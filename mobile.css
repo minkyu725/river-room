@@ -41,7 +41,7 @@
   .small .card.back { border-width: 2px; }
   .small .card.back>span { font-size: 11px; }
   .opponent>b { font-size: 10px; margin-top: 4px; }
-  .opponent small { font-size: 8px; }
+  .opponent .seat-status { font-size: 8px; }
   .dealer { width: 17px; height: 17px; right: -10px; top: -7px; font-size: 9px; }
   .board-area { top: 40%; transform: translate(-50%, -6%); }
   .pot-stack { height: 14px; margin-bottom: 2px; transform: scale(.85); }
@@ -57,7 +57,7 @@
   .hero-area .card { width: 49px; height: 68px; }
   .hero-area .card b { font-size: 23px; }
   .hero-area .card>span { font-size: 25px; }
-  .hero-area p { font-size: 10px; margin-top: 8px; }
+  .hero-area #hero-hand { font-size: 10px; margin-top: 8px; }
   .equity-panel { margin-top: 15px; padding-bottom: 12px; gap: 10px; }
   .equity-label h2 { font-size: 11px; }
   #equity-content { gap: 10px; }
@@ -82,7 +82,7 @@
   .aggression { display: none; }
   .aside-note { font-size: 9px; line-height: 1.8; margin-top: 15px; }
   .history-panel { padding: 0; border: 0; min-width: 0; }
-  summary { font-size: 10px; }
+  .history-panel summary { font-size: 10px; }
   .history-panel .result-row { flex-wrap: wrap; }
   .history-panel .result-row>strong { min-width: 0; }
   .history-panel .result-row>div:first-child { min-width: 26px; }

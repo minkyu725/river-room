@@ -1,4 +1,4 @@
-import {preflopEquity} from './preflop-equity.js?v=15';
+import {preflopEquity} from './preflop-equity.js?v=17';
 export const suits=['♣','♦','♥','♠'];
 export const rank=c=>c%13+2;
 export const suit=c=>Math.floor(c/13);
@@ -33,7 +33,7 @@ export function describeHand(cards){
  const label=c=>`${rank(c)<11?rank(c):({11:'J',12:'Q',13:'K',14:'A'})[rank(c)]}${suits[suit(c)]}`;
  const madeCount=({0:1,1:2,2:4,3:3,7:4})[result.category]??5;
  const made=best.slice(0,madeCount).map(label).join(' '),kickers=best.slice(madeCount).map(label).join(' ');
- return {...result,cards:best,label:`${result.name} · ${made}${kickers?' · 키커 '+kickers:''}`};
+ return {...result,cards:best,madeCards:best.slice(0,madeCount),kickerCards:best.slice(madeCount),label:`${result.name} · ${made}${kickers?' · 키커 '+kickers:''}`};
 }
 export function equity(hole,board,opponents,iterations=1800,random=Math.random,breakdown=false){
  if(opponents===0&&!breakdown)return {equity:1,win:1,tie:0,iterations:0};const used=new Set([...hole,...board]),available=Array.from({length:52},(_,i)=>i).filter(c=>!used.has(c));const categories=breakdown?names.map((name,category)=>({name,category,samples:0,share:0})):null;let share=0,wins=0,ties=0;

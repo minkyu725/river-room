@@ -213,12 +213,18 @@ test('animated and immediate all-in hands retain identical planned cards, result
 });
 
 
-test('folded hand review shows final category and fold status in results and on table',()=>{
- const h=harness({players:2,shuffled:fixedDeck}),g=h.game();h.nodes.get('#fold').onclick();const name=engine.describeHand([...g.players[0].hole,...g.fullBoard]).label;
- assert.equal(h.nodes.get('#hero-hand').textContent,'폴드 · '+name);assert.ok(h.nodes.get('#results').innerHTML.includes('폴드 · '+name));
- const p=g.players[1];p.folded=true;h.context.render();assert.equal(h.nodes.get('#opponent-last-1').textContent,'폴드 · '+engine.describeHand([...p.hole,...g.fullBoard]).label);
- assert.ok(h.context.resultRow({...p,folded:true,payout:0},g.fullBoard).includes('폴드 · '+engine.describeHand([...p.hole,...g.fullBoard]).label));
+test('folded hand review separates name, made cards and kickers; table uses an inspectable disclosure',()=>{
+ const h=harness({players:2,shuffled:fixedDeck}),g=h.game();h.nodes.get('#fold').onclick();
+ const hero=engine.describeHand([...g.players[0].hole,...g.fullBoard]);
+ const html=h.nodes.get('#hero-hand').innerHTML;
+ assert.ok(html.includes('<summary>'));assert.ok(html.includes('폴드 · '+hero.name));assert.ok(html.includes('카드 보기'));
+ assert.equal((html.match(/class="hand-card[ "]/g)||[]).length,5);
+ const p=g.players[1];p.folded=true;h.context.render();assert.ok(h.nodes.get('#opponent-last-1').innerHTML.includes('폴드 · '+engine.evaluate([...p.hole,...g.fullBoard]).name));
+ const row=h.context.resultRow({...p,folded:true,payout:0},g.fullBoard);assert.ok(row.includes('hand-description'));assert.ok(row.includes('hand-line'));assert.ok(!row.includes('<summary>'));
  assert.ok(h.context.resultRow({...p,folded:true,payout:0},[]).includes('폴드 · 미완성 보드'));
+ const pair=h.context.handMarkup([12,25,11,7,5]);assert.ok(pair.includes('hand-kickers'));assert.ok(pair.indexOf('구성')<pair.indexOf('키커'));
+ // A render unrelated to the hand must not replace an open native disclosure.
+ const el=h.nodes.get('#hero-hand'),cached=el.dataset.handMarkup;el.innerHTML=el.innerHTML.replace('<details ','<details open ');h.context.render();assert.ok(el.innerHTML.includes('<details open '));assert.equal(el.dataset.handMarkup,cached);
 });
 
 test('call and raise animate chips; check uses an action note; fold moves only own cards',()=>{

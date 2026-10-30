@@ -16,10 +16,10 @@ export function evaluate(cards){
  else if(pairs.length)v=[1,pairs[0][0],...rs.filter(r=>r!==pairs[0][0]).slice(0,3)];else v=[0,...rs.slice(0,5)];
  while(v.length<6)v.push(0);return {score:v.reduce((n,r)=>n*15+r,0),category:v[0],name:names[v[0]]};
 }
-export function equity(hole,board,opponents,iterations=1800,random=Math.random){
- if(opponents===0)return {equity:1,win:1,tie:0,iterations:0};const used=new Set([...hole,...board]),available=Array.from({length:52},(_,i)=>i).filter(c=>!used.has(c));let share=0,wins=0,ties=0;
- for(let i=0;i<iterations;i++){const deck=[...available],need=5-board.length+opponents*2;for(let j=0;j<need;j++){const k=j+Math.floor(random()*(deck.length-j));[deck[j],deck[k]]=[deck[k],deck[j]];}const b=[...board,...deck.slice(0,5-board.length)],own=evaluate([...hole,...b]).score;let equal=1,lose=false;for(let j=0;j<opponents;j++){const off=5-board.length+j*2,other=evaluate([...deck.slice(off,off+2),...b]).score;if(other>own){lose=true;break;}if(other===own)equal++;}if(!lose){share+=1/equal;if(equal===1)wins++;else ties++;}}
- return {equity:share/iterations,win:wins/iterations,tie:ties/iterations,iterations};
+export function equity(hole,board,opponents,iterations=1800,random=Math.random,breakdown=false){
+ if(opponents===0&&!breakdown)return {equity:1,win:1,tie:0,iterations:0};const used=new Set([...hole,...board]),available=Array.from({length:52},(_,i)=>i).filter(c=>!used.has(c));const categories=breakdown?names.map((name,category)=>({name,category,samples:0,share:0})):null;let share=0,wins=0,ties=0;
+ for(let i=0;i<iterations;i++){const deck=[...available],need=5-board.length+opponents*2;for(let j=0;j<need;j++){const k=j+Math.floor(random()*(deck.length-j));[deck[j],deck[k]]=[deck[k],deck[j]];}const b=[...board,...deck.slice(0,5-board.length)],own=evaluate([...hole,...b]);const bucket=categories?.[own.category];if(bucket)bucket.samples++;let equal=1,lose=false;for(let j=0;j<opponents;j++){const off=5-board.length+j*2,other=evaluate([...deck.slice(off,off+2),...b]).score;if(other>own.score){lose=true;break;}if(other===own.score)equal++;}if(!lose){share+=1/equal;if(bucket)bucket.share+=1/equal;if(equal===1)wins++;else ties++;}}
+ return {equity:share/iterations,win:wins/iterations,tie:ties/iterations,iterations,...(categories?{categories:categories.map(({share,...bucket})=>({...bucket,probability:bucket.samples/iterations,equity:bucket.samples?share/bucket.samples:null}))}:{})};
 }
 export function settle(players,board){
  const payouts=players.map(()=>0),pots=[],levels=[...new Set(players.map(p=>p.total).filter(Boolean))].sort((a,b)=>a-b);let previous=0;

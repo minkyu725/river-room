@@ -10,3 +10,14 @@ test('shuffle preserves 52 unique cards',()=>assert.equal(new Set(shuffled()).si
 test('side pots include folded contributions and conserve chips',()=>{const ps=[{hole:c('Ac Ad'),total:100},{hole:c('Kc Kd'),total:300},{hole:c('Qc Qd'),total:300},{hole:c('Jc Jd'),total:200,folded:true}];assert.deepEqual(settle(ps,c('2c 4d 6h 8s Th')).payouts,[400,500,0,0]);});
 test('split pot and unmatched contribution refund',()=>assert.deepEqual(settle([{hole:c('2d 3d'),total:101},{hole:c('4d 5d'),total:60}],c('Ac Kc Qc Jc Tc')).payouts,[101,60]));
 test('bot can randomly bluff using only own cards',()=>{const d=botDecision({hole:c('2d 7h'),board:[],opponents:1,call:0,stack:1000,pot:40,current:20,bet:20,minRaise:20,aggression:1,bluffRate:1,heroAggression:0,heroBluffs:0,canRaise:true},()=>0);assert.equal(d.type,'raise');assert.equal(d.reason,'블러프 레이즈');});
+
+function seeded(){let n=12345;return ()=>{n=(Math.imul(n,1664525)+1013904223)>>>0;return n/4294967296;};}
+test('category probabilities sum to one and weighted equity matches total equity',()=>{
+ for(const board of [[],c('2c 7h Jd'),c('2c 7h Jd 9s Tc')]){const result=equity(c('Ac Kd'),board,3,1200,seeded(),true);assert.equal(result.categories.length,9);assert.equal(result.categories.reduce((n,b)=>n+b.samples,0),1200);assert.ok(Math.abs(result.categories.reduce((n,b)=>n+b.probability,0)-1)<1e-12);assert.ok(Math.abs(result.categories.reduce((n,b)=>n+b.probability*(b.equity??0),0)-result.equity)<1e-12);for(const bucket of result.categories)assert.ok(bucket.samples?bucket.equity>=0&&bucket.equity<=1:bucket.equity===null);}
+});
+test('royal board has only straight flush, with shared-pot conditional equity',()=>{
+ const result=equity(c('2d 3h'),c('Ac Kc Qc Jc Tc'),3,100,seeded(),true);assert.equal(result.categories[8].probability,1);assert.equal(result.categories[8].equity,.25);assert.ok(result.categories.slice(0,8).every(b=>b.samples===0&&b.equity===null));
+});
+test('uncontested category distribution remains available without opponents',()=>{
+ const result=equity(c('Ac Ad'),[],0,100,seeded(),true);assert.equal(result.equity,1);assert.equal(result.categories.reduce((n,b)=>n+b.samples,0),100);assert.ok(result.categories.filter(b=>b.samples).every(b=>b.equity===1));
+});

@@ -34,8 +34,17 @@ header { height: 94px; display: flex; align-items: center; justify-content: spac
 .setup-title { font-size: 12px; font-weight: 600; display: flex; align-items: center; gap: 8px; }
 .blinds { color: var(--muted); font-weight: 400; margin-left: 12px; font-size: 11px; }
 .setup-row { display: flex; gap: 10px; align-items: center; }
-.setup-row label { font-size: 11px; color: var(--muted); }
-select { background: var(--surface); color: var(--ink); border: 1px solid var(--line); padding: 8px 12px; border-radius: 6px; min-height: 36px; }
+.players-label { font-size: 11px; color: var(--muted); }
+.player-picker { position: relative; }
+.players-toggle { display: flex; align-items: center; justify-content: space-between; gap: 12px; min-width: 76px; min-height: 40px; padding: 8px 10px 8px 12px; background: var(--surface); color: var(--ink); border: 1px solid var(--line); font-size: 13px; font-weight: 500; }
+.players-toggle:hover, .players-toggle[aria-expanded="true"] { background: var(--soft); border-color: var(--primary); }
+.players-toggle svg { color: var(--muted); }
+.players-menu { position: absolute; z-index: 20; top: calc(100% + 6px); right: 0; min-width: 128px; padding: 4px; border: 1px solid var(--line); border-radius: 8px; background: var(--surface); box-shadow: 0 2px 8px rgba(0,0,0,.08); }
+.players-menu button { display: flex; align-items: center; justify-content: space-between; width: 100%; min-height: 44px; padding: 10px 12px; background: transparent; color: var(--ink); font-size: 13px; font-weight: 500; text-align: left; }
+.players-menu button:hover, .players-menu button:focus-visible { background: var(--soft); outline-offset: -2px; }
+.players-menu button[aria-selected="true"] { color: var(--primary); font-weight: 650; }
+.selection-check { visibility: hidden; }
+[aria-selected="true"] .selection-check { visibility: visible; }
 .table-button { background: var(--surface); color: var(--ink); border: 1px solid var(--line); padding: 9px 14px; min-height: 36px; font-size: 12px; }
 .table-button:hover { background: var(--soft); }
 .game-layout { display: grid; grid-template-columns: minmax(0, 1fr) 240px; gap: 34px; align-items: start; }

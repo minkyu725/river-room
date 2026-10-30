@@ -21,8 +21,8 @@
   .setup-title { font-size: 11px; gap: 6px; }
   .blinds { display: none; }
   .setup-row { gap: 6px; }
-  .setup-row label { position: absolute; width: 1px; height: 1px; clip-path: inset(50%); overflow: hidden; }
-  select { padding: 8px; min-height: 36px; font-size: 12px; }
+  .players-label { position: absolute; width: 1px; height: 1px; clip-path: inset(50%); overflow: hidden; }
+  .players-toggle { min-width: 72px; min-height: 40px; font-size: 12px; }
   .table-button { padding: 9px 10px; font-size: 10px; }
   .game-layout { display: block; }
   .table-top { font-size: 10px; padding: 4px 5px 36px; }

@@ -254,3 +254,17 @@ test('missing or rejected Audio Session API never blocks Web Audio or game',()=>
  const navigator={};Object.defineProperty(navigator,'audioSession',{get(){throw Error('unsupported');}});
  for(const nav of [{},navigator]){let resumed=0;const h=harness({navigator:nav,AudioContext:class{state='suspended';resume(){resumed++;return Promise.resolve();}}});h.context.unlockAudio();assert.equal(resumed,1);assert.ok(h.game().players.length);}
 });
+
+test('custom player picker navigates without changing the game, Escape closes and restores focus',()=>{
+ const h=harness(),g=h.game(),picker=h.nodes.get('#player-picker'),toggle=h.nodes.get('#players-toggle'),menu=h.nodes.get('#players-menu');
+ assert.equal(menu.hidden,true);assert.equal(h.nodes.get('#players-value').textContent,'4명');
+ toggle.onclick();assert.equal(menu.hidden,false);assert.equal(toggle.getAttribute('aria-expanded'),'true');
+ const key=key=>picker.onkeydown({key,preventDefault(){}});
+ key('ArrowDown');key('End');assert.equal(h.game(),g);assert.equal(h.nodes.get('#players').value,'4');
+ key('Escape');assert.equal(menu.hidden,true);assert.equal(toggle.getAttribute('aria-expanded'),'false');
+ toggle.onclick();key('Home');key('Enter');assert.equal(h.game().players.length,2);assert.equal(h.nodes.get('#players-value').textContent,'2명');assert.equal(h.nodes.get('#players-option-2').getAttribute('aria-selected'),'true');assert.equal(h.nodes.get('#players-option-4').getAttribute('aria-selected'),'false');assert.equal(menu.hidden,true);
+});
+test('custom player choice cancellation restores displayed value, selected option and current table',()=>{
+ const h=harness({confirm:false}),g=h.game();h.nodes.get('#players-toggle').onclick();h.nodes.get('#players-option-6').onclick();
+ assert.equal(h.game(),g);assert.equal(h.nodes.get('#players').value,'4');assert.equal(h.nodes.get('#players-value').textContent,'4명');assert.equal(h.nodes.get('#players-option-4').getAttribute('aria-selected'),'true');assert.equal(h.nodes.get('#players-option-6').getAttribute('aria-selected'),'false');assert.equal(h.nodes.get('#players-menu').hidden,true);
+});

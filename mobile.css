@@ -27,7 +27,7 @@
   .table-top { font-size: 10px; padding: 4px 5px 24px; }
   .table-top>span:last-child { font-size: 9px; }
   .felt { height: 368px; }
-  .table-rail { inset: 14px 0 24px; border-width: 11px; border-radius: 43%; box-shadow: 0 6px 9px #23323e25, inset 0 0 0 1px #70858b80, inset 0 0 15px #11293755; }
+  .table-rail { inset: 14px 0 24px; border-width: 11px; border-radius: 43%; box-shadow: 0 6px 9px #3c2f2525, inset 0 0 0 1px #8b7c7080, inset 0 0 15px #2d231b55; }
   .table-rail:before { inset: 10px; border-radius: 43%; }
   .opponent { width: 70px; transform: translate(-50%, -10%); }
   .avatar { min-width: 52px; height: 21px; font-size: 10px; padding: 0 5px; }

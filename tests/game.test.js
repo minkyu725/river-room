@@ -24,3 +24,23 @@ test('200 complete hands: 2–6 players, folds, raises, all-ins, no stalled turn
 });
 test('heads-up dealer posts small blind and acts first preflop',()=>{const h=harness();h.nodes.get('#players').value='2';h.context.restart(true);assert.equal(h.game().players[0].bet,10);assert.equal(h.game().players[1].bet,20);assert.equal(h.game().turn,0);});
 test('bet presets respect minimum raise and stack, and require a separate confirmation',()=>{const h=harness();h.nodes.get('#players').value='2';h.context.restart(true);const before=h.game().players[0].stack;h.nodes.get('#half-pot').onclick();assert.equal(Number(h.nodes.get('#raise-size').value),40);h.nodes.get('#full-pot').onclick();assert.equal(Number(h.nodes.get('#raise-size').value),50);h.nodes.get('#all-in').onclick();assert.equal(Number(h.nodes.get('#raise-size').value),1000);assert.equal(h.game().players[0].stack,before);h.nodes.get('#raise').onclick();assert.equal(h.game().players[0].stack,0);assert.equal(h.game().current,1000);});
+
+test('early finish reveals the exact remaining runout and compares every dealt hand',()=>{
+ const h=harness();h.nodes.get('#players').value='2';h.context.restart(true);
+ const g=h.game(),deck=[...g.deck],expected=[...deck.splice(-3),...deck.splice(-1),...deck.splice(-1)];
+ h.nodes.get('#fold').onclick();
+ assert.equal(g.done,true);assert.equal(g.board.length,0);assert.deepEqual([...g.fullBoard],expected);
+ const best=Math.max(...g.players.map(p=>engine.evaluate([...p.hole,...expected]).score));
+ assert.deepEqual([...g.hypothetical],Array.from(g.players.filter(p=>engine.evaluate([...p.hole,...expected]).score===best),p=>p.name));
+ assert.ok(h.nodes.get('#board').innerHTML.includes('unplayed'));assert.ok(h.nodes.get('#results').innerHTML.includes('모두 폴드하지 않았다면'));
+});
+
+test('next hand carries stacks, excludes busted seats, and conserves table chips',()=>{
+ const h=harness();h.nodes.get('#players').value='4';h.context.restart(true);
+ const g=h.game();g.done=true;g.players.forEach((p,i)=>p.stack=[700,0,1800,1500][i]);
+ h.context.restart();const next=h.game();
+ assert.deepEqual(Array.from(next.players,p=>p.stack+p.total),[700,0,1800,1500]);assert.equal(next.players[1].sittingOut,true);assert.equal(next.pending.has(1),false);
+ let steps=0;while(!next.done){assert.ok(steps++<500);if(!h.nodes.get('#call').disabled)h.nodes.get('#call').onclick();else assert.ok(h.tick());}
+ assert.equal(next.players.reduce((sum,p)=>sum+p.stack,0),4000);
+ const stacks=next.players.map(p=>p.stack);if(stacks[0]>0&&stacks.filter(x=>x>0).length>1){h.context.restart();assert.deepEqual(h.game().players.map(p=>p.stack+p.total),stacks);}
+});

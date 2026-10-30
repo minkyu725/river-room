@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-  <meta name="theme-color" content="#202832">
+  <meta name="theme-color" content="#49382d">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="default">
   <meta name="description" content="2~6인 싱글플레이 홀덤. 승률을 확인하고 상대의 패를 복기하는 연습 테이블.">
@@ -18,7 +18,7 @@
 <main>
   <header>
     <a class="brand" href="./"><span class="brand-icon">♠</span><span>River Room<small>홀덤 연습 테이블</small></span></a>
-    <button id="help" class="icon-button" aria-label="게임 안내">?</button>
+    <div class="header-controls"><button id="sound" class="table-button" aria-pressed="true">소리 켜짐</button><button id="help" class="icon-button" aria-label="게임 안내">?</button></div>
   </header>
   <section class="setup" aria-label="테이블 설정">
     <div class="setup-title"><span class="live-dot"></span>연습 테이블 <span class="blinds">블라인드 10 / 20</span></div>
@@ -64,7 +64,7 @@
 <dialog id="help-dialog">
   <button id="close-help" class="icon-button close" aria-label="닫기">×</button>
   <h2>테이블 안내</h2>
-  <p>2~6인 노리밋 텍사스 홀덤입니다. 각 핸드는 1,000칩으로 시작하고 딜러가 돌아갑니다. 체크, 콜, 폴드, 레이즈와 올인, 사이드 팟을 지원합니다.</p>
+  <p>2~6인 노리밋 텍사스 홀덤입니다. 새 테이블은 1,000칩으로 시작하며, 다음 핸드에도 보유 칩이 유지되고 딜러가 돌아갑니다. 칩을 모두 잃은 상대는 쉬고, 내 칩이 소진되거나 한 명만 남으면 새 테이블을 시작하세요. 체크, 콜, 폴드, 레이즈와 올인, 사이드 팟을 지원합니다.</p>
   <h3>승률 읽기</h3><p>내 카드와 공개된 보드로 무작위 시뮬레이션 1,800회를 계산합니다. 동률일 때의 팟 지분도 포함합니다. 상대의 실제 카드나 베팅 성향을 반영한 예측은 아닙니다.</p>
   <h3>상대의 플레이</h3><p>상대는 자기 카드와 공개 정보로 판단합니다. 각자의 성향에 따라 블러프하고, 내 베팅과 과거 공개된 패를 보고 블러프를 의심하기도 합니다. 핸드 종료 후 폴드한 패까지 모두 공개됩니다.</p>
   <h3>iPhone에 설치하기</h3><p>Safari에서 <b>공유 → 홈 화면에 추가 → 추가</b>를 선택하세요. 처음 온라인으로 연 뒤에는 오프라인에서도 플레이할 수 있습니다. 기록은 이 기기에 저장됩니다.</p>

@@ -1,0 +1,12 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {evaluate,equity,settle,shuffled,botDecision} from '../engine.js';
+const c=s=>s.split(' ').map(x=>'23456789TJQKA'.indexOf(x[0])+'cdhs'.indexOf(x[1])*13);
+test('nine hand categories in ascending order',()=>{const hands=['Ac Jd 9h 7s 5c 3d 2h','Ac Ad 9h 7s 5c 3d 2h','Ac Ad 9h 9s 5c 3d 2h','Ac Ad Ah 7s 5c 3d 2h','Ac 2d 3h 4s 5c 9d Jh','Ac Jc 9c 7c 5c 3d 2h','Ac Ad Ah 7s 7c 3d 2h','Ac Ad Ah As 5c 3d 2h','Ac 2c 3c 4c 5c 9d Jh'];let prev=-1;hands.forEach((h,i)=>{const e=evaluate(c(h));assert.equal(e.category,i);assert.ok(e.score>prev);prev=e.score;});});
+test('two trips form full house; flush uses best five',()=>{assert.equal(evaluate(c('Ac Ad Ah Ks Kc Kd 2h')).score,evaluate(c('Ac Ad Ah Ks Kc')).score);assert.equal(evaluate(c('Ac Kc Jc 9c 7c 2c 4h')).score,evaluate(c('Ac Kc Jc 9c 7c')).score);});
+test('wheel and kicker ordering',()=>{assert.ok(evaluate(c('2c 3d 4h 5s 6c')).score>evaluate(c('Ac 2d 3h 4s 5c')).score);assert.ok(evaluate(c('Ac Ad Kh 7s 5c')).score>evaluate(c('Ac Ad Qh 7s 5c')).score);});
+test('royal board splits equity; unbeatable quads wins',()=>{assert.equal(equity(c('2d 3h'),c('Ac Kc Qc Jc Tc'),3,100).equity,.25);assert.equal(equity(c('Ac Ad'),c('Ah As 2c 3d 9h'),2,100).equity,1);});
+test('shuffle preserves 52 unique cards',()=>assert.equal(new Set(shuffled()).size,52));
+test('side pots include folded contributions and conserve chips',()=>{const ps=[{hole:c('Ac Ad'),total:100},{hole:c('Kc Kd'),total:300},{hole:c('Qc Qd'),total:300},{hole:c('Jc Jd'),total:200,folded:true}];assert.deepEqual(settle(ps,c('2c 4d 6h 8s Th')).payouts,[400,500,0,0]);});
+test('split pot and unmatched contribution refund',()=>assert.deepEqual(settle([{hole:c('2d 3d'),total:101},{hole:c('4d 5d'),total:60}],c('Ac Kc Qc Jc Tc')).payouts,[101,60]));
+test('bot can randomly bluff using only own cards',()=>{const d=botDecision({hole:c('2d 7h'),board:[],opponents:1,call:0,stack:1000,pot:40,current:20,bet:20,minRaise:20,aggression:1,bluffRate:1,heroAggression:0,heroBluffs:0,canRaise:true},()=>0);assert.equal(d.type,'raise');assert.equal(d.reason,'블러프 레이즈');});

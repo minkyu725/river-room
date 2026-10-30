@@ -1,0 +1,29 @@
+@media(max-width:720px){
+  header{height:64px}
+  .intro{padding:20px 0}
+  .intro h1{font-size:27px}
+  .setup{margin-top:18px}
+  .game-layout{gap:14px}
+  .game-layout>aside{display:contents}
+  .play-area{order:1}
+  .equity-panel{order:0;padding:14px 17px;position:relative}
+  .equity-panel .panel-heading{justify-content:flex-start;gap:13px}
+  .equity-panel .panel-heading h2{font-size:11px}
+  .equity-panel .text-button{padding:2px 0}
+  .equity-panel #equity-content{position:static}
+  .equity-panel .equity-number{position:absolute;right:17px;top:14px;margin:0;font-size:35px;letter-spacing:-1px}
+  .equity-panel .equity-number span{font-size:16px}
+  .equity-panel .meter{width:53%;margin:12px 0 8px;height:3px}
+  .equity-panel .muted{position:static;max-width:none;text-align:left;font-size:9px;margin:0}
+  .equity-panel .note{font-size:9px;margin-top:9px;padding-top:9px;line-height:1.6}
+  aside>.panel:not(.equity-panel){order:2}
+  .felt{min-height:375px;padding-top:18px;padding-bottom:18px}
+  .board-area{margin:8px 0}
+  .table-wordmark{margin-top:12px}
+  .hero-area .card{width:49px;height:67px}
+  .hero-area .card b{font-size:22px}
+  .hero-area .card>span{font-size:24px}
+  .board .card{width:46px;height:64px}
+  .pot-label{margin-bottom:11px}
+  .pot-label strong{font-size:21px}
+}

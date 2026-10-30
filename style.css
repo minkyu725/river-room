@@ -62,12 +62,12 @@ header { height: 94px; display: flex; align-items: center; justify-content: spac
 .portrait svg { display: block; width: 100%; height: 100%; }
 .thinking .portrait { border-color: #e2cd91; box-shadow: none; }
 .dealer { position: absolute; right: -15px; top: -8px; width: 20px; height: 20px; border-radius: 50%; display: grid; place-items: center; background: var(--paper); color: var(--ink); border: 1px solid var(--line); font-family: inherit; font-weight: 700; font-size: 11px; }
-.opponent .cards { background: var(--rail); width: max-content; margin: auto; padding: 5px; border-radius: 4px; box-shadow: none; }
+.opponent>.cards { background: var(--rail); width: max-content; margin: auto; padding: 5px; border-radius: 4px; box-shadow: none; }
 .opponent>b { display: block; margin: 5px 0 3px; font-size: 12px; font-weight: 600; color: #f4f7f4; text-shadow: none; }
 .opponent .seat-status { display: block; font-size: 11px; color: #e3ece5; min-height: 14px; line-height: 1.4; text-shadow: none; }
 .thinking .avatar { background: #4c5b43; }
 .thinking .cards { outline: 2px solid #d7b87c; outline-offset: 2px; }
-.opponent.folded .cards { opacity: .42; }
+.opponent.folded>.cards { opacity: .42; }
 .opponent.folded .seat-status { color: #d3dfd5; }
 .cards { display: flex; justify-content: center; gap: 6px; }
 .card { width: 55px; height: 77px; flex-shrink: 0; background: var(--paper); border: 1px solid #d8ddd7; border-radius: 5px; box-shadow: 0 2px 3px #18291e24; color: var(--ink); padding: 5px 6px; display: flex; flex-direction: column; justify-content: space-between; text-align: left; user-select: none; }
@@ -97,8 +97,8 @@ header { height: 94px; display: flex; align-items: center; justify-content: spac
 #position { font-size: 10px; color: #f0d9a0; font-weight: 400; }
 #stack { color: #f4f7f4; font-variant-numeric: tabular-nums; }
 .hero-area .card { width: 59px; height: 82px; }
-.hero-area .card:first-child { --card-tilt: -5deg; transform: rotate(var(--card-tilt)); }
-.hero-area .card:last-child { --card-tilt: 5deg; transform: rotate(var(--card-tilt)); }
+#hero>.card:first-child { --card-tilt: -5deg; transform: rotate(var(--card-tilt)); }
+#hero>.card:last-child { --card-tilt: 5deg; transform: rotate(var(--card-tilt)); }
 .card.dealing { animation: deal-card .18s ease-out; }
 .card.flipping { animation: flip-card .18s ease-out; }
 @keyframes deal-card { from { opacity: 0; transform: translateY(-10px) rotate(var(--card-tilt, 0deg)); } to { opacity: 1; transform: rotate(var(--card-tilt, 0deg)); } }
@@ -222,17 +222,41 @@ dialog p { color: var(--muted); font-size: 13px; line-height: 1.9; }
 .hand-card.red { color: var(--red); }
 .hand-kickers .hand-card { font-weight: 400; }
 .hand-disclosure { position: relative; margin: 0; padding: 0; border: 0; }
-.hand-disclosure summary { display: flex; align-items: center; justify-content: center; gap: 8px; color: inherit; font: inherit; cursor: pointer; list-style: none; }
+.hand-disclosure summary { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; color: inherit; font: inherit; font-size: 11px; cursor: pointer; list-style: none; }
 .hand-disclosure summary::-webkit-details-marker { display: none; }
 .hand-more { font-size: 10px; font-weight: 400; text-decoration: underline; text-underline-offset: 3px; }
 .hand-popover { position: absolute; left: 50%; bottom: calc(100% + 8px); transform: translateX(-50%); z-index: 8; display: grid; gap: 8px; width: 230px; padding: 12px; text-align: left; background: var(--surface); color: var(--ink); border: 1px solid var(--line); border-radius: 6px; box-shadow: 0 2px 8px rgba(0,0,0,.08); }
 .opponent:has(.hand-disclosure[open]) { z-index: 9; }
-.opponent .hand-disclosure summary { flex-direction: column; gap: 2px; }
-.opponent .hand-name { font-size: inherit; }
-.opponent .hand-more { font-size: 9px; }
+.hand-disclosure .hand-name { font-size: inherit; }
+.hand-disclosure .hand-more { font-size: 9px; }
 .opponent .hand-popover { top: calc(100% + 8px); bottom: auto; }
 .opponent[data-side="left"] .hand-popover { left: 0; transform: none; }
 .opponent[data-side="right"] .hand-popover { left: auto; right: 0; transform: none; }
 .result-row>div:first-child { flex-basis: 180px; }
 .history-panel .hand-name { font-size: 11px; }
 .history-panel .hand-line { font-size: 11px; }
+
+/* Each player's own seven-card view has exactly five selected cards. */
+.card.unused { opacity: .32; filter: blur(.65px) saturate(.35); }
+.seven-cards { display: flex; align-items: start; gap: 10px; }
+.seven-group { display: grid; gap: 4px; }
+.seven-group>small { display: block; margin: 0; font-size: 9px; font-weight: 400; color: var(--muted); }
+.seven-cards .cards { gap: 3px; }
+.result-row { display: grid; grid-template-columns: minmax(0,1fr) auto; align-items: start; }
+.result-row>strong { grid-column: 2; grid-row: 1; }
+.result-seven { grid-column: 1 / -1; grid-row: 2; }
+.hand-popover .seven-cards { margin-bottom: 4px; gap: 6px; }
+.hand-popover .mini .card { width: 23px; height: 33px; padding: 2px; }
+.hand-popover .mini .card b { font-size: 10px; }
+.hand-popover .mini .card>span { font-size: 12px; }
+.history-panel .seven-cards { gap: 5px; }
+.history-panel .seven-cards .cards { gap: 2px; }
+.history-panel .seven-cards .card { width: 18px; height: 27px; padding: 2px; }
+.history-panel .seven-cards .card b { font-size: 9px; }
+.history-panel .seven-cards .card>span { font-size: 10px; }
+
+.hand-popover-title { display: block; color: var(--ink); font-size: 13px; font-weight: 650; line-height: 1.4; }
+
+/* Shared card-view groups preserve the opponent view's separate rail frames. */
+.hand-popover .seven-group>.cards { width: max-content; margin: 0; padding: 4px; border-radius: 4px; background: var(--rail); }
+.hand-popover .card { transform: none; --card-tilt: 0deg; }

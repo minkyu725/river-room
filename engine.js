@@ -1,4 +1,4 @@
-import {preflopEquity} from './preflop-equity.js?v=17';
+import {preflopEquity} from './preflop-equity.js?v=20';
 export const suits=['♣','♦','♥','♠'];
 export const rank=c=>c%13+2;
 export const suit=c=>Math.floor(c/13);
@@ -41,6 +41,7 @@ export function equity(hole,board,opponents,iterations=1800,random=Math.random,b
  return {equity:share/iterations,win:wins/iterations,tie:ties/iterations,iterations,...(categories?{categories:categories.map(({share,...bucket})=>({...bucket,probability:bucket.samples/iterations,equity:bucket.samples?share/bucket.samples:null}))}:{})};
 }
 export function calculateEquity(hole,board,opponents){
+ if(board.length===5){const category=evaluate([...hole,...board]).category;return {method:'static-river',equity:null,tie:null,categories:names.map((name,i)=>({name,category:i,probability:i===category?1:0,equity:null}))};}
  if(board.length)return {method:'unavailable'};
  const ranks=hole.map(rank).sort((a,b)=>b-a),label=r=>r<10?String(r):({10:'T',11:'J',12:'Q',13:'K',14:'A'})[r];
  const key=ranks.map(label).join('')+(ranks[0]===ranks[1]?'':suit(hole[0])===suit(hole[1])?'s':'o');

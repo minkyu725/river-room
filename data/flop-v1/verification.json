@@ -1,0 +1,11 @@
+{
+  "states": 1286792,
+  "shards": 169,
+  "denominator": 1081,
+  "allRecordSums": true,
+  "allSha256": true,
+  "independentJsStates": 4998,
+  "independentJsRunouts": 5402838,
+  "fullRepresentativeShard": true,
+  "elapsedSeconds": 8.423
+}

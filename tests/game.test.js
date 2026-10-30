@@ -16,8 +16,8 @@ function harness(options={}){
  const document={body:options.motionAPI?node('body'):undefined,documentElement:node('html'),querySelector(s){if(!nodes.has(s))nodes.set(s,node());return nodes.get(s);},querySelectorAll(){return [...nodes.values()].flatMap(el=>el.children).filter(el=>el.classList.contains('dealing')||el.classList.contains('flipping'));},createElement:node};document.querySelector('#players').value=String(options.players??4);
  const media={matches:!!options.reducedMotion,addEventListener(event,fn){this.onchange=fn;},addListener(fn){this.onchange=fn;}};
  if(options.legacyMedia)delete media.addEventListener;
- const context=vm.createContext({...engine,shuffled:options.shuffled??engine.shuffled,botDecision:options.botDecision??engine.botDecision,document,console,localStorage:{getItem:key=>{if(options.storageFails)throw Error('storage blocked');return storage.get(key)??null;},setItem(key,value){if(options.storageFails)throw Error('storage blocked');storage.set(key,value);}},matchMedia:options.noMatchMedia?undefined:()=>media,navigator:options.navigator??{},AudioContext:options.AudioContext,Worker:class{constructor(){if(options.workerUnavailable)throw Error('unavailable');workers.push(this);}postMessage(data){if(options.postFails)throw Error('post failed');this.request=data;}terminate(){this.terminated=true;}},confirm:()=>options.confirm!==false,setTimeout:f=>{timers.set(++timerId,f);return timerId;},clearTimeout:id=>timers.delete(id)});
- const src=readFileSync(new URL('../app.js',import.meta.url),'utf8').replace(/^import[^\n]+\n/,'');vm.runInContext(src+'\nglobalThis.inspect=()=>game;globalThis.restart=start;globalThis.currentRequest=()=>equityRequest;',context);
+ const context=vm.createContext({...engine,loadFlopProbabilities:options.loadFlopProbabilities??(()=>Promise.reject(Error('No network in game harness'))),shuffled:options.shuffled??engine.shuffled,botDecision:options.botDecision??engine.botDecision,document,console,localStorage:{getItem:key=>{if(options.storageFails)throw Error('storage blocked');return storage.get(key)??null;},setItem(key,value){if(options.storageFails)throw Error('storage blocked');storage.set(key,value);}},matchMedia:options.noMatchMedia?undefined:()=>media,navigator:options.navigator??{},AudioContext:options.AudioContext,Worker:class{constructor(){if(options.workerUnavailable)throw Error('unavailable');workers.push(this);}postMessage(data){if(options.postFails)throw Error('post failed');this.request=data;}terminate(){this.terminated=true;}},confirm:()=>options.confirm!==false,setTimeout:f=>{timers.set(++timerId,f);return timerId;},clearTimeout:id=>timers.delete(id)});
+ const src=readFileSync(new URL('../app.js',import.meta.url),'utf8').replace(/^import[^\n]+\n/gm,'');vm.runInContext(src+'\nglobalThis.inspect=()=>game;globalThis.restart=start;globalThis.currentRequest=()=>equityRequest;',context);
  return {context,nodes,timers,workers,storage,media,animations,game:()=>context.inspect(),tick(){const [id,fn]=timers.entries().next().value||[];if(fn){timers.delete(id);fn();return true;}return false;}};
 }
 test('200 complete hands: 2–6 players, folds, raises, all-ins, no stalled turns or chip loss',()=>{
@@ -93,7 +93,7 @@ test('cancelling participant change restores selection without changing the game
 });
 
 test('postflop has no live calculation and stale replies cannot replace its empty state',()=>{
- const h=harness({players:2}),g=h.game();g.board=g.deck.splice(-3);h.context.calculate();assert.equal(h.nodes.get('#equity').innerHTML,'—<span>%</span>');assert.equal(h.nodes.get('#hand-odds-body').innerHTML,'');assert.ok(h.nodes.get('#equity-detail').textContent.includes('사전 계산표'));
+ const h=harness({players:2}),g=h.game();g.board=g.deck.splice(-4);h.context.calculate();assert.equal(h.nodes.get('#equity').innerHTML,'—<span>%</span>');assert.equal(h.nodes.get('#hand-odds-body').innerHTML,'');assert.ok(h.nodes.get('#equity-detail').textContent.includes('사전 계산표'));
  const id=h.context.currentRequest().id;h.context.showEquity({id:id-1,...engine.calculateEquity(g.players[0].hole,[],1)});assert.equal(h.nodes.get('#hand-odds-body').innerHTML,'');
 });
 
@@ -217,8 +217,8 @@ test('folded hand review separates name, made cards and kickers; table uses an i
  const h=harness({players:2,shuffled:fixedDeck}),g=h.game();h.nodes.get('#fold').onclick();
  const hero=engine.describeHand([...g.players[0].hole,...g.fullBoard]);
  const html=h.nodes.get('#hero-hand').innerHTML;
- assert.ok(html.includes('<summary>'));assert.ok(html.includes('폴드 · '+hero.name));assert.ok(html.includes('카드 보기'));
- assert.equal((html.match(/class="hand-card[ "]/g)||[]).length,5);
+ assert.ok(html.includes('<summary>'));assert.ok(html.includes('폴드 · '+hero.name));assert.ok(html.includes('카드 보기'));assert.ok(html.includes('class="hand-popover-title">폴드 · '+hero.name));
+ assert.equal((html.match(/class="hand-card[ "]/g)||[]).length,5);assert.equal((html.match(/data-used="true"/g)||[]).length,5);assert.equal((html.match(/data-used="false"/g)||[]).length,2);
  const p=g.players[1];p.folded=true;h.context.render();assert.ok(h.nodes.get('#opponent-last-1').innerHTML.includes('폴드 · '+engine.evaluate([...p.hole,...g.fullBoard]).name));
  const row=h.context.resultRow({...p,folded:true,payout:0},g.fullBoard);assert.ok(row.includes('hand-description'));assert.ok(row.includes('hand-line'));assert.ok(!row.includes('<summary>'));
  assert.ok(h.context.resultRow({...p,folded:true,payout:0},[]).includes('폴드 · 미완성 보드'));
@@ -273,4 +273,17 @@ test('custom player picker navigates without changing the game, Escape closes an
 test('custom player choice cancellation restores displayed value, selected option and current table',()=>{
  const h=harness({confirm:false}),g=h.game();h.nodes.get('#players-toggle').onclick();h.nodes.get('#players-option-6').onclick();
  assert.equal(h.game(),g);assert.equal(h.nodes.get('#players').value,'4');assert.equal(h.nodes.get('#players-value').textContent,'4명');assert.equal(h.nodes.get('#players-option-4').getAttribute('aria-selected'),'true');assert.equal(h.nodes.get('#players-option-6').getAttribute('aria-selected'),'false');assert.equal(h.nodes.get('#players-menu').hidden,true);
+});
+
+test('seven-card reviews retain all cards but mark exactly five used, including a board-only hand',()=>{
+ const h=harness(),html=h.context.sevenCards([13,27,12,11,10,9,8]);
+ assert.equal((html.match(/data-used="true"/g)||[]).length,5);assert.equal((html.match(/data-used="false"/g)||[]).length,2);assert.equal((html.match(/class="card unused/g)||[]).length,2);
+ const holePart=html.slice(0,html.indexOf('<small>보드</small>'));assert.equal((holePart.match(/data-used="false"/g)||[]).length,2);
+});
+test('async flop lookup shows exact completion counts and rejects stale replies and errors',async()=>{
+ const pending=[];const h=harness({players:2,loadFlopProbabilities:()=>new Promise((resolve,reject)=>pending.push({resolve,reject}))}),g=h.game();g.board=g.deck.splice(-3);const first=h.context.calculate();assert.ok(h.nodes.get('#hand-odds-status').textContent.includes('불러오는 중'));
+ const result={method:'static-flop',equity:null,categories:engine.names.map((name,category)=>({name,category,probability:category===1?1:0}))};
+ pending[0].resolve(result);await first;assert.ok(h.nodes.get('#hand-odds-status').textContent.includes('1,081'));assert.ok(h.nodes.get('#hand-odds-body').innerHTML.includes('100.0%'));
+ const stale=h.context.calculate();g.board.push(g.deck.pop());h.context.calculate();const status=h.nodes.get('#hand-odds-status').textContent;pending[1].resolve(result);await stale;assert.equal(h.nodes.get('#hand-odds-status').textContent,status);assert.equal(h.nodes.get('#hand-odds-body').innerHTML,'');
+ g.board.pop();const failed=h.context.calculate();pending[2].reject(Error('offline'));await failed;assert.ok(h.nodes.get('#hand-odds-status').textContent.includes('불러오지 못했습니다'));assert.equal(h.nodes.get('#hand-odds-body').innerHTML,'');
 });

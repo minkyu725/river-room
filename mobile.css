@@ -33,7 +33,7 @@
   .opponent { width: 70px; transform: translate(-50%, -10%); }
   .avatar { min-width: 52px; height: 21px; font-size: 10px; padding: 0 5px; }
   .portrait { width: 29px; height: 29px; }
-  .opponent .cards { padding: 4px; }
+  .opponent>.cards { padding: 4px; }
   .small { gap: 2px; }
   .small .card { width: 22px; height: 31px; padding: 2px; border-radius: 2px; }
   .small .card b { font-size: 11px; }

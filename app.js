@@ -1,4 +1,5 @@
-import {suits,rank,suit,shuffled,evaluate,describeHand,settle,botDecision,calculateEquity} from './engine.js?v=17';
+import {loadFlopProbabilities} from './flop-probabilities.js?v=20';
+import {suits,rank,suit,shuffled,evaluate,describeHand,settle,botDecision,calculateEquity} from './engine.js?v=20';
 const $=s=>document.querySelector(s);
 const profiles=[{name:'민',style:'균형형',aggression:.58,bluffRate:.12},{name:'루나',style:'공격형',aggression:.85,bluffRate:.28},{name:'제이',style:'신중형',aggression:.34,bluffRate:.07},{name:'노아',style:'변칙형',aggression:.73,bluffRate:.32},{name:'유진',style:'분석형',aggression:.5,bluffRate:.16}];
 let saved=[];try{saved=JSON.parse(localStorage.getItem('river-history')||'[]');if(!Array.isArray(saved))saved=[];}catch{}
@@ -167,21 +168,30 @@ function completeHand(){
  render();renderHistory();message(`${winners.join(', ')} 팟 수령 · 나의 결과 ${net>=0?'+':''}${net} 칩`);
  $('#results').hidden=false;$('#results').innerHTML=`<div class="panel-heading"><h2>공개된 패 <small>폴드한 상대 포함</small></h2><span>${alone?'폴드로 종료':'쇼다운'}</span></div>`+reviewNote(result)+result.players.filter(p=>!p.sittingOut).map(p=>resultRow(p,result.board)).join('');calculate();
 }
+function markUnusedHole(el,hole,board){
+ const used=board.length===5?new Set(describeHand([...hole,...board]).cards):null;
+ hole.forEach((c,i)=>{el.children[i]?.classList.toggle('unused',!!used&&!used.has(c));});
+}
+function sevenCards(cards){
+ const used=new Set(describeHand(cards).cards),piece=c=>card(c).replace('class="card ',`data-used="${used.has(c)}" class="card ${used.has(c)?'':'unused '}`).replace('aria-label="',`aria-label="${used.has(c)?'최선의 5장 · ':'미사용 · '}`);
+ const group=(label,values)=>`<span class="seven-group"><small>${label}</small><span class="cards mini">${values.map(piece).join('')}</span></span>`;
+ return `<span class="seven-cards" aria-label="최선의 5장은 선명하게, 미사용 카드는 흐리게 표시">${group('홀카드',cards.slice(0,2))}${group('보드',cards.slice(2))}</span>`;
+}
 function handMarkup(cards,prefix='',compact=false){
  const hand=describeHand(cards),title=`${prefix}${hand.name}`;
  const tokens=cards=>cards.map(c=>{const r=rank(c),red=suit(c)===1||suit(c)===2;return `<span class="hand-card${red?' red':''}">${r<11?r:({11:'J',12:'Q',13:'K',14:'A'})[r]}${suits[suit(c)]}</span>`;}).join('');
  const lines=`<span class="hand-line"><span class="hand-line-label">구성</span><span class="hand-card-run">${tokens(hand.madeCards)}</span></span>${hand.kickerCards.length?`<span class="hand-line hand-kickers"><span class="hand-line-label">키커</span><span class="hand-card-run">${tokens(hand.kickerCards)}</span></span>`:''}`;
- return compact?`<details class="hand-disclosure" name="hand-cards"><summary><span class="hand-name">${escapeHTML(title)}</span><span class="hand-more">카드 보기</span></summary><div class="hand-popover">${lines}</div></details>`:`<span class="hand-description"><span class="hand-name">${escapeHTML(title)}</span>${lines}</span>`;
+ return compact?`<details class="hand-disclosure" name="hand-cards"><summary><span class="hand-name">${escapeHTML(title)}</span><span class="hand-more">카드 보기</span></summary><div class="hand-popover"><strong class="hand-popover-title">${escapeHTML(title)}</strong>${sevenCards(cards)}${lines}</div></details>`:`<span class="hand-description"><span class="hand-name">${escapeHTML(title)}</span>${lines}</span>`;
 }
 function renderHandStatus(selector,cards,prefix='',plain=''){
  const el=$(selector);if(cards){const html=handMarkup(cards,prefix,true);if(el.dataset.handMarkup!==html){el.innerHTML=html;el.dataset.handMarkup=html;}}else{el.textContent=plain;delete el.dataset.handMarkup;}
 }
-function resultRow(p,board){return `<div class="result-row"><div><b>${escapeHTML(p.name)}</b>${board.length===5?handMarkup([...p.hole,...board],p.folded?'폴드 · ':''):`<small>${p.folded?'폴드 · ':''}미완성 보드</small>`}</div><div class="cards mini">${p.hole.map(c=>card(c)).join('')}</div><strong class="${p.payout?'positive':''}">${p.payout?'+'+p.payout+' 수령':'—'}</strong></div>`;}
+function resultRow(p,board){return `<div class="result-row"><div><b>${escapeHTML(p.name)}</b>${board.length===5?handMarkup([...p.hole,...board],p.folded?'폴드 · ':''):`<small>${p.folded?'폴드 · ':''}미완성 보드</small>`}</div><div class="result-seven">${board.length===5?sevenCards([...p.hole,...board]):p.hole.map(c=>card(c)).join('')}</div><strong class="${p.payout?'positive':''}">${p.payout?'+'+p.payout+' 수령':'—'}</strong></div>`;}
 function render(){
  const g=game;$('#hand-no').textContent=`핸드 ${hand}`;$('#street').textContent=g.done?'종료':streets[g.street];$('#pot').textContent=g.players.reduce((s,p)=>s+p.total,0).toLocaleString();
  markup('#pot-stack',chips(g.players.reduce((s,p)=>s+p.total,0)));$('#round-result').hidden=!g.done;$('#round-result').textContent=g.resultLabel||'';$('#round-result').className=`round-result ${g.net>0?'won':''}`;
- renderBoard(g);const hero=g.players[0];renderCards($('#hero'),hero.hole.map((c,i)=>i<hero.dealt?card(c):emptyCard('미배분 카드')),'dealing');$('#hero').classList.toggle('folded',hero.folded);renderHandStatus('#hero-hand',hero.dealt<2||hero.folded&&!g.done||!g.done&&!g.board.length?null:[...hero.hole,...(g.done?g.fullBoard:g.board)],g.done?(hero.folded?'폴드 · ':''):(hero.last?hero.last+' · ':''),hero.dealt<2?'카드 배분 중':hero.folded?'폴드':`${hero.last?hero.last+' · ':''}${startingHand(hero.hole)}`);$('#stack').textContent=`${hero.stack.toLocaleString()} 칩`;$('#position').textContent=dealer===0?'딜러':'';
- g.players.slice(1).forEach((p,j)=>{const i=j+1;$('#opponent-'+i).className=`opponent ${p.folded?'folded':''} ${g.turn===i&&!g.done&&!g.busy&&!g.finishing?'thinking':''}`;renderCards($('#opponent-cards-'+i),p.hole.map((c,k)=>k<p.dealt?card(c,!p.revealed):emptyCard(p.sittingOut?'쉬는 자리':'미배분 카드')),p.revealed?'flipping':'dealing');$('#opponent-stack-'+i).textContent=p.stack.toLocaleString();renderHandStatus('#opponent-last-'+i,p.revealed&&!p.sittingOut?[...p.hole,...g.fullBoard]:null,p.folded?'폴드 · ':'',p.sittingOut?'칩 소진':p.last||profiles[j].style);});
+ renderBoard(g);const hero=g.players[0];renderCards($('#hero'),hero.hole.map((c,i)=>i<hero.dealt?card(c):emptyCard('미배분 카드')),'dealing');$('#hero').classList.toggle('folded',hero.folded);markUnusedHole($('#hero'),hero.hole,g.done?g.fullBoard:g.board);renderHandStatus('#hero-hand',hero.dealt<2||hero.folded&&!g.done||!g.done&&!g.board.length?null:[...hero.hole,...(g.done?g.fullBoard:g.board)],g.done?(hero.folded?'폴드 · ':''):(hero.last?hero.last+' · ':''),hero.dealt<2?'카드 배분 중':hero.folded?'폴드':`${hero.last?hero.last+' · ':''}${startingHand(hero.hole)}`);$('#stack').textContent=`${hero.stack.toLocaleString()} 칩`;$('#position').textContent=dealer===0?'딜러':'';
+ g.players.slice(1).forEach((p,j)=>{const i=j+1;$('#opponent-'+i).className=`opponent ${p.folded?'folded':''} ${g.turn===i&&!g.done&&!g.busy&&!g.finishing?'thinking':''}`;renderCards($('#opponent-cards-'+i),p.hole.map((c,k)=>k<p.dealt?card(c,!p.revealed):emptyCard(p.sittingOut?'쉬는 자리':'미배분 카드')),p.revealed?'flipping':'dealing');markUnusedHole($('#opponent-cards-'+i),p.hole,p.revealed?g.fullBoard:[]);$('#opponent-stack-'+i).textContent=p.stack.toLocaleString();renderHandStatus('#opponent-last-'+i,p.revealed&&!p.sittingOut?[...p.hole,...g.fullBoard]:null,p.folded?'폴드 · ':'',p.sittingOut?'칩 소진':p.last||profiles[j].style);});
  $('#personalities').innerHTML=profiles.slice(0,g.players.length-1).map(p=>`<div class="profile"><span><i class="profile-dot"></i>${p.name}</span><small>${p.style}</small><span class="aggression">${'▰'.repeat(Math.round(p.aggression*5))}<em>${'▱'.repeat(5-Math.round(p.aggression*5))}</em></span></div>`).join('');
  const turn=g.turn===0&&!g.done&&!g.busy&&!g.finishing&&g.pending.has(0),p=g.players[0],call=Math.min(p.stack,g.current-p.bet);$('#actions').hidden=g.done;$('#next').hidden=!g.done;$('#next').disabled=g.done&&(g.players[0].stack===0||g.players.filter(p=>p.stack>0).length<2);$('#next').textContent=$('#next').disabled?'테이블 종료 · 새 테이블로 시작하세요':'다음 핸드';$('#results').hidden=!g.done;
  for(const id of ['fold','call','raise'])$('#'+id).disabled=!turn;$('#raise').disabled=!turn||!canRaise(0);$('#call').textContent=call?`콜 ${call}`:'체크';
@@ -193,27 +203,28 @@ function renderBoard(g){
  // Only replace a slot when its card changes; unrelated renders preserve nodes.
  renderCards($('#board'),html,'flipping');
 }
-function reviewNote(h){return `<p class="review-note">${h.revealed<5?'옅은 카드는 종료 후 공개한 남은 보드입니다. ':''}모두 폴드하지 않았다면: <b>${h.hypothetical.map(escapeHTML).join(', ')}${h.hypothetical.length>1?' 공동 승리':' 승리'}</b><br><small>전체 보드와 모든 참가자의 패를 비교한 결과 · 실제 칩 정산과 별개</small></p>`;}
+function reviewNote(h){return `<p class="review-note">${h.revealed<5?'옅은 카드는 종료 후 공개한 남은 보드입니다. ':''}모두 폴드하지 않았다면: <b>${h.hypothetical.map(escapeHTML).join(', ')}${h.hypothetical.length>1?' 공동 승리':' 승리'}</b><br><small>전체 보드와 모든 참가자의 패를 비교한 결과 · 실제 칩 정산과 별개<br>개인별 7장에서 흐린 2장은 미사용 카드입니다. 동률인 최선의 조합은 한 가지를 표시합니다.</small></p>`;}
 function startingHand(h){return rank(h[0])===rank(h[1])?'포켓 페어':suit(h[0])===suit(h[1])?'수티드 · 같은 무늬':'오프수트 · 다른 무늬';}
-function calculate(){const id=++calcId;equityRequest=null;$('#equity').innerHTML='···<span>%</span>';$('#equity-detail').textContent='가능한 상대 패를 계산하고 있어요.';$('#equity-bar').style.width='0%';$('#hand-odds-body').innerHTML='';$('#hand-odds-status').textContent='족보별 확률을 계산하고 있어요.';
+function calculate(){const id=++calcId;equityRequest=null;$('#equity').innerHTML='···<span>%</span>';$('#equity-detail').textContent='사전 계산표를 확인하고 있어요.';$('#equity-bar').style.width='0%';$('#hand-odds-body').innerHTML='';$('#hand-odds-status').textContent='족보별 사전 계산표를 확인하고 있어요.';
  if(game.players[0].dealt<2||game.busy){$('#equity').innerHTML='—<span>%</span>';$('#equity-detail').textContent='카드 배분·공개 후 승률을 계산합니다.';$('#hand-odds-status').textContent='카드 배분·공개를 기다리고 있어요.';return;}
  if(game.players[0].folded){$('#equity').innerHTML='—<span>%</span>';$('#equity-detail').textContent='폴드했습니다. 종료 후 전체 패를 확인하세요.';$('#hand-odds-status').textContent='폴드한 핸드는 승률을 계산하지 않습니다. 종료 후 공개된 패를 확인하세요.';return;}
- const data=equityRequest={id,hole:[...game.players[0].hole],board:[...game.board],opponents:active().length-1};showEquity({id,...calculateEquity(data.hole,data.board,data.opponents)});
+ const data=equityRequest={id,hole:[...game.players[0].hole],board:[...game.board],opponents:active().length-1};if(data.board.length===3){$('#equity').innerHTML='—<span>%</span>';$('#equity-detail').textContent='상대 승률의 정확한 정적 표는 미제공입니다.';$('#hand-odds-status').textContent='플롭 확률표를 불러오는 중…';return loadFlopProbabilities(data.hole,data.board).then(result=>showEquity({id,...result})).catch(()=>showEquity({id,method:'flop-error'}));}showEquity({id,...calculateEquity(data.hole,data.board,data.opponents)});
 }
 function percent(n){return n===0?'0.0%':n<.001?'<0.1%':(n*100).toFixed(1)+'%';}
 function showEquity(data){
  if(data.id!==calcId||game.busy||game.players[0].dealt<2)return;
+ if(data.method==='flop-error'){$('#hand-odds-body').innerHTML='';$('#hand-odds-status').textContent='플롭 확률표를 불러오지 못했습니다. 다음 액션 또는 새로고침 후 다시 시도합니다.';return;}
  if(data.method==='unavailable'){
   $('#equity').innerHTML='—<span>%</span>';$('#equity-bar').style.width='0%';
   $('#equity-detail').textContent='이 보드의 정확한 사전 계산표가 없습니다.';
-  $('#hand-odds-status').textContent='플롭 이후 정적 데이터 미제공 · 게임 중 계산과 추정은 하지 않습니다.';
+  $('#hand-odds-status').textContent='턴의 정적 데이터는 아직 미제공입니다. 게임 중 계산과 추정은 하지 않습니다.';
   $('#hand-odds-body').innerHTML='';return;
  }
- if(data.method!=='static'||!Array.isArray(data.categories)){$('#hand-odds-status').textContent='사전 계산표를 불러오지 못했습니다. 페이지를 새로 열어 주세요.';return;}
+ if(!['static','static-flop','static-river'].includes(data.method)||!Array.isArray(data.categories)){$('#hand-odds-status').textContent='사전 계산표를 불러오지 못했습니다. 페이지를 새로 열어 주세요.';return;}
  const n=data.equity===null?null:(data.equity*100).toFixed(1);
  $('#equity').innerHTML=`${n??'—'}<span>%</span>`;$('#equity-bar').style.width=(n??0)+'%';
- $('#equity-detail').textContent=n===null?'다인전의 정확한 사전 계산표가 없습니다.':`사전 전수 계산표 · 상대 1명 / 동률 ${(data.tie*100).toFixed(1)}%`;
- $('#hand-odds-status').textContent='프리플롭 사전 전수 계산표 · 완성 확률만 제공 · 족보별 조건부 승률 미제공';
+ $('#equity-detail').textContent=n===null?(data.method==='static'?'다인전의 정확한 사전 계산표가 없습니다.':'상대 승률의 정확한 정적 표는 미제공입니다.'):`사전 전수 계산표 · 상대 1명 / 동률 ${(data.tie*100).toFixed(1)}%`;
+ $('#hand-odds-status').textContent=data.method==='static-flop'?'1,081가지 전수 계산표 · 족보 완성 확률 · 상대 인원 무관':data.method==='static-river'?'리버의 확정 족보 · 100% · 상대 승률과는 다릅니다.':'프리플롭 사전 전수 계산표 · 완성 확률만 제공 · 족보별 조건부 승률 미제공';
  $('#hand-odds-body').innerHTML=data.categories.slice().reverse().map(c=>`<tr><th scope="row">${c.name}</th><td>${percent(c.probability)}</td><td>—</td></tr>`).join('');
 }
 function renderHistory(){

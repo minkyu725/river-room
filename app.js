@@ -1,9 +1,20 @@
-import {suits,rank,suit,shuffled,evaluate,settle,botDecision,equity} from './engine.js';
+import {suits,rank,suit,shuffled,evaluate,settle,botDecision,equity} from './engine.js?v=10';
 const $=s=>document.querySelector(s);
 const profiles=[{name:'민',style:'균형형',aggression:.58,bluffRate:.12},{name:'루나',style:'공격형',aggression:.85,bluffRate:.28},{name:'제이',style:'신중형',aggression:.34,bluffRate:.07},{name:'노아',style:'변칙형',aggression:.73,bluffRate:.32},{name:'유진',style:'분석형',aggression:.5,bluffRate:.16}];
 let saved=[];try{saved=JSON.parse(localStorage.getItem('river-history')||'[]');if(!Array.isArray(saved))saved=[];}catch{}
-let history=saved.filter(h=>Array.isArray(h.players)&&Array.isArray(h.board)&&Array.isArray(h.log)).slice(0,30),hand=0,dealer=-1,game,timer,token=0,calcId=0,worker;
-try{worker=new Worker('./equity-worker.js',{type:'module'});worker.onmessage=({data})=>showEquity(data);worker.onerror=()=>{$('#equity-detail').textContent='승률 계산을 사용할 수 없습니다. 페이지를 다시 열어 주세요.';};}catch{}
+let history=saved.filter(validRecord).slice(0,30),hand=0,dealer=-1,game,timer,token=0,calcId=0,worker;
+let equityRequest;
+function fallbackEquity(data){setTimeout(()=>{if(data.id!==calcId)return;showEquity({id:data.id,...equity(data.hole,data.board,data.opponents,600,Math.random,true)});},30);}
+function recoverWorker(){worker?.terminate();worker=null;if(equityRequest&&equityRequest.id===calcId)fallbackEquity(equityRequest);}
+try{worker=new Worker('./equity-worker.js?v=10',{type:'module'});worker.onmessage=({data})=>showEquity(data);worker.onerror=recoverWorker;}catch{}
+function validRecord(h){
+ const isCard=c=>Number.isInteger(c)&&c>=0&&c<52,isAmount=n=>Number.isFinite(n)&&n>=0;
+ if(!h||!Number.isInteger(h.hand)||h.hand<1||!Number.isFinite(h.net)||!Array.isArray(h.players)||h.players.length<2||h.players.length>6||!Array.isArray(h.board)||h.board.length>5||!h.board.every(isCard)||!Array.isArray(h.log)||!h.log.every(x=>typeof x==='string'))return false;
+ if(!h.players.every(p=>p&&typeof p.name==='string'&&p.name.length<=60&&Array.isArray(p.hole)&&p.hole.length===2&&p.hole.every(isCard)&&isAmount(p.total)&&isAmount(p.payout)))return false;
+ const cards=[...h.board,...h.players.flatMap(p=>p.hole)];
+ return new Set(cards).size===cards.length&&(h.revealed===undefined||Number.isInteger(h.revealed)&&h.revealed>=0&&h.revealed<=h.board.length)&&(h.hypothetical===undefined||Array.isArray(h.hypothetical)&&h.hypothetical.length>0&&h.hypothetical.every(name=>h.players.some(p=>p.name===name)));
+}
+function escapeHTML(value){return String(value).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
 let audio,muted=false;
 try{muted=localStorage.getItem('river-muted')==='true';}catch{}
 function sound(kind){
@@ -34,7 +45,7 @@ function ready(p){return !p.folded&&p.stack>0;}
 function nextSeat(i){do{i=(i+1)%game.players.length;}while(game.players[i].sittingOut);return i;}
 function pay(i,amount){const p=game.players[i],n=Math.min(p.stack,Math.max(0,amount));p.stack-=n;p.bet+=n;p.total+=n;return n;}
 function start(reset=false){
- clearTimeout(timer);token++;const previous=!reset&&game?game.players:null,n=previous?previous.length:Number($('#players').value);if(previous&&(previous[0].stack===0||previous.filter(p=>p.stack>0).length<2))return;if(reset){dealer=-1;hand=0;}do{dealer=(dealer+1)%n;}while(previous&&previous[dealer].stack===0);hand++;
+ clearTimeout(timer);token++;const previous=!reset&&game?game.players:null,n=previous?previous.length:Number($('#players').value);if(previous&&(previous[0].stack===0||previous.filter(p=>p.stack>0).length<2))return;if(reset){dealer=-1;hand=0;}do{dealer=(dealer+1)%n;}while(previous&&previous[dealer].stack===0);hand++;$('#players').value=String(n);
  const deck=shuffled();game={players:Array.from({length:n},(_,i)=>({name:i?profiles[i-1].name:'나',hole:[deck.pop(),deck.pop()],stack:previous?previous[i].stack:1000,sittingOut:!!previous&&previous[i].stack===0,bet:0,total:0,folded:!!previous&&previous[i].stack===0,last:'',actedAt:null})),deck,board:[],street:0,current:20,minRaise:20,done:false,pending:new Set(),turn:0,log:[],heroRaises:0};
  const sb=game.players.filter(p=>!p.sittingOut).length===2?dealer:nextSeat(dealer),bb=nextSeat(sb);pay(sb,10);pay(bb,20);game.players[sb].last='SB 10';game.players[bb].last='BB 20';game.pending=new Set(game.players.flatMap((p,i)=>ready(p)?[i]:[]));game.turn=nextSeat(bb);game.log.push('블라인드 10 / 20');render();calculate();advance();
 }
@@ -74,7 +85,7 @@ function finish(){
  render();renderHistory();message(`${winners.join(', ')} 팟 수령 · 나의 결과 ${net>=0?'+':''}${net} 칩`);
  $('#results').hidden=false;$('#results').innerHTML=`<div class="panel-heading"><h2>공개된 패 <small>폴드한 상대 포함</small></h2><span>${alone?'폴드로 종료':'쇼다운'}</span></div>`+reviewNote(result)+result.players.filter(p=>!p.sittingOut).map(p=>resultRow(p,result.board)).join('');calculate();
 }
-function resultRow(p,board){return `<div class="result-row"><div><b>${p.name}</b><small>${p.folded?'폴드':board.length===5?evaluate([...p.hole,...board]).name:'미완성 보드'}</small></div><div class="cards mini">${p.hole.map(c=>card(c)).join('')}</div><strong class="${p.payout?'positive':''}">${p.payout?'+'+p.payout+' 수령':'—'}</strong></div>`;}
+function resultRow(p,board){return `<div class="result-row"><div><b>${escapeHTML(p.name)}</b><small>${p.folded?'폴드':board.length===5?evaluate([...p.hole,...board]).name:'미완성 보드'}</small></div><div class="cards mini">${p.hole.map(c=>card(c)).join('')}</div><strong class="${p.payout?'positive':''}">${p.payout?'+'+p.payout+' 수령':'—'}</strong></div>`;}
 function render(){
  const g=game;$('#hand-no').textContent=`핸드 ${hand}`;$('#street').textContent=g.done?'종료':streets[g.street];$('#pot').textContent=g.players.reduce((s,p)=>s+p.total,0).toLocaleString();
  markup('#pot-stack',chips(g.players.reduce((s,p)=>s+p.total,0)));$('#round-result').hidden=!g.done;$('#round-result').textContent=g.resultLabel||'';$('#round-result').className=`round-result ${g.net>0?'won':''}`;
@@ -92,19 +103,24 @@ function renderBoard(g){
  if(!el.children){markup('#board',html.join(''));return;}
  html.forEach((value,i)=>{const old=el.children[i];if(old?.dataset.markup===value)return;const template=document.createElement('template');template.innerHTML=value;const next=template.content.firstElementChild;next.dataset.markup=value;if(old)old.replaceWith(next);else el.append(next);});
 }
-function reviewNote(h){return `<p class="review-note">${h.revealed<5?'옅은 카드는 종료 후 공개한 남은 보드입니다. ':''}모두 폴드하지 않았다면: <b>${h.hypothetical.join(', ')}${h.hypothetical.length>1?' 공동 승리':' 승리'}</b><br><small>전체 보드와 모든 참가자의 패를 비교한 결과 · 실제 칩 정산과 별개</small></p>`;}
+function reviewNote(h){return `<p class="review-note">${h.revealed<5?'옅은 카드는 종료 후 공개한 남은 보드입니다. ':''}모두 폴드하지 않았다면: <b>${h.hypothetical.map(escapeHTML).join(', ')}${h.hypothetical.length>1?' 공동 승리':' 승리'}</b><br><small>전체 보드와 모든 참가자의 패를 비교한 결과 · 실제 칩 정산과 별개</small></p>`;}
 function startingHand(h){return rank(h[0])===rank(h[1])?'포켓 페어':suit(h[0])===suit(h[1])?'수티드 · 같은 무늬':'오프수트 · 다른 무늬';}
-function calculate(){const id=++calcId;$('#equity').innerHTML='···<span>%</span>';$('#equity-detail').textContent='가능한 상대 패를 계산하고 있어요.';
- if(game.players[0].folded){$('#equity').innerHTML='—<span>%</span>';$('#equity-detail').textContent='폴드했습니다. 종료 후 전체 패를 확인하세요.';$('#equity-bar').style.width='0%';return;}
- const data={id,hole:game.players[0].hole,board:game.board,opponents:active().length-1};if(worker)worker.postMessage(data);else setTimeout(()=>showEquity({id,...equity(data.hole,data.board,data.opponents,600)}),30);
+function calculate(){const id=++calcId;equityRequest=null;$('#equity').innerHTML='···<span>%</span>';$('#equity-detail').textContent='가능한 상대 패를 계산하고 있어요.';$('#equity-bar').style.width='0%';$('#hand-odds-body').innerHTML='';$('#hand-odds-status').textContent='족보별 확률을 계산하고 있어요.';
+ if(game.players[0].folded){$('#equity').innerHTML='—<span>%</span>';$('#equity-detail').textContent='폴드했습니다. 종료 후 전체 패를 확인하세요.';$('#hand-odds-status').textContent='폴드한 핸드는 승률을 계산하지 않습니다. 종료 후 공개된 패를 확인하세요.';return;}
+ const data=equityRequest={id,hole:[...game.players[0].hole],board:[...game.board],opponents:active().length-1};if(worker){try{worker.postMessage(data);}catch{recoverWorker();}}else fallbackEquity(data);
 }
-function showEquity(data){if(data.id!==calcId)return;const n=(data.equity*100).toFixed(1);$('#equity').innerHTML=`${n}<span>%</span>`;$('#equity-bar').style.width=n+'%';$('#equity-detail').textContent=`상대 ${active().length-1}명 / 동률 ${(data.tie*100).toFixed(1)}%`;}
+function percent(n){return n===0?'0.0%':n<.001?'<0.1%':(n*100).toFixed(1)+'%';}
+function showEquity(data){if(data.id!==calcId)return;if(!Array.isArray(data.categories)){if(worker)recoverWorker();else $('#hand-odds-status').textContent='족보별 계산을 불러오지 못했습니다. 페이지를 새로 열어 주세요.';return;}const n=(data.equity*100).toFixed(1);$('#equity').innerHTML=`${n}<span>%</span>`;$('#equity-bar').style.width=n+'%';$('#equity-detail').textContent=`상대 ${active().length-1}명 / 동률 ${(data.tie*100).toFixed(1)}%`;
+ $('#hand-odds-status').textContent=`${data.iterations.toLocaleString()}회 추정 · 동률 지분 포함. 표본이 적은 족보의 승률은 크게 달라질 수 있습니다.`;
+ $('#hand-odds-body').innerHTML=(data.categories||[]).slice().reverse().map(c=>`<tr><th scope="row">${c.name}</th><td>${percent(c.probability)}</td><td>${c.equity===null?'—':percent(c.equity)}</td><td>${c.samples.toLocaleString()}회${c.samples>0&&c.samples<30?' · 적음':''}</td></tr>`).join('');
+}
 function renderHistory(){
  $('#record-count').textContent=`${history.length}개`;$('#history').replaceChildren();
  if(!history.length){$('#history').innerHTML='<p class="muted">핸드가 끝나면<br>상대의 패를 여기서 복기하세요.</p>';return;}
  for(const h of history.slice(0,10)){const details=document.createElement('details'),summary=document.createElement('summary');summary.textContent=`핸드 ${h.hand}　${h.net>=0?'+':''}${h.net}칩`;details.append(summary);const body=document.createElement('div');body.innerHTML=`<div class="cards mini history-board">${h.board.map((c,i)=>card(c).replace('class="card ',`class="card ${i>=(h.revealed??5)?'unplayed ':''}`)).join('')}</div>`+(h.hypothetical?reviewNote(h):'')+h.players.filter(p=>!p.sittingOut).map(p=>resultRow(p,h.board)).join('');const log=document.createElement('p');log.className='history-log';log.textContent=h.log.join(' → ');body.append(log);details.append(body);$('#history').append(details);}
 }
 $('#new').onclick=()=>{if(game&&!game.done&&game.players.some(p=>p.total>20)&&!confirm('현재 핸드를 종료하고 새 테이블을 시작할까요?'))return;unlockAudio();start(true);sound('deal');};
+$('#players').onchange=()=>{const previous=String(game.players.length);if($('#players').value===previous)return;if(!confirm('참가 인원을 변경하면 현재 테이블과 보유 칩이 초기화됩니다. 새 테이블을 시작할까요?')){$('#players').value=previous;return;}unlockAudio();start(true);sound('deal');};
 $('#next').onclick=()=>{unlockAudio();start();sound('deal');};
 function heroAction(type){if(game.done||game.turn!==0||!game.pending.has(0))return;act(0,type,Number($('#raise-size').value));if(type==='fold')calculate();advance();}
 $('#fold').onclick=()=>heroAction('fold');$('#call').onclick=()=>heroAction('call');$('#raise').onclick=()=>heroAction('raise');
@@ -112,5 +128,7 @@ $('#raise-size').oninput=()=>{const n=Number($('#raise-size').value);$('#raise-v
 function preset(fraction){if(game.done||game.turn!==0||!canRaise(0))return;const p=game.players[0],slider=$('#raise-size'),pot=game.players.reduce((s,p)=>s+p.total,0),target=fraction===Infinity?p.bet+p.stack:game.current+Math.max(game.minRaise,Math.round(pot*fraction));slider.value=Math.min(Number(slider.max),Math.max(Number(slider.min),target));slider.oninput();}
 $('#half-pot').onclick=()=>preset(.5);$('#full-pot').onclick=()=>preset(1);$('#all-in').onclick=()=>preset(Infinity);
 $('#toggle-equity').onclick=()=>{const el=$('#equity-content');el.hidden=!el.hidden;$('#toggle-equity').textContent=el.hidden?'보기':'가리기';};
+$('#hand-odds-content').hidden=true;
+$('#toggle-hand-odds').onclick=()=>{const content=$('#hand-odds-content'),button=$('#toggle-hand-odds');content.hidden=!content.hidden;button.textContent=content.hidden?'족보별 승률 보기':'족보별 승률 닫기';button.setAttribute?.('aria-expanded',String(!content.hidden));};
 $('#help').onclick=$('#install').onclick=()=>$('#help-dialog').showModal();$('#close-help').onclick=()=>$('#help-dialog').close();$('#help-dialog').onclick=e=>{if(e.target===$('#help-dialog'))$('#help-dialog').close();};renderHistory();start();
 if('serviceWorker'in navigator)navigator.serviceWorker.register('./sw.js').catch(()=>{});

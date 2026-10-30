@@ -43,6 +43,15 @@
         <div id="equity-content"><div class="equity-number" id="equity">—<span>%</span></div><div class="equity-info"><div class="meter"><div id="equity-bar"></div></div><p id="equity-detail">계산 중</p></div></div>
         <p class="note">무작위 상대 패 기준 · 동률 지분 포함</p>
       </section>
+      <section class="hand-odds" aria-label="족보별 승률">
+        <button id="toggle-hand-odds" class="text-button" aria-expanded="false" aria-controls="hand-odds-content">족보별 승률 보기</button>
+        <div id="hand-odds-content" hidden>
+          <p class="hand-odds-note">완성 확률은 리버까지 내 최종 패가 해당 족보가 될 확률입니다. 해당 족보 승률은 그 족보가 완성된 표본에서의 예상 팟 지분입니다.</p>
+          <table class="odds-table"><caption>내 최종 족보별 예상 확률</caption><thead><tr><th scope="col">최종 족보</th><th scope="col">완성 확률</th><th scope="col">해당 족보 승률</th><th scope="col">표본</th></tr></thead><tbody id="hand-odds-body"></tbody></table>
+          <p id="hand-odds-status" class="hand-odds-note" role="status"></p>
+          <p class="hand-odds-note">무작위 상대 패 기준 추정치입니다. 표본이 없는 족보의 승률은 —로 표시합니다. 사이드 팟과 베팅 성향은 반영하지 않습니다.</p>
+        </div>
+      </section>
       <div id="status" class="status" role="status" aria-live="polite"></div>
       <div id="actions" class="actions">
         <div class="bet-presets"><button id="half-pot" class="bet-chip">½ 팟</button><button id="full-pot" class="bet-chip">팟</button><button id="all-in" class="bet-chip">올인</button></div>

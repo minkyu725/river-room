@@ -175,3 +175,17 @@ dialog p { color: var(--muted); font-size: 13px; line-height: 1.9; }
 #board .card.unplayed { animation: none; }
 .review-note { font-size: 12px; line-height: 1.9; color: var(--ink); margin: 16px 0 0; }
 .review-note small { color: var(--muted); font-size: 10px; }
+
+.hand-odds { padding-top: 12px; }
+.hand-odds-note { font-size: 12px; line-height: 1.7; color: var(--muted); margin: 12px 0; }
+.odds-table { width: 100%; border-collapse: collapse; font-size: 12px; font-variant-numeric: tabular-nums; }
+.odds-table caption { text-align: left; font-weight: 600; padding: 8px 0; }
+.odds-table th, .odds-table td { padding: 10px 8px; border-bottom: 1px solid var(--line); text-align: right; }
+.odds-table th:first-child { text-align: left; }
+.odds-table thead th { color: var(--muted); font-weight: 500; }
+@media(max-width: 720px) {
+  .hand-odds-note { font-size: 11px; }
+  .odds-table { font-size: 10px; }
+  .odds-table th, .odds-table td { padding: 9px 3px; }
+  #toggle-hand-odds { min-height: 36px; font-size: 12px; }
+}

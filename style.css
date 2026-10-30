@@ -97,8 +97,8 @@ header { height: 94px; display: flex; align-items: center; justify-content: spac
 #position { font-size: 10px; color: #f0d9a0; font-weight: 400; }
 #stack { color: #f4f7f4; font-variant-numeric: tabular-nums; }
 .hero-area .card { width: 59px; height: 82px; }
-.hero-area .card:first-child { --card-tilt: -5deg; transform: rotate(var(--card-tilt)); }
-.hero-area .card:last-child { --card-tilt: 5deg; transform: rotate(var(--card-tilt)); }
+#hero>.card:first-child { --card-tilt: -5deg; transform: rotate(var(--card-tilt)); }
+#hero>.card:last-child { --card-tilt: 5deg; transform: rotate(var(--card-tilt)); }
 .card.dealing { animation: deal-card .18s ease-out; }
 .card.flipping { animation: flip-card .18s ease-out; }
 @keyframes deal-card { from { opacity: 0; transform: translateY(-10px) rotate(var(--card-tilt, 0deg)); } to { opacity: 1; transform: rotate(var(--card-tilt, 0deg)); } }
@@ -256,3 +256,7 @@ dialog p { color: var(--muted); font-size: 13px; line-height: 1.9; }
 .history-panel .seven-cards .card>span { font-size: 10px; }
 
 .hand-popover-title { display: block; color: var(--ink); font-size: 13px; font-weight: 650; line-height: 1.4; }
+
+/* Shared card-view groups preserve the opponent view's separate rail frames. */
+.hand-popover .seven-group>.cards { width: max-content; margin: 0; padding: 4px; border-radius: 4px; background: var(--rail); }
+.hand-popover .card { transform: none; --card-tilt: 0deg; }

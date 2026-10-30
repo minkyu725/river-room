@@ -1,4 +1,4 @@
-import {names} from './engine.js?v=19';
+import {names} from './engine.js?v=20';
 const permutations=[];
 function permute(values,prefix=[]){if(!values.length){permutations.push(prefix);return;}values.forEach((v,i)=>permute(values.filter((_,j)=>i!==j),[...prefix,v]));}permute([0,1,2,3]);
 export function canonicalFlop(hole,board){

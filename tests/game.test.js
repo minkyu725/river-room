@@ -4,20 +4,21 @@ import vm from 'node:vm';
 import {readFileSync} from 'node:fs';
 import * as engine from '../engine.js';
 function harness(options={}){
- const nodes=new Map(),timers=new Map(),workers=[],storage=new Map([['river-animation',options.animation===undefined?'false':options.animation],['river-history',options.history??null]]);let timerId=0;
+ const nodes=new Map(),timers=new Map(),workers=[],animations=[],storage=new Map([['river-animation',options.animation===undefined?'false':options.animation],['river-history',options.history??null]]);let timerId=0;
  // Minimal card DOM: keep node identity, classes, attributes and replacement real
  // enough to catch repeated entrance motion without a browser dependency.
  const node=(tag='div')=>{
   let html='',raw='';const attrs=new Map(),el={value:'60',hidden:false,disabled:false,style:{},textContent:'',className:'',dataset:{},children:[],parent:null,content:{},showModal(){},close(){},addEventListener(){},setAttribute(k,v){attrs.set(k,v);},getAttribute(k){return attrs.get(k);},append(...items){for(const item of items){item.parent=this;this.children.push(item);}},replaceChildren(...items){this.children=[];html='';this.append(...items);},replaceWith(next){next.parent=this.parent;this.parent.children.splice(this.parent.children.indexOf(this),1,next);}};
   el.classList={contains:c=>el.className.split(/\s+/).includes(c),add(...classes){el.className=[...new Set([...el.className.split(/\s+/).filter(Boolean),...classes])].join(' ');},remove(...classes){el.className=el.className.split(/\s+/).filter(c=>!classes.includes(c)).join(' ');},toggle(c,on){if(on)this.add(c);else this.remove(c);}};
-  Object.defineProperties(el,{innerHTML:{get(){return this.children.length?this.children.map(c=>c.outerHTML).join(''):html;},set(value){html=value;this.children=[];if(tag==='template'){const card=node('span');card.setRaw(value);this.content.firstElementChild=card;}}},outerHTML:{get(){return raw?raw.replace(/class="[^"]*"/,`class="${this.className}"`):this.innerHTML;}}});el.setRaw=value=>{raw=value;el.className=value.match(/class="([^"]*)"/)?.[1]||'';};return el;
+  Object.defineProperties(el,{innerHTML:{get(){return this.children.length?this.children.map(c=>c.outerHTML).join(''):html;},set(value){html=value;this.children=[];if(tag==='template'){const card=node('span');card.setRaw(value);this.content.firstElementChild=card;}}},outerHTML:{get(){return raw?raw.replace(/class="[^"]*"/,`class="${this.className}"`):this.innerHTML;}}});el.setRaw=value=>{raw=value;el.className=value.match(/class="([^"]*)"/)?.[1]||'';};
+  if(options.motionAPI){el.getBoundingClientRect=()=>({left:20,top:50,width:40,height:20});el.remove=()=>{if(el.parent)el.parent.children=el.parent.children.filter(c=>c!==el);};el.animate=(frames,settings)=>{const animation={frames,settings,target:el,cancelled:false,cancel(){this.cancelled=true;this.oncancel?.();}};animations.push(animation);return animation;};}return el;
  };
- const document={documentElement:node('html'),querySelector(s){if(!nodes.has(s))nodes.set(s,node());return nodes.get(s);},querySelectorAll(){return [...nodes.values()].flatMap(el=>el.children).filter(el=>el.classList.contains('dealing')||el.classList.contains('flipping'));},createElement:node};document.querySelector('#players').value=String(options.players??4);
+ const document={body:options.motionAPI?node('body'):undefined,documentElement:node('html'),querySelector(s){if(!nodes.has(s))nodes.set(s,node());return nodes.get(s);},querySelectorAll(){return [...nodes.values()].flatMap(el=>el.children).filter(el=>el.classList.contains('dealing')||el.classList.contains('flipping'));},createElement:node};document.querySelector('#players').value=String(options.players??4);
  const media={matches:!!options.reducedMotion,addEventListener(event,fn){this.onchange=fn;},addListener(fn){this.onchange=fn;}};
  if(options.legacyMedia)delete media.addEventListener;
  const context=vm.createContext({...engine,shuffled:options.shuffled??engine.shuffled,botDecision:options.botDecision??engine.botDecision,document,console,localStorage:{getItem:key=>{if(options.storageFails)throw Error('storage blocked');return storage.get(key)??null;},setItem(key,value){if(options.storageFails)throw Error('storage blocked');storage.set(key,value);}},matchMedia:options.noMatchMedia?undefined:()=>media,navigator:{},Worker:class{constructor(){if(options.workerUnavailable)throw Error('unavailable');workers.push(this);}postMessage(data){if(options.postFails)throw Error('post failed');this.request=data;}terminate(){this.terminated=true;}},confirm:()=>options.confirm!==false,setTimeout:f=>{timers.set(++timerId,f);return timerId;},clearTimeout:id=>timers.delete(id)});
  const src=readFileSync(new URL('../app.js',import.meta.url),'utf8').replace(/^import[^\n]+\n/,'');vm.runInContext(src+'\nglobalThis.inspect=()=>game;globalThis.restart=start;',context);
- return {context,nodes,timers,workers,storage,media,game:()=>context.inspect(),tick(){const [id,fn]=timers.entries().next().value||[];if(fn){timers.delete(id);fn();return true;}return false;}};
+ return {context,nodes,timers,workers,storage,media,animations,game:()=>context.inspect(),tick(){const [id,fn]=timers.entries().next().value||[];if(fn){timers.delete(id);fn();return true;}return false;}};
 }
 test('200 complete hands: 2–6 players, folds, raises, all-ins, no stalled turns or chip loss',()=>{
  const h=harness();
@@ -212,4 +213,31 @@ test('animated and immediate all-in hands retain identical planned cards, result
   assert.equal(g.players.reduce((sum,p)=>sum+p.stack,0),3000);const record=JSON.parse(h.storage.get('river-history'))[0];delete record.id;return {record,stacks:Array.from(g.players,p=>p.stack),board:[...g.board],deck:[...g.deck]};
  }
  assert.deepEqual(play('true'),play('false'));
+});
+
+
+test('folded hand review shows final category and fold status in results and on table',()=>{
+ const h=harness({players:2,shuffled:fixedDeck}),g=h.game();h.nodes.get('#fold').onclick();const name=engine.evaluate([...g.players[0].hole,...g.fullBoard]).name;
+ assert.equal(h.nodes.get('#hero-hand').textContent,'폴드 · '+name);assert.ok(h.nodes.get('#results').innerHTML.includes('폴드 · '+name));
+ const p=g.players[1];p.folded=true;h.context.render();assert.equal(h.nodes.get('#opponent-last-1').textContent,'폴드 · '+engine.evaluate([...p.hole,...g.fullBoard]).name);
+ assert.ok(h.context.resultRow({...p,folded:true,payout:0},g.fullBoard).includes('폴드 · '+engine.evaluate([...p.hole,...g.fullBoard]).name));
+ assert.ok(h.context.resultRow({...p,folded:true,payout:0},[]).includes('폴드 · 미완성 보드'));
+});
+
+test('call and raise animate chips; check uses an action note; fold moves only own cards',()=>{
+ for(const action of ['call','raise','check','fold']){
+  const h=harness({players:2,motionAPI:true}),g=h.game();h.nodes.get('#animation').onclick();
+  if(action==='check')g.current=g.players[0].bet;
+  h.nodes.get('#'+(action==='check'?'call':action)).onclick();
+  const notes=h.animations.filter(a=>a.target.className==='action-note'),chips=h.animations.filter(a=>a.target.className==='bet-flight');assert.equal(notes.length,1);
+  assert.ok(notes[0].target.textContent.includes({call:'콜',raise:'레이즈',check:'체크',fold:'폴드'}[action]));assert.equal(chips.length,action==='call'||action==='raise'?1:0);
+  assert.ok(!h.animations.some(a=>h.nodes.get('#board').children.includes(a.target)),'action must not move board cards');
+  if(action==='fold')assert.ok(h.animations.some(a=>a.target===h.nodes.get('#hero')));
+  h.nodes.get('#animation').onclick();assert.ok(h.animations.every(a=>a.cancelled));assert.equal(h.context.document.body.children.length,0,'toggle removes transient action notes and chips');
+ }
+});
+
+test('action motion stays off with preference/reduced motion; reset cleans effects without replay',()=>{
+ for(const options of [{},{animation:'true',reducedMotion:true}]){const h=harness({...options,players:2,motionAPI:true});h.nodes.get('#call').onclick();assert.equal(h.animations.length,0);}
+ const h=harness({players:2,motionAPI:true});h.nodes.get('#animation').onclick();h.nodes.get('#raise').onclick();assert.ok(h.animations.length);h.context.restart(true);assert.ok(h.animations.every(a=>a.cancelled));assert.equal(h.context.document.body.children.length,0);
 });

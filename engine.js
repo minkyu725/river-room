@@ -1,3 +1,4 @@
+import {preflopEquity} from './preflop-equity.js?v=14';
 export const suits=['♣','♦','♥','♠'];
 export const rank=c=>c%13+2;
 export const suit=c=>Math.floor(c/13);
@@ -16,10 +17,36 @@ export function evaluate(cards){
  else if(pairs.length)v=[1,pairs[0][0],...rs.filter(r=>r!==pairs[0][0]).slice(0,3)];else v=[0,...rs.slice(0,5)];
  while(v.length<6)v.push(0);return {score:v.reduce((n,r)=>n*15+r,0),category:v[0],name:names[v[0]]};
 }
+// UI-only best-five selection: keep Monte Carlo's evaluate() allocation-light.
+export function describeHand(cards){
+ const result=evaluate(cards),ordered=[...cards].sort((a,b)=>rank(b)-rank(a)||a-b);
+ let best=ordered;
+ if(cards.length>=5){
+  outer:for(let a=0;a<ordered.length-4;a++)for(let b=a+1;b<ordered.length-3;b++)for(let c=b+1;c<ordered.length-2;c++)for(let d=c+1;d<ordered.length-1;d++)for(let e=d+1;e<ordered.length;e++){
+   const five=[ordered[a],ordered[b],ordered[c],ordered[d],ordered[e]];
+   if(evaluate(five).score===result.score){best=five;break outer;}
+  }
+ }
+ const counts=new Map();best.forEach(c=>counts.set(rank(c),(counts.get(rank(c))||0)+1));
+ const straightHand=result.category===4||result.category===8,wheel=straightHand&&best.some(c=>rank(c)===14)&&best.some(c=>rank(c)===5);
+ best.sort((a,b)=>(straightHand?0:counts.get(rank(b))-counts.get(rank(a)))||((wheel&&rank(b)===14?1:rank(b))-(wheel&&rank(a)===14?1:rank(a)))||a-b);
+ const label=c=>`${rank(c)<11?rank(c):({11:'J',12:'Q',13:'K',14:'A'})[rank(c)]}${suits[suit(c)]}`;
+ const madeCount=({0:1,1:2,2:4,3:3,7:4})[result.category]??5;
+ const made=best.slice(0,madeCount).map(label).join(' '),kickers=best.slice(madeCount).map(label).join(' ');
+ return {...result,cards:best,label:`${result.name} · ${made}${kickers?' · 키커 '+kickers:''}`};
+}
 export function equity(hole,board,opponents,iterations=1800,random=Math.random,breakdown=false){
  if(opponents===0&&!breakdown)return {equity:1,win:1,tie:0,iterations:0};const used=new Set([...hole,...board]),available=Array.from({length:52},(_,i)=>i).filter(c=>!used.has(c));const categories=breakdown?names.map((name,category)=>({name,category,samples:0,share:0})):null;let share=0,wins=0,ties=0;
  for(let i=0;i<iterations;i++){const deck=[...available],need=5-board.length+opponents*2;for(let j=0;j<need;j++){const k=j+Math.floor(random()*(deck.length-j));[deck[j],deck[k]]=[deck[k],deck[j]];}const b=[...board,...deck.slice(0,5-board.length)],own=evaluate([...hole,...b]);const bucket=categories?.[own.category];if(bucket)bucket.samples++;let equal=1,lose=false;for(let j=0;j<opponents;j++){const off=5-board.length+j*2,other=evaluate([...deck.slice(off,off+2),...b]).score;if(other>own.score){lose=true;break;}if(other===own.score)equal++;}if(!lose){share+=1/equal;if(bucket)bucket.share+=1/equal;if(equal===1)wins++;else ties++;}}
  return {equity:share/iterations,win:wins/iterations,tie:ties/iterations,iterations,...(categories?{categories:categories.map(({share,...bucket})=>({...bucket,probability:bucket.samples/iterations,equity:bucket.samples?share/bucket.samples:null}))}:{})};
+}
+export function calculateEquity(hole,board,opponents){
+ if(board.length)return {method:'unavailable'};
+ const ranks=hole.map(rank).sort((a,b)=>b-a),label=r=>r<10?String(r):({10:'T',11:'J',12:'Q',13:'K',14:'A'})[r];
+ const key=ranks.map(label).join('')+(ranks[0]===ranks[1]?'':suit(hole[0])===suit(hole[1])?'s':'o');
+ const row=preflopEquity[key],supported=opponents===1;
+ return {method:'static',hand:key,equity:supported?row[0]/10000:null,win:supported?row[1]/10000:null,tie:supported?row[2]/10000:null,
+  categories:names.map((name,category)=>({name,category,probability:row[3][category]/10000,equity:null,samples:null}))};
 }
 export function settle(players,board){
  const payouts=players.map(()=>0),pots=[],levels=[...new Set(players.map(p=>p.total).filter(Boolean))].sort((a,b)=>a-b);let previous=0;

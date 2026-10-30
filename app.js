@@ -4,6 +4,7 @@ const profiles=[{name:'민',style:'균형형',aggression:.58,bluffRate:.12},{nam
 let saved=[];try{saved=JSON.parse(localStorage.getItem('river-history')||'[]');if(!Array.isArray(saved))saved=[];}catch{}
 let history=saved.filter(validRecord).slice(0,30),hand=0,dealer=-1,game,timer,token=0,calcId=0,worker;
 let equityRequest,sequence;
+const actionEffects=new Set();
 const CARD_MS=200; // Leave a frame after the 180ms CSS motion before continuing.
 let animationPreference=true,reducedMotion;
 try{animationPreference=localStorage.getItem('river-animation')!=='false';}catch{}
@@ -15,7 +16,7 @@ function animationButton(){
  document.documentElement.classList.toggle('motion-off',!enabled);
 }
 function clearCardMotion(){for(const el of document.querySelectorAll('.dealing, .flipping'))el.classList.remove('dealing','flipping');}
-function cancelSequence(){if(sequence)clearTimeout(sequence.timer);sequence=null;clearCardMotion();}
+function cancelSequence(){clearActionMotion();if(sequence)clearTimeout(sequence.timer);sequence=null;clearCardMotion();}
 // Each callback belongs to one hand and one sequence. Flushing and cancellation
 // invalidate it before continuing, so even an already queued callback is harmless.
 function runSequence(steps,complete){
@@ -31,10 +32,28 @@ function runSequence(steps,complete){
  if(s.animated&&steps.length)s.timer=setTimeout(next,CARD_MS);else next();
 }
 function finishSequenceNow(){if(!sequence)return;const s=sequence;clearTimeout(s.timer);s.animated=false;s.next();}
-$('#animation').onclick=()=>{animationPreference=!animationPreference;try{localStorage.setItem('river-animation',String(animationPreference));}catch{}animationButton();if(!animationsEnabled()){clearCardMotion();finishSequenceNow();}};
-function motionChanged(){animationButton();if(!animationsEnabled()){clearCardMotion();finishSequenceNow();}}
+$('#animation').onclick=()=>{animationPreference=!animationPreference;try{localStorage.setItem('river-animation',String(animationPreference));}catch{}animationButton();if(!animationsEnabled()){clearCardMotion();clearActionMotion();finishSequenceNow();}};
+function motionChanged(){animationButton();if(!animationsEnabled()){clearCardMotion();clearActionMotion();finishSequenceNow();}}
 if(reducedMotion?.addEventListener)reducedMotion.addEventListener('change',motionChanged);else reducedMotion?.addListener?.(motionChanged);
 animationButton();
+function clearActionMotion(){for(const effect of [...actionEffects]){effect.animation.cancel();effect.cleanup();actionEffects.delete(effect);}}
+function actionEffect(el,frames,duration=280,cleanup=()=>{}){
+ if(!animationsEnabled()||!el?.animate){cleanup();return;}
+ let animation;try{animation=el.animate(frames,{duration,easing:'ease-out'});}catch{cleanup();return;}const effect={animation,cleanup};actionEffects.add(effect);
+ const done=()=>{actionEffects.delete(effect);cleanup();};animation.onfinish=done;animation.oncancel=done;
+}
+function animateAction(i,kind,paid){
+ if(!animationsEnabled())return;
+ const label=$(i?'#opponent-last-'+i:'#hero-hand');
+ if(label?.getBoundingClientRect&&document.body){const rect=label.getBoundingClientRect(),note=document.createElement('span');note.className='action-note';note.textContent=game.players[i].last;note.setAttribute('aria-hidden','true');note.style.left=(rect.left+rect.width/2)+'px';note.style.top=(rect.top-6)+'px';document.body.append(note);actionEffect(note,[{opacity:0,transform:'translate(-50%, -80%) scale(.92)'},{opacity:1,offset:.2,transform:'translate(-50%, -100%) scale(1)'},{opacity:1,offset:.8},{opacity:0,transform:'translate(-50%, -110%) scale(1)'}],480,()=>note.remove());}
+ else actionEffect(label,[{opacity:.45},{opacity:1}],280);
+ if(kind==='fold')actionEffect($(i?'#opponent-cards-'+i:'#hero'),[{opacity:1,transform:'translateY(0)'},{opacity:.42,transform:'translateY(6px)'},{opacity:.42,transform:'translateY(0)'}]);
+ if(paid<=0)return;
+ const source=$(i?'#opponent-stack-'+i:'#stack'),target=$('#pot');
+ if(!source?.getBoundingClientRect||!target?.getBoundingClientRect||!document.body)return;
+ const a=source.getBoundingClientRect(),b=target.getBoundingClientRect(),chip=document.createElement('i');chip.className='bet-flight';chip.setAttribute('aria-hidden','true');chip.style.left=(a.left+a.width/2)+'px';chip.style.top=(a.top+a.height/2)+'px';document.body.append(chip);
+ actionEffect(chip,[{opacity:1,transform:'translate(-50%, -50%) scale(1)'},{opacity:1,offset:.8},{opacity:0,transform:`translate(calc(-50% + ${b.left+b.width/2-a.left-a.width/2}px), calc(-50% + ${b.top+b.height/2-a.top-a.height/2}px)) scale(.7)`}],kind==='raise'?380:320,()=>chip.remove());
+}
 function fallbackEquity(data){setTimeout(()=>{if(data.id!==calcId)return;showEquity({id:data.id,...equity(data.hole,data.board,data.opponents,600,Math.random,true)});},30);}
 function recoverWorker(){worker?.terminate();worker=null;if(equityRequest&&equityRequest.id===calcId)fallbackEquity(equityRequest);}
 try{worker=new Worker('./equity-worker.js?v=10',{type:'module'});worker.onmessage=({data})=>showEquity(data);worker.onerror=recoverWorker;}catch{}
@@ -97,14 +116,14 @@ function start(reset=false){
 function canRaise(i){const p=game.players[i];return p.stack>game.current-p.bet&&(p.actedAt===null||game.current-p.actedAt>=game.minRaise)&&game.players.some((q,j)=>j!==i&&ready(q));}
 function act(i,type,target){
  if(game.done||game.busy||game.finishing)return;
- const p=game.players[i],call=game.current-p.bet;sound(type==='fold'?'fold':type==='raise'||call?'chips':'check');
+ const p=game.players[i],before=p.stack,call=game.current-p.bet;let kind=type==='fold'?'fold':'check';sound(type==='fold'?'fold':type==='raise'||call?'chips':'check');
  if(type==='fold'){p.folded=true;p.last='폴드';}
  else if(type==='raise'&&canRaise(i)){
   const old=game.current,cap=p.bet+p.stack;target=Math.min(cap,Math.max(old+game.minRaise,target));pay(i,target-p.bet);game.current=p.bet;if(game.current-old>=game.minRaise)game.minRaise=game.current-old;
   for(let j=0;j<game.players.length;j++)if(j!==i&&ready(game.players[j])&&game.players[j].bet<game.current)game.pending.add(j);
-  p.last=`레이즈 ${p.bet}`;if(i===0)game.heroRaises++;
- }else{const paid=pay(i,call);p.last=call?`콜 ${paid}`:'체크';}
- if(!p.stack)p.last+=' · 올인';p.actedAt=game.current;game.pending.delete(i);game.log.push(`${p.name}: ${p.last}`);game.turn=nextSeat(i);
+  kind='raise';p.last=`레이즈 ${p.bet}`;if(i===0)game.heroRaises++;
+ }else{const paid=pay(i,call);kind=call?'call':'check';p.last=call?`콜 ${paid}`:'체크';}
+ if(!p.stack)p.last+=' · 올인';p.actedAt=game.current;game.pending.delete(i);game.log.push(`${p.name}: ${p.last}`);game.turn=nextSeat(i);render();animateAction(i,kind,before-p.stack);
 }
 function advance(){
  if(game.done||game.busy||game.finishing)return;
@@ -145,12 +164,12 @@ function completeHand(){
  render();renderHistory();message(`${winners.join(', ')} 팟 수령 · 나의 결과 ${net>=0?'+':''}${net} 칩`);
  $('#results').hidden=false;$('#results').innerHTML=`<div class="panel-heading"><h2>공개된 패 <small>폴드한 상대 포함</small></h2><span>${alone?'폴드로 종료':'쇼다운'}</span></div>`+reviewNote(result)+result.players.filter(p=>!p.sittingOut).map(p=>resultRow(p,result.board)).join('');calculate();
 }
-function resultRow(p,board){return `<div class="result-row"><div><b>${escapeHTML(p.name)}</b><small>${p.folded?'폴드':board.length===5?evaluate([...p.hole,...board]).name:'미완성 보드'}</small></div><div class="cards mini">${p.hole.map(c=>card(c)).join('')}</div><strong class="${p.payout?'positive':''}">${p.payout?'+'+p.payout+' 수령':'—'}</strong></div>`;}
+function resultRow(p,board){return `<div class="result-row"><div><b>${escapeHTML(p.name)}</b><small>${p.folded?'폴드 · ':''}${board.length===5?evaluate([...p.hole,...board]).name:'미완성 보드'}</small></div><div class="cards mini">${p.hole.map(c=>card(c)).join('')}</div><strong class="${p.payout?'positive':''}">${p.payout?'+'+p.payout+' 수령':'—'}</strong></div>`;}
 function render(){
  const g=game;$('#hand-no').textContent=`핸드 ${hand}`;$('#street').textContent=g.done?'종료':streets[g.street];$('#pot').textContent=g.players.reduce((s,p)=>s+p.total,0).toLocaleString();
  markup('#pot-stack',chips(g.players.reduce((s,p)=>s+p.total,0)));$('#round-result').hidden=!g.done;$('#round-result').textContent=g.resultLabel||'';$('#round-result').className=`round-result ${g.net>0?'won':''}`;
- renderBoard(g);const hero=g.players[0];renderCards($('#hero'),hero.hole.map((c,i)=>i<hero.dealt?card(c):emptyCard('미배분 카드')),'dealing');$('#hero-hand').textContent=hero.dealt<2?'카드 배분 중':hero.folded?'폴드':g.board.length?evaluate([...hero.hole,...g.board]).name:startingHand(hero.hole);$('#stack').textContent=`${hero.stack.toLocaleString()} 칩`;$('#position').textContent=dealer===0?'딜러':'';
- g.players.slice(1).forEach((p,j)=>{const i=j+1;$('#opponent-'+i).className=`opponent ${p.folded?'folded':''} ${g.turn===i&&!g.done&&!g.busy&&!g.finishing?'thinking':''}`;renderCards($('#opponent-cards-'+i),p.hole.map((c,k)=>k<p.dealt?card(c,!p.revealed):emptyCard(p.sittingOut?'쉬는 자리':'미배분 카드')),p.revealed?'flipping':'dealing');$('#opponent-stack-'+i).textContent=p.stack.toLocaleString();$('#opponent-last-'+i).textContent=p.sittingOut?'칩 소진':p.last||profiles[j].style;});
+ renderBoard(g);const hero=g.players[0];renderCards($('#hero'),hero.hole.map((c,i)=>i<hero.dealt?card(c):emptyCard('미배분 카드')),'dealing');$('#hero').classList.toggle('folded',hero.folded);$('#hero-hand').textContent=hero.dealt<2?'카드 배분 중':g.done?`${hero.folded?'폴드 · ':''}${evaluate([...hero.hole,...g.fullBoard]).name}`:hero.folded?'폴드':`${hero.last?hero.last+' · ':''}${g.board.length?evaluate([...hero.hole,...g.board]).name:startingHand(hero.hole)}`;$('#stack').textContent=`${hero.stack.toLocaleString()} 칩`;$('#position').textContent=dealer===0?'딜러':'';
+ g.players.slice(1).forEach((p,j)=>{const i=j+1;$('#opponent-'+i).className=`opponent ${p.folded?'folded':''} ${g.turn===i&&!g.done&&!g.busy&&!g.finishing?'thinking':''}`;renderCards($('#opponent-cards-'+i),p.hole.map((c,k)=>k<p.dealt?card(c,!p.revealed):emptyCard(p.sittingOut?'쉬는 자리':'미배분 카드')),p.revealed?'flipping':'dealing');$('#opponent-stack-'+i).textContent=p.stack.toLocaleString();$('#opponent-last-'+i).textContent=p.sittingOut?'칩 소진':p.revealed?`${p.folded?'폴드 · ':''}${evaluate([...p.hole,...g.fullBoard]).name}`:p.last||profiles[j].style;});
  $('#personalities').innerHTML=profiles.slice(0,g.players.length-1).map(p=>`<div class="profile"><span><i class="profile-dot"></i>${p.name}</span><small>${p.style}</small><span class="aggression">${'▰'.repeat(Math.round(p.aggression*5))}<em>${'▱'.repeat(5-Math.round(p.aggression*5))}</em></span></div>`).join('');
  const turn=g.turn===0&&!g.done&&!g.busy&&!g.finishing&&g.pending.has(0),p=g.players[0],call=Math.min(p.stack,g.current-p.bet);$('#actions').hidden=g.done;$('#next').hidden=!g.done;$('#next').disabled=g.done&&(g.players[0].stack===0||g.players.filter(p=>p.stack>0).length<2);$('#next').textContent=$('#next').disabled?'테이블 종료 · 새 테이블로 시작하세요':'다음 핸드';$('#results').hidden=!g.done;
  for(const id of ['fold','call','raise'])$('#'+id).disabled=!turn;$('#raise').disabled=!turn||!canRaise(0);$('#call').textContent=call?`콜 ${call}`:'체크';

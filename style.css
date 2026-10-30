@@ -188,3 +188,7 @@ dialog p { color: var(--muted); font-size: 13px; line-height: 1.9; }
   .odds-table th, .odds-table td { padding: 9px 3px; }
   #toggle-hand-odds { min-height: 36px; font-size: 12px; }
 }
+
+#hero.folded { opacity: .42; }
+.bet-flight { position: fixed; z-index: 10; pointer-events: none; width: 15px; height: 8px; border-radius: 50%; background: var(--brass); border: 2px dashed var(--paper); box-shadow: 0 1px 0 #665032; }
+.action-note { position: fixed; z-index: 11; pointer-events: none; padding: 5px 9px; border-radius: 4px; background: var(--rail); color: var(--paper); font-size: 12px; font-weight: 600; white-space: nowrap; }

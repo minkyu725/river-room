@@ -1,4 +1,4 @@
-import {suits,rank,suit,shuffled,evaluate,describeHand,settle,botDecision,calculateEquity} from './engine.js?v=14';
+import {suits,rank,suit,shuffled,evaluate,describeHand,settle,botDecision,calculateEquity} from './engine.js?v=15';
 const $=s=>document.querySelector(s);
 const profiles=[{name:'민',style:'균형형',aggression:.58,bluffRate:.12},{name:'루나',style:'공격형',aggression:.85,bluffRate:.28},{name:'제이',style:'신중형',aggression:.34,bluffRate:.07},{name:'노아',style:'변칙형',aggression:.73,bluffRate:.32},{name:'유진',style:'분석형',aggression:.5,bluffRate:.16}];
 let saved=[];try{saved=JSON.parse(localStorage.getItem('river-history')||'[]');if(!Array.isArray(saved))saved=[];}catch{}
@@ -110,7 +110,7 @@ function nextSeat(i){do{i=(i+1)%game.players.length;}while(game.players[i].sitti
 function pay(i,amount){const p=game.players[i],n=Math.min(p.stack,Math.max(0,amount));p.stack-=n;p.bet+=n;p.total+=n;return n;}
 function start(reset=false){
  const previous=!reset&&game?game.players:null,n=previous?previous.length:Number($('#players').value);if(previous&&(previous[0].stack===0||previous.filter(p=>p.stack>0).length<2))return;
- clearTimeout(timer);cancelSequence();token++;if(reset){dealer=-1;hand=0;}do{dealer=(dealer+1)%n;}while(previous&&previous[dealer].stack===0);hand++;$('#players').value=String(n);
+ clearTimeout(timer);cancelSequence();token++;if(reset){dealer=-1;hand=0;}do{dealer=(dealer+1)%n;}while(previous&&previous[dealer].stack===0);hand++;$('#players').value=String(n);syncPlayerPicker();
  const deck=shuffled();game={players:Array.from({length:n},(_,i)=>({name:i?profiles[i-1].name:'나',hole:[deck.pop(),deck.pop()],dealt:0,revealed:false,stack:previous?previous[i].stack:1000,sittingOut:!!previous&&previous[i].stack===0,bet:0,total:0,folded:!!previous&&previous[i].stack===0,last:'',actedAt:null})),deck,board:[],runoutShown:0,street:0,current:20,minRaise:20,done:false,finishing:false,busy:false,pending:new Set(),turn:0,log:[],heroRaises:0};
  const sb=game.players.filter(p=>!p.sittingOut).length===2?dealer:nextSeat(dealer),bb=nextSeat(sb);pay(sb,10);pay(bb,20);game.players[sb].last='SB 10';game.players[bb].last='BB 20';game.pending=new Set(game.players.flatMap((p,i)=>ready(p)?[i]:[]));game.turn=nextSeat(bb);game.log.push('블라인드 10 / 20');mountSeats();
  const order=Array.from({length:n},(_,j)=>(dealer+j+1)%n).filter(i=>!game.players[i].sittingOut);
@@ -213,7 +213,38 @@ function renderHistory(){
  for(const h of history.slice(0,10)){const details=document.createElement('details'),summary=document.createElement('summary');summary.textContent=`핸드 ${h.hand}　${h.net>=0?'+':''}${h.net}칩`;details.append(summary);const body=document.createElement('div');body.innerHTML=`<div class="cards mini history-board">${h.board.map((c,i)=>card(c).replace('class="card ',`class="card ${i>=(h.revealed??5)?'unplayed ':''}`)).join('')}</div>`+(h.hypothetical?reviewNote(h):'')+h.players.filter(p=>!p.sittingOut).map(p=>resultRow(p,h.board)).join('');const log=document.createElement('p');log.className='history-log';log.textContent=h.log.join(' → ');body.append(log);details.append(body);$('#history').append(details);}
 }
 $('#new').onclick=()=>{if(game&&!game.done&&game.players.some(p=>p.total>20)&&!confirm('현재 핸드를 종료하고 새 테이블을 시작할까요?'))return;unlockAudio();start(true);};
-$('#players').onchange=()=>{const previous=String(game.players.length);if($('#players').value===previous)return;if(!confirm('참가 인원을 변경하면 현재 테이블과 보유 칩이 초기화됩니다. 새 테이블을 시작할까요?')){$('#players').value=previous;return;}unlockAudio();start(true);};
+$('#players').onchange=()=>{const previous=String(game.players.length);if($('#players').value===previous)return;if(!confirm('참가 인원을 변경하면 현재 테이블과 보유 칩이 초기화됩니다. 새 테이블을 시작할까요?')){$('#players').value=previous;syncPlayerPicker();return;}unlockAudio();start(true);};
+// Custom single-select listbox. Focus moves through choices without changing
+// the table until the user confirms a choice; cancelling restores the selection.
+let playerChoice=4;
+function syncPlayerPicker(){
+ const value=Number($('#players').value);$('#players-value').textContent=`${value}명`;
+ for(let n=2;n<=6;n++)$('#players-option-'+n).setAttribute('aria-selected',String(n===value));
+}
+function closePlayerPicker(restoreFocus=false){
+ $('#players-menu').hidden=true;$('#players-toggle').setAttribute('aria-expanded','false');
+ if(restoreFocus)$('#players-toggle').focus?.();
+}
+function openPlayerPicker(value=Number($('#players').value)){
+ playerChoice=value;$('#players-menu').hidden=false;$('#players-toggle').setAttribute('aria-expanded','true');$('#players-option-'+value).focus?.();
+}
+function choosePlayers(value){
+ closePlayerPicker(true);$('#players').value=String(value);$('#players').onchange();syncPlayerPicker();
+}
+$('#players-menu').hidden=true;
+$('#players-toggle').onclick=()=>$('#players-menu').hidden?openPlayerPicker():closePlayerPicker(true);
+for(let n=2;n<=6;n++)$('#players-option-'+n).onclick=()=>choosePlayers(n);
+$('#player-picker').onkeydown=e=>{
+ const open=!$('#players-menu').hidden;
+ if(e.key==='Escape'&&open){e.preventDefault();closePlayerPicker(true);return;}
+ if(e.key==='Tab'){if(open)closePlayerPicker(true);return;}
+ if(['ArrowDown','ArrowUp','Home','End'].includes(e.key)){
+  e.preventDefault();const value=e.key==='Home'?2:e.key==='End'?6:open?Math.max(2,Math.min(6,playerChoice+(e.key==='ArrowDown'?1:-1))):Number($('#players').value);openPlayerPicker(value);return;
+ }
+ if(open&&(e.key==='Enter'||e.key===' ')){e.preventDefault();choosePlayers(playerChoice);}
+};
+$('#player-picker').onfocusout=e=>{if(!$('#player-picker').contains?.(e.relatedTarget))closePlayerPicker();};
+document.addEventListener?.('pointerdown',e=>{if(!$('#player-picker').contains(e.target))closePlayerPicker();});
 $('#next').onclick=()=>{if(!game.done)return;unlockAudio();start();};
 function heroAction(type){if(game.done||game.busy||game.finishing||game.turn!==0||!game.pending.has(0))return;act(0,type,Number($('#raise-size').value));if(type==='fold')calculate();advance();}
 $('#fold').onclick=()=>heroAction('fold');$('#call').onclick=()=>heroAction('call');$('#raise').onclick=()=>heroAction('raise');

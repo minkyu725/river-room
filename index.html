@@ -10,8 +10,8 @@
   <link rel="manifest" href="./manifest.webmanifest">
   <link rel="icon" href="./icon.svg">
   <link rel="apple-touch-icon" href="./icon-192.png">
-  <link rel="stylesheet" href="./style.css?v=14">
-  <link rel="stylesheet" href="./mobile.css?v=14">
+  <link rel="stylesheet" href="./style.css?v=15">
+  <link rel="stylesheet" href="./mobile.css?v=15">
   <title>River Room · 홀덤 연습</title>
 </head>
 <body>
@@ -22,7 +22,21 @@
   </header>
   <section class="setup" aria-label="테이블 설정">
     <div class="setup-title">연습 테이블 <span class="blinds">블라인드 10 / 20</span></div>
-    <div class="setup-row"><label for="players">참가 인원</label><select id="players"><option value="2">2명</option><option value="3">3명</option><option value="4" selected>4명</option><option value="5">5명</option><option value="6">6명</option></select><button id="new" class="table-button">새 테이블</button></div>
+    <div class="setup-row">
+      <span id="players-label" class="players-label">참가 인원</span>
+      <div id="player-picker" class="player-picker">
+        <input id="players" type="hidden" value="4">
+        <button id="players-toggle" class="players-toggle" type="button" aria-haspopup="listbox" aria-expanded="false" aria-controls="players-menu" aria-labelledby="players-label players-value"><span id="players-value">4명</span><svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="m4 6 4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        <div id="players-menu" class="players-menu" role="listbox" aria-labelledby="players-label" hidden>
+          <button id="players-option-2" type="button" role="option" aria-selected="false" tabindex="-1"><span>2명</span><span class="selection-check" aria-hidden="true">✓</span></button>
+          <button id="players-option-3" type="button" role="option" aria-selected="false" tabindex="-1"><span>3명</span><span class="selection-check" aria-hidden="true">✓</span></button>
+          <button id="players-option-4" type="button" role="option" aria-selected="true" tabindex="-1"><span>4명</span><span class="selection-check" aria-hidden="true">✓</span></button>
+          <button id="players-option-5" type="button" role="option" aria-selected="false" tabindex="-1"><span>5명</span><span class="selection-check" aria-hidden="true">✓</span></button>
+          <button id="players-option-6" type="button" role="option" aria-selected="false" tabindex="-1"><span>6명</span><span class="selection-check" aria-hidden="true">✓</span></button>
+        </div>
+      </div>
+      <button id="new" class="table-button">새 테이블</button>
+    </div>
   </section>
   <div class="game-layout">
     <section class="play-area" aria-label="홀덤 테이블">
@@ -77,6 +91,6 @@
   <h3>상대의 플레이</h3><p>상대는 자기 카드와 공개 정보로 판단합니다. 각자의 성향에 따라 블러프하고, 내 베팅과 과거 공개된 패를 보고 블러프를 의심하기도 합니다. 핸드 종료 후 폴드한 패까지 모두 공개됩니다.</p>
   <h3>iPhone에 설치하기</h3><p>Safari에서 <b>공유 → 홈 화면에 추가 → 추가</b>를 선택하세요. 처음 온라인으로 연 뒤에는 오프라인에서도 플레이할 수 있습니다. 기록은 이 기기에 저장됩니다.</p>
 </dialog>
-<script type="module" src="./app.js?v=14"></script>
+<script type="module" src="./app.js?v=15"></script>
 </body>
 </html>

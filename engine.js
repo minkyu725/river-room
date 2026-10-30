@@ -1,4 +1,4 @@
-import {preflopEquity} from './preflop-equity.js?v=14';
+import {preflopEquity} from './preflop-equity.js?v=15';
 export const suits=['♣','♦','♥','♠'];
 export const rank=c=>c%13+2;
 export const suit=c=>Math.floor(c/13);

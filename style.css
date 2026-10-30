@@ -64,11 +64,11 @@ header { height: 94px; display: flex; align-items: center; justify-content: spac
 .dealer { position: absolute; right: -15px; top: -8px; width: 20px; height: 20px; border-radius: 50%; display: grid; place-items: center; background: var(--paper); color: var(--ink); border: 1px solid var(--line); font-family: inherit; font-weight: 700; font-size: 11px; }
 .opponent .cards { background: var(--rail); width: max-content; margin: auto; padding: 5px; border-radius: 4px; box-shadow: none; }
 .opponent>b { display: block; margin: 5px 0 3px; font-size: 12px; font-weight: 600; color: #f4f7f4; text-shadow: none; }
-.opponent small { display: block; font-size: 11px; color: #e3ece5; min-height: 14px; line-height: 1.4; text-shadow: none; }
+.opponent .seat-status { display: block; font-size: 11px; color: #e3ece5; min-height: 14px; line-height: 1.4; text-shadow: none; }
 .thinking .avatar { background: #4c5b43; }
 .thinking .cards { outline: 2px solid #d7b87c; outline-offset: 2px; }
 .opponent.folded .cards { opacity: .42; }
-.opponent.folded small { color: #d3dfd5; }
+.opponent.folded .seat-status { color: #d3dfd5; }
 .cards { display: flex; justify-content: center; gap: 6px; }
 .card { width: 55px; height: 77px; flex-shrink: 0; background: var(--paper); border: 1px solid #d8ddd7; border-radius: 5px; box-shadow: 0 2px 3px #18291e24; color: var(--ink); padding: 5px 6px; display: flex; flex-direction: column; justify-content: space-between; text-align: left; user-select: none; }
 .card b { font-family: Georgia, serif; font-size: 25px; line-height: 1; font-weight: 700; }
@@ -103,7 +103,7 @@ header { height: 94px; display: flex; align-items: center; justify-content: spac
 .card.flipping { animation: flip-card .18s ease-out; }
 @keyframes deal-card { from { opacity: 0; transform: translateY(-10px) rotate(var(--card-tilt, 0deg)); } to { opacity: 1; transform: rotate(var(--card-tilt, 0deg)); } }
 @keyframes flip-card { from { opacity: 0; transform: rotateY(80deg); } to { opacity: var(--card-opacity, 1); transform: none; } }
-.hero-area p { margin: 10px 0 0; font-size: 12px; font-weight: 600; color: var(--muted); }
+.hero-area #hero-hand { margin: 10px 0 0; font-size: 12px; font-weight: 600; color: var(--muted); }
 .equity-panel { display: flex; align-items: center; flex-wrap: wrap; gap: 12px; border-bottom: 1px solid var(--line); margin: 21px 2px 0; padding-bottom: 14px; }
 .equity-label { display: flex; flex-direction: column; align-items: flex-start; gap: 1px; }
 h2 { font-size: 13px; margin: 0; font-weight: 650; }
@@ -146,8 +146,8 @@ aside { padding-top: 4px; }
 #record-count { font-size: 10px; color: var(--muted); }
 #history { padding-top: 8px; }
 .muted { font-size: 11px; color: var(--muted); line-height: 1.8; }
-details { border-bottom: 1px solid var(--line); padding: 12px 0; }
-summary { color: var(--ink); cursor: pointer; font-size: 12px; line-height: 1.8; }
+.history-panel details { border-bottom: 1px solid var(--line); padding: 12px 0; }
+.history-panel summary { color: var(--ink); cursor: pointer; font-size: 12px; line-height: 1.8; }
 .history-log { font-size: 10px; color: var(--muted); line-height: 1.9; }
 .install-button { display: block; text-align: left; padding: 17px 0; border-top: 1px solid var(--line); border-radius: 0; margin-top: 25px; background: none; width: 100%; color: var(--ink); }
 .install-button span { display: block; font-size: 11px; }
@@ -204,10 +204,35 @@ dialog p { color: var(--muted); font-size: 13px; line-height: 1.9; }
 
 /* Keep full hand explanations readable inside seats and narrow review rows. */
 .hero-area { width: min(340px, 90%); }
-.hero-area p { line-height: 1.5; overflow-wrap: anywhere; }
-.opponent small { overflow-wrap: anywhere; }
+.hero-area #hero-hand { line-height: 1.5; overflow-wrap: anywhere; }
+.opponent .seat-status { overflow-wrap: anywhere; }
 .result-row { flex-wrap: wrap; }
 .result-row>div:first-child { flex: 1 1 130px; }
 .result-row small { line-height: 1.5; overflow-wrap: anywhere; }
 
 .round-result { position: static; transform: none; width: fit-content; margin: 28px auto 0; white-space: normal; text-align: center; }
+
+/* Read the hand name first; inspect its cards without crowding the table. */
+.hand-description { display: grid; gap: 6px; margin-top: 6px; }
+.hand-name { display: block; font-size: 12px; font-weight: 650; line-height: 1.4; }
+.hand-line { display: flex; align-items: baseline; gap: 8px; font-size: 12px; line-height: 1.5; }
+.hand-line-label { flex: 0 0 26px; font-size: 10px; color: var(--muted); font-weight: 500; }
+.hand-card-run { display: flex; flex-wrap: wrap; gap: 3px 8px; }
+.hand-card { white-space: nowrap; font-weight: 600; font-variant-numeric: tabular-nums; }
+.hand-card.red { color: var(--red); }
+.hand-kickers .hand-card { font-weight: 400; }
+.hand-disclosure { position: relative; margin: 0; padding: 0; border: 0; }
+.hand-disclosure summary { display: flex; align-items: center; justify-content: center; gap: 8px; color: inherit; font: inherit; cursor: pointer; list-style: none; }
+.hand-disclosure summary::-webkit-details-marker { display: none; }
+.hand-more { font-size: 10px; font-weight: 400; text-decoration: underline; text-underline-offset: 3px; }
+.hand-popover { position: absolute; left: 50%; bottom: calc(100% + 8px); transform: translateX(-50%); z-index: 8; display: grid; gap: 8px; width: 230px; padding: 12px; text-align: left; background: var(--surface); color: var(--ink); border: 1px solid var(--line); border-radius: 6px; box-shadow: 0 2px 8px rgba(0,0,0,.08); }
+.opponent:has(.hand-disclosure[open]) { z-index: 9; }
+.opponent .hand-disclosure summary { flex-direction: column; gap: 2px; }
+.opponent .hand-name { font-size: inherit; }
+.opponent .hand-more { font-size: 9px; }
+.opponent .hand-popover { top: calc(100% + 8px); bottom: auto; }
+.opponent[data-side="left"] .hand-popover { left: 0; transform: none; }
+.opponent[data-side="right"] .hand-popover { left: auto; right: 0; transform: none; }
+.result-row>div:first-child { flex-basis: 180px; }
+.history-panel .hand-name { font-size: 11px; }
+.history-panel .hand-line { font-size: 11px; }

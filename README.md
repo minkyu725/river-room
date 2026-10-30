@@ -5,7 +5,7 @@
 - 앱: https://minkyu725.github.io/river-room/
 - 저장소: https://github.com/minkyu725/river-room
 - 로컬 경로: `/Users/minkyu/works/river-room`
-- 디자인 기준: [DESIGN.md](./DESIGN.md), Anthropic frontend-design 스킬 적용
+- 디자인 기준: [DESIGN.md](./DESIGN.md), no-slop-ui 스킬로 중성 배경·녹색 테이블과 절제된 컨트롤 적용
 
 ## 실행
 

@@ -13,9 +13,9 @@
   main { padding: 0 16px; }
   header { height: 72px; }
   .brand { gap: 9px; }
-  .brand-icon { width: 35px; height: 35px; font-size: 22px; border-width: 3px; }
-  .brand>span:last-child { font-size: 24px; }
-  .brand small { font-size: 9px; margin-top: 6px; }
+  .brand-icon { width: 22px; height: 32px; font-size: 26px; }
+  .brand>span:last-child { font-size: 21px; }
+  .brand small { font-size: 10px; margin-top: 5px; }
   .setup { padding: 11px 0 13px; margin-bottom: 8px; gap: 5px; }
   .setup-title { font-size: 11px; gap: 6px; }
   .blinds { display: none; }
@@ -24,10 +24,10 @@
   select { padding: 8px; min-height: 36px; font-size: 12px; }
   .table-button { padding: 9px 10px; font-size: 10px; }
   .game-layout { display: block; }
-  .table-top { font-size: 10px; padding: 4px 5px 24px; }
+  .table-top { font-size: 10px; padding: 4px 5px 36px; }
   .table-top>span:last-child { font-size: 9px; }
   .felt { height: 368px; }
-  .table-rail { inset: 14px 0 24px; border-width: 11px; border-radius: 43%; box-shadow: 0 6px 9px #3c2f2525, inset 0 0 0 1px #8b7c7080, inset 0 0 15px #2d231b55; }
+  .table-rail { inset: 14px 0 24px; border-width: 11px; border-radius: 43%; box-shadow: 0 2px 8px #18291e14, inset 0 0 0 1px #93aa9b55; }
   .table-rail:before { inset: 10px; border-radius: 43%; }
   .opponent { width: 70px; transform: translate(-50%, -10%); }
   .avatar { min-width: 52px; height: 21px; font-size: 10px; padding: 0 5px; }
@@ -52,7 +52,6 @@
   .board .card { width: 43px; height: 60px; padding: 4px 5px; }
   .board .card b { font-size: 20px; }
   .board .card>span { font-size: 23px; }
-  .table-wordmark { visibility: hidden; font-size: 17px; margin-top: 13px; }
   .hero-label { font-size: 10px; gap: 10px; margin-bottom: 7px; }
   .hero-area .card { width: 49px; height: 68px; }
   .hero-area .card b { font-size: 23px; }
@@ -102,4 +101,10 @@
   .board-area { top: 44%; }
   #equity-content { gap: 7px; }
   .equity-number { min-width: 71px; font-size: 28px; }
+}
+
+@media(max-width: 360px) {
+  .header-controls { gap: 6px; }
+  #sound { padding: 8px; }
+  .brand>span:last-child { font-size: 19px; }
 }

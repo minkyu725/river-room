@@ -1,0 +1,9 @@
+{
+  "allHashes": true,
+  "allCountBounds": true,
+  "turnStates": 13960050,
+  "flopStates": 1286792,
+  "independentStates": 516,
+  "independentComparisons": 32720490,
+  "elapsedSeconds": 52.31
+}

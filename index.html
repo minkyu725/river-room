@@ -10,8 +10,8 @@
   <link rel="manifest" href="./manifest.webmanifest">
   <link rel="icon" href="./icon.svg">
   <link rel="apple-touch-icon" href="./icon-192.png">
-  <link rel="stylesheet" href="./style.css?v=20">
-  <link rel="stylesheet" href="./mobile.css?v=20">
+  <link rel="stylesheet" href="./style.css?v=22">
+  <link rel="stylesheet" href="./mobile.css?v=22">
   <title>River Room · 홀덤 연습</title>
 </head>
 <body>
@@ -49,21 +49,22 @@
           <p class="pot-label">팟 <strong id="pot">0</strong></p>
           <div id="board" class="cards board"></div>
         </div>
-        <div class="hero-area"><div class="hero-label"><span class="you-tag">나 <span id="position"></span></span><span id="stack"></span></div><div id="hero" class="cards"></div><div id="hero-hand"></div></div>
+        <div class="hero-area"><div class="hero-label"><span class="you-tag">나 <span id="position"></span></span><span id="stack"></span></div><div id="hero" class="cards"></div></div>
       </div>
+      <div id="hero-hand"></div>
       <div id="round-result" class="round-result" hidden></div>
-      <section class="equity-panel" aria-label="나의 승률">
-        <div class="equity-label"><h2>내 승률</h2><button id="toggle-equity" class="text-button">가리기</button></div>
+      <section class="equity-panel" aria-label="최강 패 확률">
+        <div class="equity-label"><h2>최강 패 확률</h2><button id="toggle-equity" class="text-button">가리기</button></div>
         <div id="equity-content"><div class="equity-number" id="equity">—<span>%</span></div><div class="equity-info"><div class="meter"><div id="equity-bar"></div></div><p id="equity-detail">계산 중</p></div></div>
-        <p class="note">무작위 상대 패 가정 · 사전 전수 계산표</p>
+        <p class="note">무작위 상대 패 기준 · 공동 1등 포함</p>
       </section>
-      <section class="hand-odds" aria-label="족보별 승률">
-        <button id="toggle-hand-odds" class="text-button" aria-expanded="false" aria-controls="hand-odds-content">족보별 승률 보기</button>
+      <section class="hand-odds" aria-label="족보 완성 확률">
+        <button id="toggle-hand-odds" class="text-button" aria-expanded="false" aria-controls="hand-odds-content">족보 완성 확률 보기</button>
         <div id="hand-odds-content" hidden>
-          <p class="hand-odds-note">완성 확률은 리버까지 내 최종 패가 해당 족보가 될 확률입니다. 해당 족보 승률은 그 족보가 완성된 경우의 팟 지분이며, 정확한 정적 표가 없어 제공하지 않습니다.</p>
-          <table class="odds-table"><caption>내 최종 족보별 완성 확률</caption><thead><tr><th scope="col">최종 족보</th><th scope="col">완성 확률</th><th scope="col">해당 족보 승률</th></tr></thead><tbody id="hand-odds-body"></tbody></table>
+          <p class="hand-odds-note">여기는 리버까지 각 족보가 완성될 확률입니다. 상대보다 강한 패일 확률은 위의 최강 패 확률에서 확인하세요.</p>
+          <table class="odds-table"><caption>내 최종 족보별 완성 확률</caption><thead><tr><th scope="col">최종 족보</th><th scope="col">완성 확률</th></tr></thead><tbody id="hand-odds-body"></tbody></table>
           <p id="hand-odds-status" class="hand-odds-note" role="status"></p>
-          <p class="hand-odds-note">프리플롭·플롭 완성 확률은 전수 계산표를 조회하고, 리버는 확정된 족보를 표시합니다. 정확한 표가 없는 조건부 승률은 —로 표시합니다. 사이드 팟과 베팅 성향은 반영하지 않습니다.</p>
+          <p class="hand-odds-note">프리플롭·플롭은 전수 계산표, 리버는 확정 족보입니다. 턴 족보 분포는 미제공이며 상단 최강 패 확률과는 별개입니다.</p>
         </div>
       </section>
       <div id="status" class="status" role="status" aria-live="polite"></div>
@@ -87,10 +88,10 @@
   <button id="close-help" class="icon-button close" aria-label="닫기">×</button>
   <h2>테이블 안내</h2>
   <p>2~6인 노리밋 텍사스 홀덤입니다. 새 테이블은 1,000칩으로 시작하며, 다음 핸드에도 보유 칩이 유지되고 딜러가 돌아갑니다. 칩을 모두 잃은 상대는 쉬고, 내 칩이 소진되거나 한 명만 남으면 새 테이블을 시작하세요. 체크, 콜, 폴드, 레이즈와 올인, 사이드 팟을 지원합니다.</p>
-  <h3>승률 읽기</h3><p>프리플롭·플롭에서 사전 전수 계산표를 조회합니다. 상대 1명일 때 동률 지분을 포함한 승률을 표시하며, 다인전 승률과 플롭 이후 상대 승률은 정확한 표가 없어 표시하지 않습니다. 족보별 완성 확률은 프리플롭·플롭에 제공하며 리버는 확정 족보를 표시합니다. 턴 확률과 조건부 승률은 미제공입니다. 실제 상대 패나 베팅 성향을 반영한 예측은 아닙니다.</p>
+  <h3>최강 패 확률 읽기</h3><p>내 패보다 강한 상대가 없는 확률이며 공동 1등을 포함합니다. 상대 1명일 때 프리플롭·플롭·턴·리버의 모든 가능한 상대 패와 남은 보드를 전수 계산한 정적 표를 조회합니다. 단독 승리와 동률 확률도 따로 표시합니다. 상대 2명 이상은 정확한 표가 없어 표시하지 않습니다. 무작위 상대 패를 균등하게 가정하며 실제 비공개 카드나 베팅 성향을 반영한 예측은 아닙니다. 족보 완성 확률은 별도의 펼침 표에서 확인하세요.</p>
   <h3>상대의 플레이</h3><p>상대는 자기 카드와 공개 정보로 판단합니다. 각자의 성향에 따라 블러프하고, 내 베팅과 과거 공개된 패를 보고 블러프를 의심하기도 합니다. 핸드 종료 후 폴드한 패까지 모두 공개됩니다.</p>
   <h3>iPhone에 설치하기</h3><p>Safari에서 <b>공유 → 홈 화면에 추가 → 추가</b>를 선택하세요. 처음 온라인으로 연 뒤에는 오프라인에서도 플레이할 수 있습니다. 기록은 이 기기에 저장됩니다.</p>
 </dialog>
-<script type="module" src="./app.js?v=20"></script>
+<script type="module" src="./app.js?v=22"></script>
 </body>
 </html>

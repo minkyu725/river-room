@@ -1,4 +1,4 @@
-import {preflopEquity} from './preflop-equity.js?v=20';
+import {preflopHeadsUp} from './preflop-headsup-counts.js?v=22';
 export const suits=['♣','♦','♥','♠'];
 export const rank=c=>c%13+2;
 export const suit=c=>Math.floor(c/13);
@@ -41,13 +41,11 @@ export function equity(hole,board,opponents,iterations=1800,random=Math.random,b
  return {equity:share/iterations,win:wins/iterations,tie:ties/iterations,iterations,...(categories?{categories:categories.map(({share,...bucket})=>({...bucket,probability:bucket.samples/iterations,equity:bucket.samples?share/bucket.samples:null}))}:{})};
 }
 export function calculateEquity(hole,board,opponents){
- if(board.length===5){const category=evaluate([...hole,...board]).category;return {method:'static-river',equity:null,tie:null,categories:names.map((name,i)=>({name,category:i,probability:i===category?1:0,equity:null}))};}
- if(board.length)return {method:'unavailable'};
- const ranks=hole.map(rank).sort((a,b)=>b-a),label=r=>r<10?String(r):({10:'T',11:'J',12:'Q',13:'K',14:'A'})[r];
- const key=ranks.map(label).join('')+(ranks[0]===ranks[1]?'':suit(hole[0])===suit(hole[1])?'s':'o');
- const row=preflopEquity[key],supported=opponents===1;
- return {method:'static',hand:key,equity:supported?row[0]/10000:null,win:supported?row[1]/10000:null,tie:supported?row[2]/10000:null,
-  categories:names.map((name,category)=>({name,category,probability:row[3][category]/10000,equity:null,samples:null}))};
+ if(board.length===5){const category=evaluate([...hole,...board]).category;return {method:'static-river',equity:opponents===0?1:null,win:opponents===0?1:null,tie:opponents===0?0:null,strongest:opponents===0?1:null,denominator:1,categories:names.map((name,i)=>({name,category:i,probability:i===category?1:0,equity:null}))};}
+ if(board.length)return {method:'unavailable',win:opponents===0?1:null,tie:opponents===0?0:null,strongest:opponents===0?1:null,denominator:1};
+ const ranks=hole.map(rank).sort((a,b)=>b-a),low=ranks[1]-2,high=ranks[0]-2,suited=suit(hole[0])===suit(hole[1]),key=low*64+(low===high||!suited?high+13:high),row=preflopHeadsUp[key];
+ const win=opponents===0?1:opponents===1?row[0]/row[2]:null,tie=opponents===0?0:opponents===1?row[1]/row[2]:null;
+ return {method:'static',win,tie,strongest:win===null?null:win+tie,equity:win===null?null:win+tie/2,denominator:opponents===0?1:row[2],categories:names.map((name,category)=>({name,category,count:row[3+category],probability:row[3+category]/2118760,equity:null,samples:null}))};
 }
 export function settle(players,board){
  const payouts=players.map(()=>0),pots=[],levels=[...new Set(players.map(p=>p.total).filter(Boolean))].sort((a,b)=>a-b);let previous=0;

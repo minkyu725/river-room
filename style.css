@@ -192,3 +192,13 @@ dialog p { color: var(--muted); font-size: 13px; line-height: 1.9; }
 #hero.folded { opacity: .42; }
 .bet-flight { position: fixed; z-index: 10; pointer-events: none; width: 15px; height: 8px; border-radius: 50%; background: var(--brass); border: 2px dashed var(--paper); box-shadow: 0 1px 0 #665032; }
 .action-note { position: fixed; z-index: 11; pointer-events: none; padding: 5px 9px; border-radius: 4px; background: var(--rail); color: var(--paper); font-size: 12px; font-weight: 600; white-space: nowrap; }
+
+/* Keep full hand explanations readable inside seats and narrow review rows. */
+.hero-area { width: min(340px, 90%); }
+.hero-area p { line-height: 1.5; overflow-wrap: anywhere; }
+.opponent small { overflow-wrap: anywhere; }
+.result-row { flex-wrap: wrap; }
+.result-row>div:first-child { flex: 1 1 130px; }
+.result-row small { line-height: 1.5; overflow-wrap: anywhere; }
+
+.round-result { position: static; transform: none; width: fit-content; margin: 28px auto 0; white-space: normal; text-align: center; }

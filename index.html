@@ -10,8 +10,8 @@
   <link rel="manifest" href="./manifest.webmanifest">
   <link rel="icon" href="./icon.svg">
   <link rel="apple-touch-icon" href="./icon-192.png">
-  <link rel="stylesheet" href="./style.css?v=12">
-  <link rel="stylesheet" href="./mobile.css?v=12">
+  <link rel="stylesheet" href="./style.css?v=14">
+  <link rel="stylesheet" href="./mobile.css?v=14">
   <title>River Room · 홀덤 연습</title>
 </head>
 <body>
@@ -29,7 +29,6 @@
       <div class="table-top"><span id="hand-no">핸드 1</span><span id="street">프리플롭</span><span>시작 칩 1,000</span></div>
       <div class="felt">
         <div class="table-rail"></div>
-        <div id="round-result" class="round-result" hidden></div>
         <div id="opponents" class="opponents"></div>
         <div class="board-area">
           <div id="pot-stack" class="pot-stack" aria-hidden="true"></div>
@@ -38,18 +37,19 @@
         </div>
         <div class="hero-area"><div class="hero-label"><span class="you-tag">나 <span id="position"></span></span><span id="stack"></span></div><div id="hero" class="cards"></div><p id="hero-hand"></p></div>
       </div>
+      <div id="round-result" class="round-result" hidden></div>
       <section class="equity-panel" aria-label="나의 승률">
         <div class="equity-label"><h2>내 승률</h2><button id="toggle-equity" class="text-button">가리기</button></div>
         <div id="equity-content"><div class="equity-number" id="equity">—<span>%</span></div><div class="equity-info"><div class="meter"><div id="equity-bar"></div></div><p id="equity-detail">계산 중</p></div></div>
-        <p class="note">무작위 상대 패 기준 · 동률 지분 포함</p>
+        <p class="note">무작위 상대 패 가정 · 사전 전수 계산표</p>
       </section>
       <section class="hand-odds" aria-label="족보별 승률">
         <button id="toggle-hand-odds" class="text-button" aria-expanded="false" aria-controls="hand-odds-content">족보별 승률 보기</button>
         <div id="hand-odds-content" hidden>
-          <p class="hand-odds-note">완성 확률은 리버까지 내 최종 패가 해당 족보가 될 확률입니다. 해당 족보 승률은 그 족보가 완성된 표본에서의 예상 팟 지분입니다.</p>
-          <table class="odds-table"><caption>내 최종 족보별 예상 확률</caption><thead><tr><th scope="col">최종 족보</th><th scope="col">완성 확률</th><th scope="col">해당 족보 승률</th><th scope="col">표본</th></tr></thead><tbody id="hand-odds-body"></tbody></table>
+          <p class="hand-odds-note">완성 확률은 리버까지 내 최종 패가 해당 족보가 될 확률입니다. 해당 족보 승률은 그 족보가 완성된 경우의 팟 지분이며, 정확한 정적 표가 없어 제공하지 않습니다.</p>
+          <table class="odds-table"><caption>내 최종 족보별 완성 확률</caption><thead><tr><th scope="col">최종 족보</th><th scope="col">완성 확률</th><th scope="col">해당 족보 승률</th></tr></thead><tbody id="hand-odds-body"></tbody></table>
           <p id="hand-odds-status" class="hand-odds-note" role="status"></p>
-          <p class="hand-odds-note">무작위 상대 패 기준 추정치입니다. 표본이 없는 족보의 승률은 —로 표시합니다. 사이드 팟과 베팅 성향은 반영하지 않습니다.</p>
+          <p class="hand-odds-note">프리플롭 완성 확률은 전수 계산표를 조회합니다. 정확한 표가 없는 조건부 승률은 —로 표시합니다. 사이드 팟과 베팅 성향은 반영하지 않습니다.</p>
         </div>
       </section>
       <div id="status" class="status" role="status" aria-live="polite"></div>
@@ -73,10 +73,10 @@
   <button id="close-help" class="icon-button close" aria-label="닫기">×</button>
   <h2>테이블 안내</h2>
   <p>2~6인 노리밋 텍사스 홀덤입니다. 새 테이블은 1,000칩으로 시작하며, 다음 핸드에도 보유 칩이 유지되고 딜러가 돌아갑니다. 칩을 모두 잃은 상대는 쉬고, 내 칩이 소진되거나 한 명만 남으면 새 테이블을 시작하세요. 체크, 콜, 폴드, 레이즈와 올인, 사이드 팟을 지원합니다.</p>
-  <h3>승률 읽기</h3><p>내 카드와 공개된 보드로 무작위 시뮬레이션 1,800회를 계산합니다. 동률일 때의 팟 지분도 포함합니다. 상대의 실제 카드나 베팅 성향을 반영한 예측은 아닙니다.</p>
+  <h3>승률 읽기</h3><p>프리플롭에서 사전 전수 계산표를 조회합니다. 상대 1명일 때 동률 지분을 포함한 승률을 표시하며, 다인전 승률과 플롭 이후 값은 정확한 표가 없어 표시하지 않습니다. 족보별 완성 확률은 프리플롭에 제공하며 조건부 승률은 미제공입니다. 실제 상대 패나 베팅 성향을 반영한 예측은 아닙니다.</p>
   <h3>상대의 플레이</h3><p>상대는 자기 카드와 공개 정보로 판단합니다. 각자의 성향에 따라 블러프하고, 내 베팅과 과거 공개된 패를 보고 블러프를 의심하기도 합니다. 핸드 종료 후 폴드한 패까지 모두 공개됩니다.</p>
   <h3>iPhone에 설치하기</h3><p>Safari에서 <b>공유 → 홈 화면에 추가 → 추가</b>를 선택하세요. 처음 온라인으로 연 뒤에는 오프라인에서도 플레이할 수 있습니다. 기록은 이 기기에 저장됩니다.</p>
 </dialog>
-<script type="module" src="./app.js?v=12"></script>
+<script type="module" src="./app.js?v=14"></script>
 </body>
 </html>

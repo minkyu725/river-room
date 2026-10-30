@@ -2,6 +2,11 @@
 
 한국어 싱글플레이 텍사스 홀덤 연습 PWA. 의존성/빌드 없이 GitHub Pages에서 실행됩니다.
 
+- 앱: https://minkyu725.github.io/river-room/
+- 저장소: https://github.com/minkyu725/river-room
+- 로컬 경로: `/Users/minkyu/works/river-room`
+- 디자인 기준: [DESIGN.md](./DESIGN.md), Anthropic frontend-design 스킬 적용
+
 ## 실행
 
 ```sh

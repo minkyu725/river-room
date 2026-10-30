@@ -1,29 +1,105 @@
-@media(max-width:720px){
-  header{height:64px}
-  .intro{padding:20px 0}
-  .intro h1{font-size:27px}
-  .setup{margin-top:18px}
-  .game-layout{gap:14px}
-  .game-layout>aside{display:contents}
-  .play-area{order:1}
-  .equity-panel{order:0;padding:14px 17px;position:relative}
-  .equity-panel .panel-heading{justify-content:flex-start;gap:13px}
-  .equity-panel .panel-heading h2{font-size:11px}
-  .equity-panel .text-button{padding:2px 0}
-  .equity-panel #equity-content{position:static}
-  .equity-panel .equity-number{position:absolute;right:17px;top:14px;margin:0;font-size:35px;letter-spacing:-1px}
-  .equity-panel .equity-number span{font-size:16px}
-  .equity-panel .meter{width:53%;margin:12px 0 8px;height:3px}
-  .equity-panel .muted{position:static;max-width:none;text-align:left;font-size:9px;margin:0}
-  .equity-panel .note{font-size:9px;margin-top:9px;padding-top:9px;line-height:1.6}
-  aside>.panel:not(.equity-panel){order:2}
-  .felt{min-height:375px;padding-top:18px;padding-bottom:18px}
-  .board-area{margin:8px 0}
-  .table-wordmark{margin-top:12px}
-  .hero-area .card{width:49px;height:67px}
-  .hero-area .card b{font-size:22px}
-  .hero-area .card>span{font-size:24px}
-  .board .card{width:46px;height:64px}
-  .pot-label{margin-bottom:11px}
-  .pot-label strong{font-size:21px}
+@media(max-width: 950px) {
+  main { padding: 0 24px; }
+  .game-layout { grid-template-columns: minmax(0, 1fr) 210px; gap: 24px; }
+  .felt { height: 446px; }
+  .opponent { width: 90px; }
+  .card { width: 47px; height: 67px; }
+  .board { gap: 4px; }
+  .board .card b { font-size: 22px; }
+  .board .card>span { font-size: 25px; }
+  .table-rail { border-width: 14px; }
+}
+@media(max-width: 720px) {
+  main { padding: 0 16px; }
+  header { height: 72px; }
+  .brand { gap: 9px; }
+  .brand-icon { width: 35px; height: 35px; font-size: 22px; border-width: 3px; }
+  .brand>span:last-child { font-size: 24px; }
+  .brand small { font-size: 9px; margin-top: 6px; }
+  .setup { padding: 11px 0 13px; margin-bottom: 8px; gap: 5px; }
+  .setup-title { font-size: 11px; gap: 6px; }
+  .blinds { display: none; }
+  .setup-row { gap: 6px; }
+  .setup-row label { position: absolute; width: 1px; height: 1px; clip-path: inset(50%); overflow: hidden; }
+  select { padding: 8px; min-height: 36px; font-size: 12px; }
+  .table-button { padding: 9px 10px; font-size: 10px; }
+  .game-layout { display: block; }
+  .table-top { font-size: 10px; padding: 4px 5px 24px; }
+  .table-top>span:last-child { font-size: 9px; }
+  .felt { height: 368px; }
+  .table-rail { inset: 14px 0 24px; border-width: 11px; border-radius: 43%; box-shadow: 0 6px 9px #23323e25, inset 0 0 0 1px #70858b80, inset 0 0 15px #11293755; }
+  .table-rail:before { inset: 10px; border-radius: 43%; }
+  .opponent { width: 70px; transform: translate(-50%, -10%); }
+  .avatar { min-width: 52px; height: 21px; font-size: 10px; padding: 0 5px; }
+  .portrait { width: 29px; height: 29px; }
+  .opponent .cards { padding: 4px; }
+  .small { gap: 2px; }
+  .small .card { width: 22px; height: 31px; padding: 2px; border-radius: 2px; }
+  .small .card b { font-size: 11px; }
+  .small .card>span { font-size: 13px; }
+  .small .card.back { border-width: 2px; }
+  .small .card.back>span { font-size: 11px; }
+  .opponent>b { font-size: 10px; margin-top: 4px; }
+  .opponent small { font-size: 8px; }
+  .dealer { width: 17px; height: 17px; right: -10px; top: -7px; font-size: 9px; }
+  .board-area { top: 40%; transform: translate(-50%, -6%); }
+  .pot-stack { height: 14px; margin-bottom: 2px; transform: scale(.85); }
+  .round-result { top: 30%; font-size: 11px; padding: 7px 16px; }
+  .pot-label { font-size: 10px; gap: 5px; margin-bottom: 11px; }
+  .pot-label strong { font-size: 22px; }
+  .pot-chip { width: 15px; height: 15px; border-width: 2px; }
+  .board { gap: 4px; }
+  .board .card { width: 43px; height: 60px; padding: 4px 5px; }
+  .board .card b { font-size: 20px; }
+  .board .card>span { font-size: 23px; }
+  .table-wordmark { visibility: hidden; font-size: 17px; margin-top: 13px; }
+  .hero-label { font-size: 10px; gap: 10px; margin-bottom: 7px; }
+  .hero-area .card { width: 49px; height: 68px; }
+  .hero-area .card b { font-size: 23px; }
+  .hero-area .card>span { font-size: 25px; }
+  .hero-area p { font-size: 10px; margin-top: 8px; }
+  .equity-panel { margin-top: 15px; padding-bottom: 12px; gap: 10px; }
+  .equity-label h2 { font-size: 11px; }
+  #equity-content { gap: 10px; }
+  .equity-number { font-size: 31px; min-width: 78px; }
+  .equity-number span { font-size: 14px; }
+  #equity-detail { font-size: 9px; margin-top: 5px; }
+  .note { font-size: 9px; margin-left: 50px; }
+  .text-button { font-size: 9px; padding: 4px 0; }
+  .status { min-height: 36px; padding-top: 10px; font-size: 11px; }
+  .raise-control { padding: 0 2px 5px; gap: 12px; }
+  .raise-control label { font-size: 10px; }
+  .actions { gap: 7px; }
+  .bet-presets { margin-top: 2px; }
+  .bet-chip { min-height: 27px; min-width: 53px; font-size: 9px; }
+  .actions>button, .next { min-height: 47px; font-size: 12px; }
+  aside { margin-top: 31px; display: grid; grid-template-columns: 1fr 1fr; gap: 20px; border-top: 1px solid var(--line); padding-top: 22px; }
+  .opponent-notes { padding-bottom: 0; }
+  aside h2 { font-size: 12px; }
+  .opponent-notes h2 { border: none; padding-bottom: 0; }
+  .profile { grid-template-columns: 25px 1fr; gap: 6px; padding-top: 14px; font-size: 11px; }
+  .profile small { font-size: 10px; }
+  .aggression { display: none; }
+  .aside-note { font-size: 9px; line-height: 1.8; margin-top: 15px; }
+  .history-panel { padding: 0; border: 0; min-width: 0; }
+  summary { font-size: 10px; }
+  .history-panel .result-row { flex-wrap: wrap; }
+  .history-panel .result-row>strong { min-width: 0; }
+  .history-panel .result-row>div:first-child { min-width: 26px; }
+  .history-panel .mini .card { width: 22px; height: 32px; }
+  .history-panel .mini .card b { font-size: 10px; }
+  .history-panel .mini .card>span { font-size: 12px; }
+  .history-board { flex-wrap: wrap; }
+  .install-button { grid-column: 1/-1; margin-top: 0; padding: 17px 0 0; }
+  .install-button span, .install-button small { display: inline; margin-right: 10px; }
+  .results { padding: 16px; margin-top: 17px; }
+  footer { padding-bottom: max(24px, env(safe-area-inset-bottom)); font-size: 9px; }
+}
+@media(max-width: 360px) {
+  main { padding: 0 12px; }
+  .felt { height: 350px; }
+  .board .card { width: 39px; height: 56px; }
+  .board-area { top: 44%; }
+  #equity-content { gap: 7px; }
+  .equity-number { min-width: 71px; font-size: 28px; }
 }

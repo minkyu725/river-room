@@ -1,8 +1,74 @@
 <!doctype html>
-<html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#101e1b"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="description" content="승률을 읽고, 상대를 읽는 싱글플레이 홀덤 연습실"><link rel="manifest" href="./manifest.webmanifest"><link rel="icon" href="./icon.svg"><link rel="apple-touch-icon" href="./icon-192.png"><link rel="stylesheet" href="./style.css"><title>River Room · 홀덤 연습실</title></head>
-<body><link rel="stylesheet" href="./mobile.css"><main><header><a class="brand" href="./"><span class="brand-icon">♠</span> RIVER ROOM<span class="badge">PRACTICE</span></a><button id="help" class="icon-button" aria-label="게임 안내">?</button></header>
-<section class="intro"><div><p class="eyebrow">YOUR PERSONAL POKER TABLE</p><h1>패를 읽고.<br><span>확률을 익히고.</span></h1><p class="sub">실전 같은 테이블에서 쌓는, 나만의 홀덤 감각.</p></div><div class="setup"><label for="players">테이블 인원 <small>나 포함</small></label><div class="setup-row"><select id="players"><option value="2">2명 · 헤즈업</option><option value="3">3명</option><option value="4" selected>4명</option><option value="5">5명</option><option value="6">6명 · 풀 테이블</option></select><button id="new" class="primary">새 테이블 ↗</button></div></div></section>
-<div class="game-layout"><section class="play-area"><div class="table-top"><span><i class="live-dot"></i> <span id="hand-no">HAND 01</span></span><span id="street">PREFLOP</span><span>SB 10 / BB 20</span></div><div class="felt"><div id="opponents" class="opponents"></div><div class="board-area"><p class="pot-label">TOTAL POT <strong id="pot">0</strong></p><div id="board" class="cards board"></div><div class="table-wordmark">RIVER ROOM <span>NO LIMIT HOLD’EM</span></div></div><div class="hero-area"><span class="you-tag">YOU <span id="position"></span></span><div id="hero" class="cards"></div><p id="hero-hand"></p><span id="stack"></span></div></div><div id="status" class="status" role="status" aria-live="polite"></div><div id="actions" class="actions"><button id="fold" class="secondary">폴드</button><button id="call" class="secondary">체크</button><button id="raise" class="primary">레이즈</button><div class="raise-control"><label for="raise-size">총 베팅 <output id="raise-value"></output></label><input id="raise-size" type="range" min="40" max="1000" step="1" value="60"></div></div><button id="next" class="primary next" hidden>다음 핸드 →</button><section id="results" class="results" hidden></section></section>
-<aside><section class="panel equity-panel"><div class="panel-heading"><h2>나의 승률</h2><button id="toggle-equity" class="text-button">가리기</button></div><div id="equity-content"><div class="equity-number" id="equity">—<span>%</span></div><div class="meter"><div id="equity-bar"></div></div><p id="equity-detail" class="muted">가능한 상대 패를 계산하고 있어요.</p></div><p class="note">무작위 상대 패 기준의 팟 지분(동률 포함)입니다. 상대의 실제 패는 계산에 사용하지 않습니다.</p></section><section class="panel"><p class="eyebrow">TABLE INSIGHT</p><h2>상대도 당신을 읽고 있어요.</h2><p class="muted">상대는 각자의 성향으로 블러프하고, 당신의 베팅 패턴과 공개된 과거 패를 보고 의심합니다.</p><div id="personalities"></div></section><section class="panel history-panel"><div class="panel-heading"><h2>핸드 기록</h2><span id="record-count" class="muted">0 hands</span></div><div id="history"><p class="muted">첫 핸드를 마치면 기록이 남아요.</p></div></section></aside></div>
-<footer><span>작은 선택이, 더 나은 플레이를 만듭니다.</span><button id="install" class="text-button">iPhone에 설치하기 ↗</button></footer></main>
-<dialog id="help-dialog"><button id="close-help" class="icon-button close" aria-label="닫기">×</button><p class="eyebrow">WELCOME TO RIVER ROOM</p><h2>확률을 배우는 나만의 테이블</h2><p>2~6인 노리밋 텍사스 홀덤입니다. 각 핸드는 연습 칩 1,000개로 새로 시작하고 딜러가 돌아갑니다. 체크·콜·폴드·레이즈와 올인, 사이드 팟을 지원합니다.</p><p>승률은 상대의 숨겨진 패를 제외한 무작위 시뮬레이션 1,800회로 추정합니다. 표시값은 승리 확률에 동률의 팟 지분을 더한 에퀴티이며, 상대의 베팅 성향을 반영한 예측은 아닙니다.</p><p>AI는 자기 패와 공개 정보만으로 판단합니다. 확률적으로 블러프하고, 큰 베팅과 과거에 공개된 당신의 패를 보고 블러프를 의심하기도 합니다. 핸드가 끝나면 폴드한 패까지 공개합니다.</p><h3>iPhone 홈 화면에 설치</h3><p>배포된 페이지를 Safari로 열고 <b>공유 → 홈 화면에 추가 → 추가</b>를 누르세요. 한 번 로드한 후에는 오프라인에서도 연습할 수 있습니다. 기록은 이 기기에 저장됩니다.</p><p class="muted">실제 돈을 사용하지 않는 학습용 게임입니다.</p></dialog><script type="module" src="./app.js"></script></body></html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#202832">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="description" content="2~6인 싱글플레이 홀덤. 승률을 확인하고 상대의 패를 복기하는 연습 테이블.">
+  <link rel="manifest" href="./manifest.webmanifest">
+  <link rel="icon" href="./icon.svg">
+  <link rel="apple-touch-icon" href="./icon-192.png">
+  <link rel="stylesheet" href="./style.css">
+  <link rel="stylesheet" href="./mobile.css">
+  <title>River Room · 홀덤 연습</title>
+</head>
+<body>
+<main>
+  <header>
+    <a class="brand" href="./"><span class="brand-icon">♠</span><span>River Room<small>홀덤 연습 테이블</small></span></a>
+    <button id="help" class="icon-button" aria-label="게임 안내">?</button>
+  </header>
+  <section class="setup" aria-label="테이블 설정">
+    <div class="setup-title"><span class="live-dot"></span>연습 테이블 <span class="blinds">블라인드 10 / 20</span></div>
+    <div class="setup-row"><label for="players">참가 인원</label><select id="players"><option value="2">2명</option><option value="3">3명</option><option value="4" selected>4명</option><option value="5">5명</option><option value="6">6명</option></select><button id="new" class="table-button">새 테이블</button></div>
+  </section>
+  <div class="game-layout">
+    <section class="play-area" aria-label="홀덤 테이블">
+      <div class="table-top"><span id="hand-no">핸드 1</span><span id="street">프리플롭</span><span>시작 칩 1,000</span></div>
+      <div class="felt">
+        <div class="table-rail"></div>
+        <div id="round-result" class="round-result" hidden></div>
+        <div id="opponents" class="opponents"></div>
+        <div class="board-area">
+          <div id="pot-stack" class="pot-stack" aria-hidden="true"></div>
+          <p class="pot-label">팟 <strong id="pot">0</strong></p>
+          <div id="board" class="cards board"></div>
+          <div class="table-wordmark" aria-hidden="true">River Room</div>
+        </div>
+        <div class="hero-area"><div class="hero-label"><span class="you-tag">나 <span id="position"></span></span><span id="stack"></span></div><div id="hero" class="cards"></div><p id="hero-hand"></p></div>
+      </div>
+      <section class="equity-panel" aria-label="나의 승률">
+        <div class="equity-label"><h2>내 승률</h2><button id="toggle-equity" class="text-button">가리기</button></div>
+        <div id="equity-content"><div class="equity-number" id="equity">—<span>%</span></div><div class="equity-info"><div class="meter"><div id="equity-bar"></div></div><p id="equity-detail">계산 중</p></div></div>
+        <p class="note">무작위 상대 패 기준 · 동률 지분 포함</p>
+      </section>
+      <div id="status" class="status" role="status" aria-live="polite"></div>
+      <div id="actions" class="actions">
+        <div class="bet-presets"><button id="half-pot" class="bet-chip">½ 팟</button><button id="full-pot" class="bet-chip">팟</button><button id="all-in" class="bet-chip">올인</button></div>
+        <div class="raise-control"><label for="raise-size">레이즈 총액 <output id="raise-value"></output></label><input id="raise-size" aria-label="레이즈 총액" type="range" min="40" max="1000" step="1" value="60"></div>
+        <button id="fold" class="fold-button">폴드</button><button id="call" class="call-button">체크</button><button id="raise" class="raise-button">레이즈</button>
+      </div>
+      <button id="next" class="raise-button next" hidden>다음 핸드</button>
+      <section id="results" class="results" hidden></section>
+    </section>
+    <aside>
+      <section class="opponent-notes"><h2>테이블의 상대</h2><div id="personalities"></div><p class="aside-note">큰 베팅이 항상 좋은 패는 아닙니다.<br>상대마다 블러프 빈도와 콜 기준이 다릅니다.</p></section>
+      <section class="history-panel"><div class="panel-heading"><h2>지난 핸드</h2><span id="record-count">0개</span></div><div id="history"></div></section>
+      <button id="install" class="install-button"><span>홈 화면에 설치</span><small>iPhone에서 앱처럼 사용하기</small></button>
+    </aside>
+  </div>
+  <footer>텍사스 홀덤 · 연습용 칩만 사용합니다</footer>
+</main>
+<dialog id="help-dialog">
+  <button id="close-help" class="icon-button close" aria-label="닫기">×</button>
+  <h2>테이블 안내</h2>
+  <p>2~6인 노리밋 텍사스 홀덤입니다. 각 핸드는 1,000칩으로 시작하고 딜러가 돌아갑니다. 체크, 콜, 폴드, 레이즈와 올인, 사이드 팟을 지원합니다.</p>
+  <h3>승률 읽기</h3><p>내 카드와 공개된 보드로 무작위 시뮬레이션 1,800회를 계산합니다. 동률일 때의 팟 지분도 포함합니다. 상대의 실제 카드나 베팅 성향을 반영한 예측은 아닙니다.</p>
+  <h3>상대의 플레이</h3><p>상대는 자기 카드와 공개 정보로 판단합니다. 각자의 성향에 따라 블러프하고, 내 베팅과 과거 공개된 패를 보고 블러프를 의심하기도 합니다. 핸드 종료 후 폴드한 패까지 모두 공개됩니다.</p>
+  <h3>iPhone에 설치하기</h3><p>Safari에서 <b>공유 → 홈 화면에 추가 → 추가</b>를 선택하세요. 처음 온라인으로 연 뒤에는 오프라인에서도 플레이할 수 있습니다. 기록은 이 기기에 저장됩니다.</p>
+</dialog>
+<script type="module" src="./app.js"></script>
+</body>
+</html>

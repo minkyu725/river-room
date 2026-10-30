@@ -1,0 +1,11 @@
+{
+  "boards": 134459,
+  "storedHandStates": 145350179,
+  "opponentHandsPerState": 990,
+  "allHashes": true,
+  "allCountBounds": true,
+  "independentStates": 4233,
+  "independentOpponentHands": 4190670,
+  "fullRepresentativeBoard": true,
+  "elapsedSeconds": 11.379
+}

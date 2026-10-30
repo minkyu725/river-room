@@ -1,5 +1,6 @@
-import {loadFlopProbabilities} from './flop-probabilities.js?v=20';
-import {suits,rank,suit,shuffled,evaluate,describeHand,settle,botDecision,calculateEquity} from './engine.js?v=20';
+import {loadHeadsUpProbabilities} from './headsup-probabilities.js?v=22';
+import {loadFlopProbabilities} from './flop-probabilities.js?v=22';
+import {suits,rank,suit,shuffled,evaluate,describeHand,settle,botDecision,calculateEquity} from './engine.js?v=22';
 const $=s=>document.querySelector(s);
 const profiles=[{name:'민',style:'균형형',aggression:.58,bluffRate:.12},{name:'루나',style:'공격형',aggression:.85,bluffRate:.28},{name:'제이',style:'신중형',aggression:.34,bluffRate:.07},{name:'노아',style:'변칙형',aggression:.73,bluffRate:.32},{name:'유진',style:'분석형',aggression:.5,bluffRate:.16}];
 let saved=[];try{saved=JSON.parse(localStorage.getItem('river-history')||'[]');if(!Array.isArray(saved))saved=[];}catch{}
@@ -208,24 +209,28 @@ function startingHand(h){return rank(h[0])===rank(h[1])?'포켓 페어':suit(h[0
 function calculate(){const id=++calcId;equityRequest=null;$('#equity').innerHTML='···<span>%</span>';$('#equity-detail').textContent='사전 계산표를 확인하고 있어요.';$('#equity-bar').style.width='0%';$('#hand-odds-body').innerHTML='';$('#hand-odds-status').textContent='족보별 사전 계산표를 확인하고 있어요.';
  if(game.players[0].dealt<2||game.busy){$('#equity').innerHTML='—<span>%</span>';$('#equity-detail').textContent='카드 배분·공개 후 승률을 계산합니다.';$('#hand-odds-status').textContent='카드 배분·공개를 기다리고 있어요.';return;}
  if(game.players[0].folded){$('#equity').innerHTML='—<span>%</span>';$('#equity-detail').textContent='폴드했습니다. 종료 후 전체 패를 확인하세요.';$('#hand-odds-status').textContent='폴드한 핸드는 승률을 계산하지 않습니다. 종료 후 공개된 패를 확인하세요.';return;}
- const data=equityRequest={id,hole:[...game.players[0].hole],board:[...game.board],opponents:active().length-1};if(data.board.length===3){$('#equity').innerHTML='—<span>%</span>';$('#equity-detail').textContent='상대 승률의 정확한 정적 표는 미제공입니다.';$('#hand-odds-status').textContent='플롭 확률표를 불러오는 중…';return loadFlopProbabilities(data.hole,data.board).then(result=>showEquity({id,...result})).catch(()=>showEquity({id,method:'flop-error'}));}showEquity({id,...calculateEquity(data.hole,data.board,data.opponents)});
+ const data=equityRequest={id,hole:[...game.players[0].hole],board:[...game.board],opponents:active().length-1};
+ const base=calculateEquity(data.hole,data.board,data.opponents);
+ if(!data.board.length||data.opponents===0){showEquity({id,...base});return;}
+ const categoryRequest=data.board.length===3?loadFlopProbabilities(data.hole,data.board):Promise.resolve(base);
+ const winRequest=data.opponents===1?loadHeadsUpProbabilities(data.hole,data.board):Promise.resolve(null);
+ $('#equity').innerHTML='—<span>%</span>';$('#equity-detail').textContent=data.opponents===1?'정확한 사전 승률표를 불러오는 중…':`상대 ${data.opponents}명 정확 승률표는 미제공입니다.`;
+ $('#hand-odds-status').textContent='사전 계산표를 불러오는 중…';
+ return Promise.allSettled([categoryRequest,winRequest]).then(([category,win])=>{
+  const result=category.status==='fulfilled'?category.value:{method:'unavailable',categoryError:true};
+  showEquity({id,...result,...(win.status==='fulfilled'&&win.value?win.value:{}),categories:result.categories??[],winError:win.status==='rejected'});
+ });
 }
 function percent(n){return n===0?'0.0%':n<.001?'<0.1%':(n*100).toFixed(1)+'%';}
 function showEquity(data){
  if(data.id!==calcId||game.busy||game.players[0].dealt<2)return;
- if(data.method==='flop-error'){$('#hand-odds-body').innerHTML='';$('#hand-odds-status').textContent='플롭 확률표를 불러오지 못했습니다. 다음 액션 또는 새로고침 후 다시 시도합니다.';return;}
- if(data.method==='unavailable'){
-  $('#equity').innerHTML='—<span>%</span>';$('#equity-bar').style.width='0%';
-  $('#equity-detail').textContent='이 보드의 정확한 사전 계산표가 없습니다.';
-  $('#hand-odds-status').textContent='턴의 정적 데이터는 아직 미제공입니다. 게임 중 계산과 추정은 하지 않습니다.';
-  $('#hand-odds-body').innerHTML='';return;
- }
- if(!['static','static-flop','static-river'].includes(data.method)||!Array.isArray(data.categories)){$('#hand-odds-status').textContent='사전 계산표를 불러오지 못했습니다. 페이지를 새로 열어 주세요.';return;}
- const n=data.equity===null?null:(data.equity*100).toFixed(1);
+ const chance=Number.isFinite(data.strongest)?data.strongest:Number.isFinite(data.win)&&Number.isFinite(data.tie)?data.win+data.tie:null;
+ const n=chance===null?null:(chance*100).toFixed(1),opponents=active().length-1;
  $('#equity').innerHTML=`${n??'—'}<span>%</span>`;$('#equity-bar').style.width=(n??0)+'%';
- $('#equity-detail').textContent=n===null?(data.method==='static'?'다인전의 정확한 사전 계산표가 없습니다.':'상대 승률의 정확한 정적 표는 미제공입니다.'):`사전 전수 계산표 · 상대 1명 / 동률 ${(data.tie*100).toFixed(1)}%`;
- $('#hand-odds-status').textContent=data.method==='static-flop'?'1,081가지 전수 계산표 · 족보 완성 확률 · 상대 인원 무관':data.method==='static-river'?'리버의 확정 족보 · 100% · 상대 승률과는 다릅니다.':'프리플롭 사전 전수 계산표 · 완성 확률만 제공 · 족보별 조건부 승률 미제공';
- $('#hand-odds-body').innerHTML=data.categories.slice().reverse().map(c=>`<tr><th scope="row">${c.name}</th><td>${percent(c.probability)}</td><td>—</td></tr>`).join('');
+ $('#equity-detail').textContent=n!==null?opponents===0?'남은 상대 없음 · 최강 패 100%':`공동 1등 포함 · 단독 승리 ${(data.win*100).toFixed(1)}% / 동률 ${(data.tie*100).toFixed(1)}% · ${data.denominator.toLocaleString()}가지 전수 계산`:data.winError?'정확한 사전 승률표를 불러오지 못했습니다.':`상대 ${opponents}명 정확 승률표는 아직 미제공입니다.`;
+ const categories=Array.isArray(data.categories)?data.categories:[];
+ $('#hand-odds-body').innerHTML=categories.slice().reverse().map(c=>`<tr><th scope="row">${c.name}</th><td>${percent(c.probability)}</td></tr>`).join('');
+ $('#hand-odds-status').textContent=data.categoryError?'족보 확률표를 불러오지 못했습니다. 다음 액션 또는 새로고침 후 다시 시도합니다.':!categories.length?'턴의 족보 완성 분포표는 미제공입니다. 상단 최강 패 확률과는 별개입니다.':game.board.length===3?'1,081가지 전수 계산표 · 족보 완성 확률 · 상단 최강 패 확률과는 별개입니다.':game.board.length===5?'리버의 확정 족보 · 상대보다 강할 확률은 상단에서 확인하세요.':'2,118,760개 보드 전수 계산 · 족보 완성 확률 · 상단 최강 패 확률과는 별개입니다.';
 }
 function renderHistory(){
  $('#record-count').textContent=`${history.length}개`;$('#history').replaceChildren();
@@ -273,6 +278,6 @@ function preset(fraction){if(game.done||game.busy||game.finishing||game.turn!==0
 $('#half-pot').onclick=()=>preset(.5);$('#full-pot').onclick=()=>preset(1);$('#all-in').onclick=()=>preset(Infinity);
 $('#toggle-equity').onclick=()=>{const el=$('#equity-content');el.hidden=!el.hidden;$('#toggle-equity').textContent=el.hidden?'보기':'가리기';};
 $('#hand-odds-content').hidden=true;
-$('#toggle-hand-odds').onclick=()=>{const content=$('#hand-odds-content'),button=$('#toggle-hand-odds');content.hidden=!content.hidden;button.textContent=content.hidden?'족보별 승률 보기':'족보별 승률 닫기';button.setAttribute?.('aria-expanded',String(!content.hidden));};
+$('#toggle-hand-odds').onclick=()=>{const content=$('#hand-odds-content'),button=$('#toggle-hand-odds');content.hidden=!content.hidden;button.textContent=content.hidden?'족보 완성 확률 보기':'족보 완성 확률 닫기';button.setAttribute?.('aria-expanded',String(!content.hidden));};
 $('#help').onclick=$('#install').onclick=()=>$('#help-dialog').showModal();$('#close-help').onclick=()=>$('#help-dialog').close();$('#help-dialog').onclick=e=>{if(e.target===$('#help-dialog'))$('#help-dialog').close();};renderHistory();start();
 if('serviceWorker'in navigator)navigator.serviceWorker.register('./sw.js').catch(()=>{});

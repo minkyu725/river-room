@@ -16,7 +16,7 @@ function harness(options={}){
  const document={body:options.motionAPI?node('body'):undefined,documentElement:node('html'),querySelector(s){if(!nodes.has(s))nodes.set(s,node());return nodes.get(s);},querySelectorAll(){return [...nodes.values()].flatMap(el=>el.children).filter(el=>el.classList.contains('dealing')||el.classList.contains('flipping'));},createElement:node};document.querySelector('#players').value=String(options.players??4);
  const media={matches:!!options.reducedMotion,addEventListener(event,fn){this.onchange=fn;},addListener(fn){this.onchange=fn;}};
  if(options.legacyMedia)delete media.addEventListener;
- const context=vm.createContext({...engine,loadFlopProbabilities:options.loadFlopProbabilities??(()=>Promise.reject(Error('No network in game harness'))),shuffled:options.shuffled??engine.shuffled,botDecision:options.botDecision??engine.botDecision,document,console,localStorage:{getItem:key=>{if(options.storageFails)throw Error('storage blocked');return storage.get(key)??null;},setItem(key,value){if(options.storageFails)throw Error('storage blocked');storage.set(key,value);}},matchMedia:options.noMatchMedia?undefined:()=>media,navigator:options.navigator??{},AudioContext:options.AudioContext,Worker:class{constructor(){if(options.workerUnavailable)throw Error('unavailable');workers.push(this);}postMessage(data){if(options.postFails)throw Error('post failed');this.request=data;}terminate(){this.terminated=true;}},confirm:()=>options.confirm!==false,setTimeout:f=>{timers.set(++timerId,f);return timerId;},clearTimeout:id=>timers.delete(id)});
+ const context=vm.createContext({...engine,loadHeadsUpProbabilities:options.loadHeadsUpProbabilities??(()=>Promise.reject(Error('No network in harness'))),loadFlopProbabilities:options.loadFlopProbabilities??(()=>Promise.reject(Error('No network in game harness'))),shuffled:options.shuffled??engine.shuffled,botDecision:options.botDecision??engine.botDecision,document,console,localStorage:{getItem:key=>{if(options.storageFails)throw Error('storage blocked');return storage.get(key)??null;},setItem(key,value){if(options.storageFails)throw Error('storage blocked');storage.set(key,value);}},matchMedia:options.noMatchMedia?undefined:()=>media,navigator:options.navigator??{},AudioContext:options.AudioContext,Worker:class{constructor(){if(options.workerUnavailable)throw Error('unavailable');workers.push(this);}postMessage(data){if(options.postFails)throw Error('post failed');this.request=data;}terminate(){this.terminated=true;}},confirm:()=>options.confirm!==false,setTimeout:f=>{timers.set(++timerId,f);return timerId;},clearTimeout:id=>timers.delete(id)});
  const src=readFileSync(new URL('../app.js',import.meta.url),'utf8').replace(/^import[^\n]+\n/gm,'');vm.runInContext(src+'\nglobalThis.inspect=()=>game;globalThis.restart=start;globalThis.currentRequest=()=>equityRequest;',context);
  return {context,nodes,timers,workers,storage,media,animations,game:()=>context.inspect(),tick(){const [id,fn]=timers.entries().next().value||[];if(fn){timers.delete(id);fn();return true;}return false;}};
 }
@@ -56,11 +56,11 @@ test('next hand carries stacks, excludes busted seats, and conserves table chips
 
 
 test('game uses static lookup without constructing a worker or simulation',()=>{
- const h=harness({players:2});assert.equal(h.workers.length,0);assert.ok(h.nodes.get('#equity-detail').textContent.includes('사전'));assert.equal((h.nodes.get('#hand-odds-body').innerHTML.match(/<tr>/g)||[]).length,9);
+ const h=harness({players:2});assert.equal(h.workers.length,0);assert.ok(h.nodes.get('#equity-detail').textContent.includes('전수 계산'));assert.equal((h.nodes.get('#hand-odds-body').innerHTML.match(/<tr>/g)||[]).length,9);
  const before=h.nodes.get('#equity').innerHTML;h.context.calculate();assert.equal(h.nodes.get('#equity').innerHTML,before);
 });
 test('multiway preflop shows exact category probabilities without estimated equity',()=>{
- const h=harness();assert.equal(h.nodes.get('#equity').innerHTML,'—<span>%</span>');assert.ok(h.nodes.get('#equity-detail').textContent.includes('다인전'));assert.equal((h.nodes.get('#hand-odds-body').innerHTML.match(/<tr>/g)||[]).length,9);
+ const h=harness();assert.equal(h.nodes.get('#equity').innerHTML,'—<span>%</span>');assert.ok(h.nodes.get('#equity-detail').textContent.includes('상대 3명'));assert.equal((h.nodes.get('#hand-odds-body').innerHTML.match(/<tr>/g)||[]).length,9);
 });
 
 test('hand odds toggle is independent and clears old results when folding',()=>{
@@ -92,8 +92,8 @@ test('cancelling participant change restores selection without changing the game
  const h=harness({confirm:false}),before=h.game();h.nodes.get('#players').value='6';h.nodes.get('#players').onchange();assert.equal(h.game(),before);assert.equal(h.nodes.get('#players').value,'4');
 });
 
-test('postflop has no live calculation and stale replies cannot replace its empty state',()=>{
- const h=harness({players:2}),g=h.game();g.board=g.deck.splice(-4);h.context.calculate();assert.equal(h.nodes.get('#equity').innerHTML,'—<span>%</span>');assert.equal(h.nodes.get('#hand-odds-body').innerHTML,'');assert.ok(h.nodes.get('#equity-detail').textContent.includes('사전 계산표'));
+test('postflop has no live calculation and stale replies cannot replace its empty state',async()=>{
+ const h=harness({players:2}),g=h.game();g.board=g.deck.splice(-4);await h.context.calculate();assert.equal(h.nodes.get('#equity').innerHTML,'—<span>%</span>');assert.equal(h.nodes.get('#hand-odds-body').innerHTML,'');assert.ok(h.nodes.get('#equity-detail').textContent.includes('사전 승률표'));
  const id=h.context.currentRequest().id;h.context.showEquity({id:id-1,...engine.calculateEquity(g.players[0].hole,[],1)});assert.equal(h.nodes.get('#hand-odds-body').innerHTML,'');
 });
 
@@ -284,6 +284,15 @@ test('async flop lookup shows exact completion counts and rejects stale replies 
  const pending=[];const h=harness({players:2,loadFlopProbabilities:()=>new Promise((resolve,reject)=>pending.push({resolve,reject}))}),g=h.game();g.board=g.deck.splice(-3);const first=h.context.calculate();assert.ok(h.nodes.get('#hand-odds-status').textContent.includes('불러오는 중'));
  const result={method:'static-flop',equity:null,categories:engine.names.map((name,category)=>({name,category,probability:category===1?1:0}))};
  pending[0].resolve(result);await first;assert.ok(h.nodes.get('#hand-odds-status').textContent.includes('1,081'));assert.ok(h.nodes.get('#hand-odds-body').innerHTML.includes('100.0%'));
- const stale=h.context.calculate();g.board.push(g.deck.pop());h.context.calculate();const status=h.nodes.get('#hand-odds-status').textContent;pending[1].resolve(result);await stale;assert.equal(h.nodes.get('#hand-odds-status').textContent,status);assert.equal(h.nodes.get('#hand-odds-body').innerHTML,'');
+ const stale=h.context.calculate();g.board.push(g.deck.pop());await h.context.calculate();const status=h.nodes.get('#hand-odds-status').textContent;pending[1].resolve(result);await stale;assert.equal(h.nodes.get('#hand-odds-status').textContent,status);assert.equal(h.nodes.get('#hand-odds-body').innerHTML,'');
  g.board.pop();const failed=h.context.calculate();pending[2].reject(Error('offline'));await failed;assert.ok(h.nodes.get('#hand-odds-status').textContent.includes('불러오지 못했습니다'));assert.equal(h.nodes.get('#hand-odds-body').innerHTML,'');
+});
+
+test('strongest-hand headline includes tied first place instead of splitting pot share',()=>{
+ const h=harness({players:2}),id=h.context.currentRequest().id;
+ h.context.showEquity({id,method:'static-river-hu',win:0,tie:1,strongest:1,equity:.5,denominator:990,categories:[]});
+ assert.equal(h.nodes.get('#equity').innerHTML,'100.0<span>%</span>');assert.ok(h.nodes.get('#equity-detail').textContent.includes('공동 1등 포함'));assert.ok(h.nodes.get('#equity-detail').textContent.includes('동률 100.0%'));
+});
+test('late heads-up win lookup cannot overwrite a later street or folded hand',async()=>{
+ const pending=[];const h=harness({players:2,loadHeadsUpProbabilities:()=>new Promise((resolve,reject)=>pending.push({resolve,reject}))}),g=h.game();g.board=g.deck.splice(-4);const first=h.context.calculate();g.players[0].folded=true;h.context.calculate();const before=h.nodes.get('#equity-detail').textContent;pending[0].resolve({method:'static-turn-hu',strongest:1,win:1,tie:0,denominator:45540});await first;assert.equal(h.nodes.get('#equity-detail').textContent,before);assert.equal(h.nodes.get('#equity').innerHTML,'—<span>%</span>');
 });

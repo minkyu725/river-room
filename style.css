@@ -91,7 +91,7 @@ header { height: 94px; display: flex; align-items: center; justify-content: spac
 .pot-label strong { font-size: 25px; font-weight: 600; color: #fffefa; margin-left: 3px; font-variant-numeric: tabular-nums; }
 .pot-chip { height: 18px; width: 18px; border-radius: 50%; background: #b38c50; border: 3px dashed #f6e4bd; box-shadow: 0 2px 0 #87652e; margin-right: 2px; }
 .card.empty { background: #2846363d; border: 1px solid #d2e2d02e; box-shadow: none; align-items: center; justify-content: center; color: #c4d7c442; font-size: 24px; }
-.hero-area { position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); min-width: 150px; text-align: center; }
+.hero-area { position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%); min-width: 150px; text-align: center; }
 .hero-label { display: flex; align-items: center; justify-content: center; gap: 13px; margin-bottom: 8px; color: #f4f7f4; font-size: 11px; }
 .you-tag { font-weight: 700; }
 #position { font-size: 10px; color: #f0d9a0; font-weight: 400; }
@@ -103,7 +103,7 @@ header { height: 94px; display: flex; align-items: center; justify-content: spac
 .card.flipping { animation: flip-card .18s ease-out; }
 @keyframes deal-card { from { opacity: 0; transform: translateY(-10px) rotate(var(--card-tilt, 0deg)); } to { opacity: 1; transform: rotate(var(--card-tilt, 0deg)); } }
 @keyframes flip-card { from { opacity: 0; transform: rotateY(80deg); } to { opacity: var(--card-opacity, 1); transform: none; } }
-.hero-area #hero-hand { margin: 10px 0 0; font-size: 12px; font-weight: 600; color: var(--muted); }
+#hero-hand { position: relative; width: min(340px, 90%); min-height: 32px; margin: 0 auto; text-align: center; font-size: 12px; font-weight: 600; color: var(--muted); }
 .equity-panel { display: flex; align-items: center; flex-wrap: wrap; gap: 12px; border-bottom: 1px solid var(--line); margin: 21px 2px 0; padding-bottom: 14px; }
 .equity-label { display: flex; flex-direction: column; align-items: flex-start; gap: 1px; }
 h2 { font-size: 13px; margin: 0; font-weight: 650; }
@@ -204,7 +204,7 @@ dialog p { color: var(--muted); font-size: 13px; line-height: 1.9; }
 
 /* Keep full hand explanations readable inside seats and narrow review rows. */
 .hero-area { width: min(340px, 90%); }
-.hero-area #hero-hand { line-height: 1.5; overflow-wrap: anywhere; }
+#hero-hand { line-height: 1.5; overflow-wrap: anywhere; }
 .opponent .seat-status { overflow-wrap: anywhere; }
 .result-row { flex-wrap: wrap; }
 .result-row>div:first-child { flex: 1 1 130px; }

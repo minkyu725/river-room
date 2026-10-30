@@ -2,3 +2,6 @@ node_modules/
 _site/
 .DS_Store
 data/flop-v1/*.tmp
+data/river-hu-v1/*.tmp
+data/flop-hu-v1/*.tmp
+data/turn-hu-v1/*.tmp

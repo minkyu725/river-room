@@ -12,7 +12,7 @@
 |---|---|---|
 | 1 | 완료·배포 검증 | PR #20, merge `2b7b41495c10bb287a1c0d1c305f9a39bb057aec`, Pages run `41146072556` |
 | 2 | 작업 중 | 완료·배포 검증: PR #22, merge `9f0e8dcebfd6ae704f0bb4a698c18e93365ddc5f`, Pages `41148159361` |
-| 3 | 작업 중 | matching 3개 정확 식 및 Hero 삭제 모멘트 검증 |
+| 3 | 전체 생성·검증 완료 | 모든 스트리트 앱 연동 및 79개 테스트 통과; PR/CI/배포 대기 |
 | 4 | 대기 | 3명 단계 배포 후 진행 |
 | 5 | 대기 | 4명 단계 배포 후 진행 |
 | 6 | 대기 | 5명 단계 배포 후 진행, 총 7명 UI 포함 |
@@ -64,3 +64,5 @@ k=3 matching은 원래 그래프 G의 line graph L(G)에서 independent vertex t
 - D[a]++, D[b]++, 양쪽 adjacency에 간선 추가.
 
 먼저 이 incremental 갱신을 그래프 전체 재계산과 매 단계 비교하고, 삭제 공식도 함께 대조합니다. 이 방법은 Hero마다 990개 간선/삼각형을 다시 열거하는 비용을 피합니다. 상대 3명 리버 wins/ties는 u32 각각으로 저장할 수 있지만 턴 이후는 u64가 필요합니다. 높은 단계의 프리플롭은 u128/BigInt가 필요합니다. 압축 후 전체 Pages 크기를 단계마다 다시 확인합니다.
+
+상대 3명 전체 생성·검증 결과는 data/MULTIWAY.md, data/river-three-verification.json, data/three-street-verification.json, data/three-graph-verification.json에 기록했습니다. 로컬 브라우저 v24의 상대 3명 프리플롭 확률과 390px 가로 넘침 없음을 확인했으며, postflop HTTP/공개 배포 검증은 PR 머지 후 수행합니다.

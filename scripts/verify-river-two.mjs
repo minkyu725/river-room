@@ -1,0 +1,13 @@
+import fs from 'node:fs';import {gunzipSync} from 'node:zlib';import {createHash} from 'node:crypto';import assert from 'node:assert/strict';import {countTwoOpponents,bruteForceTwoOpponents} from './two-opponent-reference.mjs';
+const root='data/river-two-v1/',m=JSON.parse(fs.readFileSync(root+'manifest.json')),keys=fs.readFileSync('data/river-hu-v1/keys.bin'),hash=b=>createHash('sha256').update(b).digest('hex');
+assert.equal(hash(keys),m.keysSha256);assert.equal(hash(fs.readFileSync('scripts/generate-river-two.cpp')),m.generatorSha256);assert.equal(Object.keys(m.chunks).length,1051);
+let seed=29104;const rand=n=>{seed=(Math.imul(seed,1664525)+1013904223)>>>0;return seed%n;};let bounds=0,probes=0;const t=Date.now();
+for(let chunk=0;chunk<1051;chunk++){
+ const entry=m.chunks[chunk],packed=fs.readFileSync(root+chunk+'.bin.gz');assert.equal(packed.length,entry.bytes);assert.equal(hash(packed),entry.sha256);const raw=gunzipSync(packed);assert.equal(raw.length,entry.rawBytes);assert.equal(hash(raw),entry.rawSha256);assert.equal(raw.toString('ascii',0,4),'R2W1');const start=raw.readUInt32LE(4),n=raw.readUInt32LE(8);assert.equal(start,chunk*128);assert.equal(n,Math.min(128,134459-start));assert.equal(raw.length,12+n*5405);
+ for(let o=12;o<raw.length;o+=5){const value=raw.readUIntLE(o,5),wins=value%1048576,ties=Math.floor(value/1048576);assert.ok(wins+ties<=893970);assert.equal(wins%2,0);assert.equal(ties%2,0);bounds++;}
+ const bi=start+rand(n),ordinal=rand(1081);let k=keys.readUInt32LE(8+4*bi),board=[];for(let i=0;i<5;i++){board.unshift(k%64);k=Math.floor(k/64);}const deck=Array.from({length:52},(_,i)=>i).filter(c=>!board.includes(c));let a=0,b=1,ord=0;outer:for(a=0;a<46;a++)for(b=a+1;b<47;b++){if(ord===ordinal)break outer;ord++;}const hole=[deck[a],deck[b]];
+ const {hands,own,...reference}=countTwoOpponents(hole,board),brute=bruteForceTwoOpponents(hole,board);assert.deepEqual(reference,brute);
+ const offset=12+(bi-start)*5405+ordinal*5,value=raw.readUIntLE(offset,5),wins=value%1048576,ties=Math.floor(value/1048576);assert.deepEqual({wins,ties,strongest:wins+ties,denominator:893970},reference);probes++;
+ if(chunk%128===0)console.log(JSON.stringify({chunk,bounds,probes,seconds:(Date.now()-t)/1000}));
+}
+assert.equal(bounds,145350179);const report={opponents:2,riverStates:bounds,independentlyEnumeratedStates:probes,orderedOpponentDeals:probes*893970,manifestSha256:hash(fs.readFileSync(root+'manifest.json')),verifierSha256:hash(fs.readFileSync(import.meta.filename)),seconds:(Date.now()-t)/1000};fs.writeFileSync('data/river-two-verification.json',JSON.stringify(report,null,2)+'\n');console.log(report);

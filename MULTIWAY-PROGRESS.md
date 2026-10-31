@@ -12,8 +12,8 @@
 |---|---|---|
 | 1 | 완료·배포 검증 | PR #20, merge `2b7b41495c10bb287a1c0d1c305f9a39bb057aec`, Pages run `41146072556` |
 | 2 | 작업 중 | 완료·배포 검증: PR #22, merge `9f0e8dcebfd6ae704f0bb4a698c18e93365ddc5f`, Pages `41148159361` |
-| 3 | 전체 생성·검증 완료 | 모든 스트리트 앱 연동 및 79개 테스트 통과; PR/CI/배포 대기 |
-| 4 | 대기 | 3명 단계 배포 후 진행 |
+| 3 | 완료·배포 검증 | PR #23, merge `c97f5617cd0542e7dec9df2da9b7509c9f9702f2`, Pages `41150080074` |
+| 4 | 작업 중 | 정확 matching 4개 식·Hero 삭제 모멘트가 660개 직접 열거 사례와 일치 |
 | 5 | 대기 | 4명 단계 배포 후 진행 |
 | 6 | 대기 | 5명 단계 배포 후 진행, 총 7명 UI 포함 |
 
@@ -66,3 +66,15 @@ k=3 matching은 원래 그래프 G의 line graph L(G)에서 independent vertex t
 먼저 이 incremental 갱신을 그래프 전체 재계산과 매 단계 비교하고, 삭제 공식도 함께 대조합니다. 이 방법은 Hero마다 990개 간선/삼각형을 다시 열거하는 비용을 피합니다. 상대 3명 리버 wins/ties는 u32 각각으로 저장할 수 있지만 턴 이후는 u64가 필요합니다. 높은 단계의 프리플롭은 u128/BigInt가 필요합니다. 압축 후 전체 Pages 크기를 단계마다 다시 확인합니다.
 
 상대 3명 전체 생성·검증 결과는 data/MULTIWAY.md, data/river-three-verification.json, data/three-street-verification.json, data/three-graph-verification.json에 기록했습니다. 로컬 브라우저 v24의 상대 3명 프리플롭 확률과 390px 가로 넘침 없음을 확인했으며, postflop HTTP/공개 배포 검증은 PR 머지 후 수행합니다.
+
+
+## 상대 3명 배포 완료 / 상대 4명 시작
+
+PR #23 / merge c97f5617cd0542e7dec9df2da9b7509c9f9702f2 / Pages 41150080074 success를 확인했습니다. 공개 파일 23개와 실제 HTTP 로더 4개 상태가 로컬 검증본과 일치했습니다. 로컬 브라우저 v24에서 상대 3명 확률, 폴드→다음 핸드, 390px 가로 넘침 없음을 확인했습니다.
+
+다음 단계의 직접 열거 기준 구현은 scripts/four-opponent-matching.mjs입니다. 660개 작은 그래프의 직접 matching 4개 열거 및 완전 그래프 분모 543,194,051,400과 일치합니다. 아직 실제 카드 전체 표는 생성하지 않았습니다.
+
+- 상세 미검증 native 갱신 유도는 허용 임시 경로 /private/tmp/river-round/mw4-derivation.md에 보존했습니다. 검증된 JS 모멘트와 대조한 뒤 구현합니다.
+- 기존 matching-three.hpp는 상대 3명 데이터 manifest가 SHA를 고정합니다. 이를 수정하지 말고 matching-four.hpp에서 포함/확장하여 레거시 검증을 유지합니다.
+- 전체 데이터가 약 917MB이므로 상대 4명 배포 전에 기존 HU 리버/턴/플롭을 손실 없이 압축하고 모든 기존 상태가 동일하게 해제되는지 확인합니다.
+- 상대 4명 이상 프리플롭은 JS 안전 정수를 초과합니다. 정확한 uint128/BigInt 카운트와 안전한 비율 계산/분모 표시를 먼저 설계합니다.

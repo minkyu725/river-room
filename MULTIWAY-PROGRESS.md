@@ -14,7 +14,7 @@
 | 2 | 작업 중 | 완료·배포 검증: PR #22, merge `9f0e8dcebfd6ae704f0bb4a698c18e93365ddc5f`, Pages `41148159361` |
 | 3 | 완료·배포 검증 | PR #23, merge `c97f5617cd0542e7dec9df2da9b7509c9f9702f2`, Pages `41150080074` |
 | 4 | 완료·배포 검증 | PR #24, merge `7172978b6f843f2953ee642785f18989d593f632`, Pages `41152755319` |
-| 5 | 전체 리버 생성 중 | 52개 support 계수·fast hom·native 누적/쌍둥이 캐시 검증 완료, 3개 worker로 5/6 리버 공동 생성 |
+| 5 | 전체 생성·독립 검증 완료 | 99개 테스트 예정, 데이터 commit 5a28a4ba726dfeb4d598cbf7be3e94b405d57e21 고정; UI/CI/배포 검증 대기 |
 | 6 | 대기 | 5명 단계 배포 후 진행, 총 7명 UI 포함 |
 
 ## 실행·한도·재개 규칙
@@ -98,3 +98,5 @@ PR #24, merge 7172978b6f843f2953ee642785f18989d593f632, Pages 41152755319 succes
 생성 완료 후 scripts/derive-five-six.cpp를 5 인자로 실행하고 scripts/pack-many-tables.py 5로 포장합니다. 6명 리버는 공동 계산하지만 전체 스트리트 합산/검증/배포는 5명부터 완료합니다. uint128 합산 및 6명 플롭 128bit 행을 구현했으나 전체 생성 데이터와의 검증은 대기 중입니다.
 
 Pages의 공식 1GB 제한 때문에 큰 5/6명 파일은 동일한 기존 공개 GitHub 저장소의 immutable commit URL을 고려합니다. 실제 기존 커밋 .gz 응답에서 CORS * 및 cross-origin 전달 가능을 확인했습니다. 새 서비스·유료 비용·권한 확대 없이 동일한 검증 byte를 조회하며, 원본 commit를 고정하고 압축 전후 SHA를 계속 검증해야 합니다. table-source.js는 아직 빈 설정(로컬 조회)이며, 검증된 데이터 commit가 게시된 뒤에만 revision을 채웁니다.
+
+리버 5/6명 1,051 paired chunk가 모두 완성됐고 worker 3개는 exit0으로 확인했습니다. 상대 5명 전체 스트리트를 생성·검증했으며 data/five-verification.json을 참고하세요. 실제 계정 한도 리셋 후 정상 허용 상태에서 진행했습니다. 상대 6명은 아직 리버 원본만 완료한 단계입니다.

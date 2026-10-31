@@ -1,10 +1,11 @@
-import {exactPercent} from './exact-probability.js?v=25';
-import {loadFourOpponentProbabilities} from './four-opponent-probabilities.js?v=25';
-import {loadThreeOpponentProbabilities} from './three-opponent-probabilities.js?v=25';
-import {loadTwoOpponentProbabilities} from './two-opponent-probabilities.js?v=25';
-import {loadHeadsUpProbabilities} from './headsup-probabilities.js?v=25';
-import {loadFlopProbabilities} from './flop-probabilities.js?v=25';
-import {suits,rank,suit,shuffled,evaluate,describeHand,settle,botDecision,calculateEquity} from './engine.js?v=25';
+import {loadFiveOpponentProbabilities} from './five-opponent-probabilities.js?v=26';
+import {exactPercent} from './exact-probability.js?v=26';
+import {loadFourOpponentProbabilities} from './four-opponent-probabilities.js?v=26';
+import {loadThreeOpponentProbabilities} from './three-opponent-probabilities.js?v=26';
+import {loadTwoOpponentProbabilities} from './two-opponent-probabilities.js?v=26';
+import {loadHeadsUpProbabilities} from './headsup-probabilities.js?v=26';
+import {loadFlopProbabilities} from './flop-probabilities.js?v=26';
+import {suits,rank,suit,shuffled,evaluate,describeHand,settle,botDecision,calculateEquity} from './engine.js?v=26';
 const $=s=>document.querySelector(s);
 const profiles=[{name:'민',style:'균형형',aggression:.58,bluffRate:.12},{name:'루나',style:'공격형',aggression:.85,bluffRate:.28},{name:'제이',style:'신중형',aggression:.34,bluffRate:.07},{name:'노아',style:'변칙형',aggression:.73,bluffRate:.32},{name:'유진',style:'분석형',aggression:.5,bluffRate:.16}];
 let saved=[];try{saved=JSON.parse(localStorage.getItem('river-history')||'[]');if(!Array.isArray(saved))saved=[];}catch{}
@@ -217,8 +218,8 @@ function calculate(){const id=++calcId;equityRequest=null;$('#equity').innerHTML
  const base=calculateEquity(data.hole,data.board,data.opponents);
  if(!data.board.length||data.opponents===0){showEquity({id,...base});return;}
  const categoryRequest=data.board.length===3?loadFlopProbabilities(data.hole,data.board):Promise.resolve(base);
- const winRequest=data.opponents===1?loadHeadsUpProbabilities(data.hole,data.board):data.opponents===2?loadTwoOpponentProbabilities(data.hole,data.board):data.opponents===3?loadThreeOpponentProbabilities(data.hole,data.board):data.opponents===4?loadFourOpponentProbabilities(data.hole,data.board):Promise.resolve(null);
- $('#equity').innerHTML='—<span>%</span>';$('#equity-detail').textContent=data.opponents<=4?'정확한 사전 승률표를 불러오는 중…':`상대 ${data.opponents}명 정확 승률표는 미제공입니다.`;
+ const winRequest=data.opponents===1?loadHeadsUpProbabilities(data.hole,data.board):data.opponents===2?loadTwoOpponentProbabilities(data.hole,data.board):data.opponents===3?loadThreeOpponentProbabilities(data.hole,data.board):data.opponents===4?loadFourOpponentProbabilities(data.hole,data.board):data.opponents===5?loadFiveOpponentProbabilities(data.hole,data.board):Promise.resolve(null);
+ $('#equity').innerHTML='—<span>%</span>';$('#equity-detail').textContent=data.opponents<=5?'정확한 사전 승률표를 불러오는 중…':`상대 ${data.opponents}명 정확 승률표는 미제공입니다.`;
  $('#hand-odds-status').textContent='사전 계산표를 불러오는 중…';
  return Promise.allSettled([categoryRequest,winRequest]).then(([category,win])=>{
   const result=category.status==='fulfilled'?category.value:{method:'unavailable',categoryError:true};

@@ -1,4 +1,6 @@
-# Candidate exact joint stage5/6 algorithm — UNIMPLEMENTED, must prove/verify
+# Exact joint stage5/6 matching strategy and implementation
+
+Implemented foundation verified against independent subset-DP/direct homomorphisms/native prefix reconstruction. Full delivery status is recorded in MULTIWAY-PROGRESS.md and data/five-verification.json; opponent 6 still requires full-street aggregation and UI/deployment.
 
 Goal: compute both remaining matching coefficients m5,m6 from <=52 small connected graph homomorphism counts, reusing threshold graph stats and O(47^2) Hero deletion. Avoid manually deriving I5/I6 motifs or sampling. All future ideas below require independent small-graph tests and native prefix reconstruction tests. Do not claim achieved from this note.
 

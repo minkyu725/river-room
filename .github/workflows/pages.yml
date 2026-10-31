@@ -25,7 +25,7 @@ jobs:
       - name: Prepare static site
         run: |
           mkdir _site
-          cp five-opponent-probabilities.js preflop-five-counts.js table-source.js compressed-table.js exact-probability.js four-opponent-probabilities.js preflop-four-counts.js multiway-probabilities.js three-opponent-probabilities.js preflop-three-counts.js two-opponent-probabilities.js preflop-two-counts.js index.html style.css mobile.css app.js flop-probabilities.js headsup-probabilities.js river-probabilities.js preflop-headsup-counts.js engine.js sw.js manifest.webmanifest icon.svg icon-192.png icon-512.png _site/
+          cp six-opponent-probabilities.js preflop-six-counts.js five-opponent-probabilities.js preflop-five-counts.js table-source.js compressed-table.js exact-probability.js four-opponent-probabilities.js preflop-four-counts.js multiway-probabilities.js three-opponent-probabilities.js preflop-three-counts.js two-opponent-probabilities.js preflop-two-counts.js index.html style.css mobile.css app.js flop-probabilities.js headsup-probabilities.js river-probabilities.js preflop-headsup-counts.js engine.js sw.js manifest.webmanifest icon.svg icon-192.png icon-512.png _site/
           python3 scripts/copy-pages-data.py
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3

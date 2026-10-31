@@ -260,3 +260,8 @@ dialog p { color: var(--muted); font-size: 13px; line-height: 1.9; }
 /* Shared card-view groups preserve the opponent view's separate rail frames. */
 .hand-popover .seven-group>.cards { width: max-content; margin: 0; padding: 4px; border-radius: 4px; background: var(--rail); }
 .hand-popover .card { transform: none; --card-tilt: 0deg; }
+/* Lower seven-player seats extend onto the light page at desktop widths. */
+@media(min-width:721px) {
+ .felt[data-players="7"] :is(#opponent-5,#opponent-6) > b,
+ .felt[data-players="7"] :is(#opponent-5,#opponent-6) .seat-status { color: var(--ink); }
+}

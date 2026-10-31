@@ -1,13 +1,14 @@
-import {loadFiveOpponentProbabilities} from './five-opponent-probabilities.js?v=26';
-import {exactPercent} from './exact-probability.js?v=26';
-import {loadFourOpponentProbabilities} from './four-opponent-probabilities.js?v=26';
-import {loadThreeOpponentProbabilities} from './three-opponent-probabilities.js?v=26';
-import {loadTwoOpponentProbabilities} from './two-opponent-probabilities.js?v=26';
-import {loadHeadsUpProbabilities} from './headsup-probabilities.js?v=26';
-import {loadFlopProbabilities} from './flop-probabilities.js?v=26';
-import {suits,rank,suit,shuffled,evaluate,describeHand,settle,botDecision,calculateEquity} from './engine.js?v=26';
+import {loadSixOpponentProbabilities} from './six-opponent-probabilities.js?v=27';
+import {loadFiveOpponentProbabilities} from './five-opponent-probabilities.js?v=27';
+import {exactPercent} from './exact-probability.js?v=27';
+import {loadFourOpponentProbabilities} from './four-opponent-probabilities.js?v=27';
+import {loadThreeOpponentProbabilities} from './three-opponent-probabilities.js?v=27';
+import {loadTwoOpponentProbabilities} from './two-opponent-probabilities.js?v=27';
+import {loadHeadsUpProbabilities} from './headsup-probabilities.js?v=27';
+import {loadFlopProbabilities} from './flop-probabilities.js?v=27';
+import {suits,rank,suit,shuffled,evaluate,describeHand,settle,botDecision,calculateEquity} from './engine.js?v=27';
 const $=s=>document.querySelector(s);
-const profiles=[{name:'민',style:'균형형',aggression:.58,bluffRate:.12},{name:'루나',style:'공격형',aggression:.85,bluffRate:.28},{name:'제이',style:'신중형',aggression:.34,bluffRate:.07},{name:'노아',style:'변칙형',aggression:.73,bluffRate:.32},{name:'유진',style:'분석형',aggression:.5,bluffRate:.16}];
+const profiles=[{name:'민',style:'균형형',aggression:.58,bluffRate:.12},{name:'루나',style:'공격형',aggression:.85,bluffRate:.28},{name:'제이',style:'신중형',aggression:.34,bluffRate:.07},{name:'노아',style:'변칙형',aggression:.73,bluffRate:.32},{name:'유진',style:'분석형',aggression:.5,bluffRate:.16},{name:'하늘',style:'수비형',aggression:.38,bluffRate:.08}];
 let saved=[];try{saved=JSON.parse(localStorage.getItem('river-history')||'[]');if(!Array.isArray(saved))saved=[];}catch{}
 let history=saved.filter(validRecord).slice(0,30),hand=0,dealer=-1,game,timer,token=0,calcId=0;
 let equityRequest,sequence;
@@ -63,7 +64,7 @@ function animateAction(i,kind,paid){
 }
 function validRecord(h){
  const isCard=c=>Number.isInteger(c)&&c>=0&&c<52,isAmount=n=>Number.isFinite(n)&&n>=0;
- if(!h||!Number.isInteger(h.hand)||h.hand<1||!Number.isFinite(h.net)||!Array.isArray(h.players)||h.players.length<2||h.players.length>6||!Array.isArray(h.board)||h.board.length>5||!h.board.every(isCard)||!Array.isArray(h.log)||!h.log.every(x=>typeof x==='string'))return false;
+ if(!h||!Number.isInteger(h.hand)||h.hand<1||!Number.isFinite(h.net)||!Array.isArray(h.players)||h.players.length<2||h.players.length>7||!Array.isArray(h.board)||h.board.length>5||!h.board.every(isCard)||!Array.isArray(h.log)||!h.log.every(x=>typeof x==='string'))return false;
  if(!h.players.every(p=>p&&typeof p.name==='string'&&p.name.length<=60&&Array.isArray(p.hole)&&p.hole.length===2&&p.hole.every(isCard)&&isAmount(p.total)&&isAmount(p.payout)))return false;
  const cards=[...h.board,...h.players.flatMap(p=>p.hole)];
  return new Set(cards).size===cards.length&&(h.revealed===undefined||Number.isInteger(h.revealed)&&h.revealed>=0&&h.revealed<=h.board.length)&&(h.hypothetical===undefined||Array.isArray(h.hypothetical)&&h.hypothetical.length>0&&h.hypothetical.every(name=>h.players.some(p=>p.name===name)));
@@ -89,12 +90,12 @@ globalThis.document.addEventListener?.('pointerdown',unlockAudio,{passive:true})
 globalThis.document.addEventListener?.('keydown',unlockAudio);
 const streets=['프리플롭','플롭','턴','리버'];
 // Seats follow the table perimeter. Leave the center clear for the board.
-const seats={1:[[50,3]],2:[[22,12],[78,12]],3:[[15,23],[50,3],[85,23]],4:[[12,34],[33,5],[67,5],[88,34]],5:[[10,38],[25,9],[50,2],[75,9],[90,38]]};
-const portraitColors=['#d3ad72','#bb817c','#8faba2','#a19ebc','#7ca4b8'];
+const seats={1:[[50,3]],2:[[22,12],[78,12]],3:[[15,23],[50,3],[85,23]],4:[[12,34],[33,5],[67,5],[88,34]],5:[[10,38],[25,9],[50,2],[75,9],[90,38]],6:[[10,32],[32,5],[68,5],[90,32],[86,75],[14,75]]};
+const portraitColors=['#d3ad72','#bb817c','#8faba2','#a19ebc','#7ca4b8','#9cae97'];
 function portrait(i){
- const hair=['M10 23Q5 5 23 7Q39 5 37 24L32 16 24 19 18 15Z','M7 35V19Q8 4 24 5Q41 5 41 23V36L33 31V18L17 16V32Z','M10 19Q10 4 24 6Q38 6 38 21L31 14 20 17Z','M8 22L9 12 18 10 22 4 28 10 37 10 40 24 32 17 25 21 15 16Z','M9 23Q4 8 19 6Q32 0 39 14L36 24 31 17 14 18Z'][i];
+ const hair=['M10 23Q5 5 23 7Q39 5 37 24L32 16 24 19 18 15Z','M7 35V19Q8 4 24 5Q41 5 41 23V36L33 31V18L17 16V32Z','M10 19Q10 4 24 6Q38 6 38 21L31 14 20 17Z','M8 22L9 12 18 10 22 4 28 10 37 10 40 24 32 17 25 21 15 16Z','M9 23Q4 8 19 6Q32 0 39 14L36 24 31 17 14 18Z','M8 24Q6 7 18 6Q27 1 35 9Q41 13 38 26L32 18 24 14 17 18Z'][i];
  const glasses=i===2?'<path d="M15 24h7v6h-7zm11 0h7v6h-7zm-4 2h4" fill="none" stroke="#30424c" stroke-width="2"/>':'';
- return `<svg viewBox="0 0 48 48" aria-hidden="true"><rect width="48" height="48" rx="24" fill="${portraitColors[i]}"/><path d="M7 48q1-14 17-14t17 14" fill="${['#395b69','#6c3e52','#416358','#594c70','#38516a'][i]}"/><rect x="20" y="30" width="8" height="9" rx="3" fill="#dba57c"/><ellipse cx="24" cy="23" rx="13" ry="15" fill="#f2c399"/><path d="${hair}" fill="#34333a"/><path d="M17 24h2m10 0h2" stroke="#34333a" stroke-width="2.5" stroke-linecap="round"/><path d="M21 31q3 2 6-1" stroke="#a66b55" stroke-width="1.5" fill="none" stroke-linecap="round"/>${glasses}</svg>`;
+ return `<svg viewBox="0 0 48 48" aria-hidden="true"><rect width="48" height="48" rx="24" fill="${portraitColors[i]}"/><path d="M7 48q1-14 17-14t17 14" fill="${['#395b69','#6c3e52','#416358','#594c70','#38516a','#43594c'][i]}"/><rect x="20" y="30" width="8" height="9" rx="3" fill="#dba57c"/><ellipse cx="24" cy="23" rx="13" ry="15" fill="#f2c399"/><path d="${hair}" fill="#34333a"/><path d="M17 24h2m10 0h2" stroke="#34333a" stroke-width="2.5" stroke-linecap="round"/><path d="M21 31q3 2 6-1" stroke="#a66b55" stroke-width="1.5" fill="none" stroke-linecap="round"/>${glasses}</svg>`;
 }
 function markup(selector,html){const el=$(selector);if(el.innerHTML!==html)el.innerHTML=html;}
 function chips(amount){const count=Math.min(12,Math.max(1,Math.ceil(amount/40)));return Array.from({length:count},(_,i)=>`<i style="--tower:${i%3};--level:${Math.floor(i/3)};--chip:${['#bd9654','#a35758','#4e8799'][i%3]}"></i>`).join('');}
@@ -107,6 +108,7 @@ function renderCards(el,values,effect){
  });
 }
 function mountSeats(){
+ $('.felt').dataset.players=String(game.players.length);
  $('#board').replaceChildren();$('#hero').replaceChildren();
  $('#opponents').innerHTML=game.players.slice(1).map((p,j)=>{const [x,y]=seats[game.players.length-1][j],i=j+1;return `<div id="opponent-${i}" style="--x:${x}%;--y:${y}%" class="opponent" data-side="${x<35?'left':x>65?'right':'center'}"><div class="avatar"><span class="portrait">${portrait(j)}</span>${p.name}${dealer===i?'<span class="dealer" aria-label="딜러">D</span>':''}</div><div id="opponent-cards-${i}" class="cards small"></div><b id="opponent-stack-${i}"></b><div class="seat-status" id="opponent-last-${i}"></div></div>`;}).join('');
 }
@@ -218,8 +220,8 @@ function calculate(){const id=++calcId;equityRequest=null;$('#equity').innerHTML
  const base=calculateEquity(data.hole,data.board,data.opponents);
  if(!data.board.length||data.opponents===0){showEquity({id,...base});return;}
  const categoryRequest=data.board.length===3?loadFlopProbabilities(data.hole,data.board):Promise.resolve(base);
- const winRequest=data.opponents===1?loadHeadsUpProbabilities(data.hole,data.board):data.opponents===2?loadTwoOpponentProbabilities(data.hole,data.board):data.opponents===3?loadThreeOpponentProbabilities(data.hole,data.board):data.opponents===4?loadFourOpponentProbabilities(data.hole,data.board):data.opponents===5?loadFiveOpponentProbabilities(data.hole,data.board):Promise.resolve(null);
- $('#equity').innerHTML='—<span>%</span>';$('#equity-detail').textContent=data.opponents<=5?'정확한 사전 승률표를 불러오는 중…':`상대 ${data.opponents}명 정확 승률표는 미제공입니다.`;
+ const winRequest=data.opponents===1?loadHeadsUpProbabilities(data.hole,data.board):data.opponents===2?loadTwoOpponentProbabilities(data.hole,data.board):data.opponents===3?loadThreeOpponentProbabilities(data.hole,data.board):data.opponents===4?loadFourOpponentProbabilities(data.hole,data.board):data.opponents===5?loadFiveOpponentProbabilities(data.hole,data.board):data.opponents===6?loadSixOpponentProbabilities(data.hole,data.board):Promise.resolve(null);
+ $('#equity').innerHTML='—<span>%</span>';$('#equity-detail').textContent=data.opponents<=6?'정확한 사전 승률표를 불러오는 중…':`상대 ${data.opponents}명 정확 승률표는 미제공입니다.`;
  $('#hand-odds-status').textContent='사전 계산표를 불러오는 중…';
  return Promise.allSettled([categoryRequest,winRequest]).then(([category,win])=>{
   const result=category.status==='fulfilled'?category.value:{method:'unavailable',categoryError:true};
@@ -250,7 +252,7 @@ $('#players').onchange=()=>{const previous=String(game.players.length);if($('#pl
 let playerChoice=4;
 function syncPlayerPicker(){
  const value=Number($('#players').value);$('#players-value').textContent=`${value}명`;
- for(let n=2;n<=6;n++)$('#players-option-'+n).setAttribute('aria-selected',String(n===value));
+ for(let n=2;n<=7;n++)$('#players-option-'+n).setAttribute('aria-selected',String(n===value));
 }
 function closePlayerPicker(restoreFocus=false){
  $('#players-menu').hidden=true;$('#players-toggle').setAttribute('aria-expanded','false');
@@ -264,13 +266,13 @@ function choosePlayers(value){
 }
 $('#players-menu').hidden=true;
 $('#players-toggle').onclick=()=>$('#players-menu').hidden?openPlayerPicker():closePlayerPicker(true);
-for(let n=2;n<=6;n++)$('#players-option-'+n).onclick=()=>choosePlayers(n);
+for(let n=2;n<=7;n++)$('#players-option-'+n).onclick=()=>choosePlayers(n);
 $('#player-picker').onkeydown=e=>{
  const open=!$('#players-menu').hidden;
  if(e.key==='Escape'&&open){e.preventDefault();closePlayerPicker(true);return;}
  if(e.key==='Tab'){if(open)closePlayerPicker(true);return;}
  if(['ArrowDown','ArrowUp','Home','End'].includes(e.key)){
-  e.preventDefault();const value=e.key==='Home'?2:e.key==='End'?6:open?Math.max(2,Math.min(6,playerChoice+(e.key==='ArrowDown'?1:-1))):Number($('#players').value);openPlayerPicker(value);return;
+  e.preventDefault();const value=e.key==='Home'?2:e.key==='End'?7:open?Math.max(2,Math.min(7,playerChoice+(e.key==='ArrowDown'?1:-1))):Number($('#players').value);openPlayerPicker(value);return;
  }
  if(open&&(e.key==='Enter'||e.key===' ')){e.preventDefault();choosePlayers(playerChoice);}
 };

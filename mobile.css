@@ -109,3 +109,12 @@
   #sound, #animation { padding: 8px; }
   .brand>span:last-child { font-size: 19px; }
 }
+
+/* Extra perimeter seats stay outside the shared board and hero cards. */
+@media(max-width:720px) {
+ .felt[data-players="7"] { height: 500px; }
+ .felt[data-players="7"] .board-area { top: 36%; }
+ .felt[data-players="7"] #opponent-5 { left: 82%; top: 67%; }
+ .felt[data-players="7"] #opponent-6 { left: 18%; top: 67%; }
+ .felt[data-players="7"] .opponent .hand-popover { width: min(340px, calc(100vw - 48px)); }
+}

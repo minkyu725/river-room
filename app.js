@@ -1,12 +1,12 @@
-import {loadSixOpponentProbabilities} from './six-opponent-probabilities.js?v=29';
-import {loadFiveOpponentProbabilities} from './five-opponent-probabilities.js?v=29';
-import {exactPercent} from './exact-probability.js?v=29';
-import {loadFourOpponentProbabilities} from './four-opponent-probabilities.js?v=29';
-import {loadThreeOpponentProbabilities} from './three-opponent-probabilities.js?v=29';
-import {loadTwoOpponentProbabilities} from './two-opponent-probabilities.js?v=29';
-import {loadHeadsUpProbabilities} from './headsup-probabilities.js?v=29';
-import {loadFlopProbabilities} from './flop-probabilities.js?v=29';
-import {suits,rank,suit,shuffled,evaluate,describeHand,settle,botDecision,calculateEquity} from './engine.js?v=29';
+import {loadSixOpponentProbabilities} from './six-opponent-probabilities.js?v=30';
+import {loadFiveOpponentProbabilities} from './five-opponent-probabilities.js?v=30';
+import {exactPercent} from './exact-probability.js?v=30';
+import {loadFourOpponentProbabilities} from './four-opponent-probabilities.js?v=30';
+import {loadThreeOpponentProbabilities} from './three-opponent-probabilities.js?v=30';
+import {loadTwoOpponentProbabilities} from './two-opponent-probabilities.js?v=30';
+import {loadHeadsUpProbabilities} from './headsup-probabilities.js?v=30';
+import {loadFlopProbabilities} from './flop-probabilities.js?v=30';
+import {suits,rank,suit,shuffled,evaluate,describeHand,settle,botDecision,calculateEquity} from './engine.js?v=30';
 const $=s=>document.querySelector(s);
 const profiles=[{name:'민',style:'균형형',aggression:.58,bluffRate:.12},{name:'루나',style:'공격형',aggression:.85,bluffRate:.28},{name:'제이',style:'신중형',aggression:.34,bluffRate:.07},{name:'노아',style:'변칙형',aggression:.73,bluffRate:.32},{name:'유진',style:'분석형',aggression:.5,bluffRate:.16},{name:'하늘',style:'수비형',aggression:.38,bluffRate:.08}];
 let saved=[];try{saved=JSON.parse(localStorage.getItem('river-history')||'[]');if(!Array.isArray(saved))saved=[];}catch{}
@@ -276,7 +276,9 @@ $('#player-picker').onkeydown=e=>{
  }
  if(open&&(e.key==='Enter'||e.key===' ')){e.preventDefault();choosePlayers(playerChoice);}
 };
-$('#player-picker').onfocusout=e=>{if(!$('#player-picker').contains?.(e.relatedTarget))closePlayerPicker();};
+// Touch blur can report no destination before the toggle's click. Outside
+// pointerdown and Tab already dismiss the menu; do not close then reopen it.
+$('#player-picker').onfocusout=e=>{if(e.relatedTarget&&!$('#player-picker').contains?.(e.relatedTarget))closePlayerPicker();};
 document.addEventListener?.('pointerdown',e=>{if(!$('#player-picker').contains(e.target))closePlayerPicker();});
 $('#next').onclick=()=>{if(!game.done)return;unlockAudio();start();};
 function heroAction(type){if(game.done||game.busy||game.finishing||game.turn!==0||!game.pending.has(0))return;act(0,type,Number($('#raise-size').value));if(type==='fold')calculate();advance();}

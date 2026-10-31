@@ -1,12 +1,12 @@
-import {loadSixOpponentProbabilities} from './six-opponent-probabilities.js?v=27';
-import {loadFiveOpponentProbabilities} from './five-opponent-probabilities.js?v=27';
-import {exactPercent} from './exact-probability.js?v=27';
-import {loadFourOpponentProbabilities} from './four-opponent-probabilities.js?v=27';
-import {loadThreeOpponentProbabilities} from './three-opponent-probabilities.js?v=27';
-import {loadTwoOpponentProbabilities} from './two-opponent-probabilities.js?v=27';
-import {loadHeadsUpProbabilities} from './headsup-probabilities.js?v=27';
-import {loadFlopProbabilities} from './flop-probabilities.js?v=27';
-import {suits,rank,suit,shuffled,evaluate,describeHand,settle,botDecision,calculateEquity} from './engine.js?v=27';
+import {loadSixOpponentProbabilities} from './six-opponent-probabilities.js?v=28';
+import {loadFiveOpponentProbabilities} from './five-opponent-probabilities.js?v=28';
+import {exactPercent} from './exact-probability.js?v=28';
+import {loadFourOpponentProbabilities} from './four-opponent-probabilities.js?v=28';
+import {loadThreeOpponentProbabilities} from './three-opponent-probabilities.js?v=28';
+import {loadTwoOpponentProbabilities} from './two-opponent-probabilities.js?v=28';
+import {loadHeadsUpProbabilities} from './headsup-probabilities.js?v=28';
+import {loadFlopProbabilities} from './flop-probabilities.js?v=28';
+import {suits,rank,suit,shuffled,evaluate,describeHand,settle,botDecision,calculateEquity} from './engine.js?v=28';
 const $=s=>document.querySelector(s);
 const profiles=[{name:'민',style:'균형형',aggression:.58,bluffRate:.12},{name:'루나',style:'공격형',aggression:.85,bluffRate:.28},{name:'제이',style:'신중형',aggression:.34,bluffRate:.07},{name:'노아',style:'변칙형',aggression:.73,bluffRate:.32},{name:'유진',style:'분석형',aggression:.5,bluffRate:.16},{name:'하늘',style:'수비형',aggression:.38,bluffRate:.08}];
 let saved=[];try{saved=JSON.parse(localStorage.getItem('river-history')||'[]');if(!Array.isArray(saved))saved=[];}catch{}

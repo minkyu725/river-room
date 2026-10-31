@@ -1,6 +1,6 @@
 # Exact joint stage5/6 matching strategy and implementation
 
-Implemented foundation verified against independent subset-DP/direct homomorphisms/native prefix reconstruction. Full delivery status is recorded in MULTIWAY-PROGRESS.md and data/five-verification.json; opponent 6 still requires full-street aggregation and UI/deployment.
+Implemented foundation verified against independent subset-DP/direct homomorphisms/native prefix reconstruction. Full delivery of opponents 5 and 6 is verified: see MULTIWAY-PROGRESS.md, data/five-verification.json and data/six-verification.json. Both complete street aggregates and seven-player UI have shipped. The original derivation notes follow; verify each implementation claim against the linked reports.
 
 Goal: compute both remaining matching coefficients m5,m6 from <=52 small connected graph homomorphism counts, reusing threshold graph stats and O(47^2) Hero deletion. Avoid manually deriving I5/I6 motifs or sampling. All future ideas below require independent small-graph tests and native prefix reconstruction tests. Do not claim achieved from this note.
 

@@ -265,3 +265,5 @@ dialog p { color: var(--muted); font-size: 13px; line-height: 1.9; }
  .felt[data-players="7"] :is(#opponent-5,#opponent-6) > b,
  .felt[data-players="7"] :is(#opponent-5,#opponent-6) .seat-status { color: var(--ink); }
 }
+/* Lower seats open into the table, clear of the hero/result strip. */
+.felt[data-players="7"] :is(#opponent-5,#opponent-6) .hand-popover { top: auto; bottom: calc(100% + 8px); }

@@ -28,3 +28,8 @@ Preserve the game-first layout: setup, round information, opponents around the t
 Use 6px control corners, solid fills, subtle 1px borders and visible focus. Preset buttons have the same neutral treatment; all-in uses red text to distinguish its consequence. Reserve green fill for the primary action. Remove the decorative chip frame around the brand, live dot, duplicate table wordmark, pill-shaped presets and gold victory banner. Preserve the oval rail, player portraits, physical chip stacks and card-back pattern because these communicate the game and its seating.
 
 Preserve audio, persistent stacks, fixed card nodes, dimmed undealt runout and hypothetical showdown review. Only newly revealed cards animate. Reduced-motion preferences remain respected. No new dependencies or fonts are needed.
+
+
+## Seven-player table
+
+Keep the existing neutral page, green felt/rail, Avenir/Apple Gothic UI and Georgia card ranks. No new typeface, decorative frame or palette change. Six opponents use two top seats, two middle side seats and two lower side seats; the hero remains at the bottom center and the board stays centered. A uniformly spaced extra seat would crowd the shared board, so the lower pair is placed outside its card row. On mobile only the seven-player felt grows to 500px to keep portraits, board and the hero hand separate. Existing smaller tables retain their dimensions. Preserve the custom listbox, 44px options, keyboard navigation/cancellation, reduced motion and the separate hole/board card-view groups.

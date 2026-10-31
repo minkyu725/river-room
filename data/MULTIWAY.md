@@ -132,3 +132,12 @@ Connected edge-support Möbius 전개와 vertex-partition Möbius 전개로 matc
 GitHub Pages의 게시 크기는 1GB 제한입니다 ([공식 문서](https://docs.github.com/en/pages/getting-started-with-github-pages/github-pages-limits)). 따라서 큰 5명 표 315,063,833바이트는 이미 게시한 동일 공개 저장소의 검증된 데이터 커밋 `5a28a4ba726dfeb4d598cbf7be3e94b405d57e21`에서 직접 조회합니다. 앱과 작은 preflop 모듈은 Pages에 게시하며, `table-source.js`가 해당 커밋의 raw.githubusercontent.com 경로를 고정합니다. branch/main 최신 값을 사용하지 않습니다 ([커밋 고정 안내](https://docs.github.com/en/repositories/working-with-files/using-files/getting-permanent-links-to-files)).
 
 실제 고정 커밋 응답에서 CORS `*`, cross-origin resource policy, HTTP 200을 확인했습니다. 새 서비스/유료 저장소/추가 인증 권한을 만들지 않습니다. 기존 압축 전후 SHA 검증, 실패 재시도 및 3-shard 메모리 상한을 그대로 사용합니다. raw 전달 실패나 브라우저 미지원 시 추정값을 표시하지 않습니다. 모든 데이터 원본은 저장소와 재현 가능한 생성기로 검토할 수 있습니다.
+
+
+## 상대 6명 (총 7명)
+
+`river-six-v1` 145,350,179행, `turn-six-v1` 13,960,050행, `flop-six-v1` 1,286,792행, 프리플롭 169개 정규 클래스입니다. 리버는 R6W1/u64 쌍, 턴은 RT61/u32 키+u64 쌍, 플롭은 RF61/u32 키+u128 쌍입니다. 프리플롭은 10진 문자열을 BigInt로 읽습니다. 분모는 각각 215251506748278000, 9901569310420788000, 232686878794888518000, 456066282437981495280000입니다. 공동 1등은 wins+ties이며 동률 지분을 나눈 equity가 아닙니다.
+
+전체 바이트/해시는 `six-verification.json`과 각 manifest에 고정되어 있습니다. 독립 리버 1,051 상태와 실제 카드 subset-DP 사례, 턴 169개/플롭 3개 상태의 11,017 runout, 프리플롭 169개 합산 및 상위 인원 단조성을 검증했습니다. 모든 행의 범위·정렬·정수 나눗셈 검사는 생성/압축 시 수행합니다. 독립 검증을 모든 상태에 다시 실행한 것으로 주장하지 않습니다. 생성 재개 및 수학적 모델은 상대 5명과 같은 `generate-river-five-six.cpp`, `derive-five-six.cpp`, `pack-many-tables.py`, `verify-many-tables.mjs`를 사용합니다.
+
+상대 6명의 bulk 표도 상대 5명과 동일하게 이 공개 저장소의 고정 데이터 커밋 `484429223d26de7bf168207d0880123476ae49cb`에서 가져옵니다. Pages에는 작은 프리플롭·검증 파일과 앱을 유지하며 기존 상대 1–4명 표 제공 범위를 줄이지 않습니다. 총 7명까지 커스텀 인원 선택기와 저장된 핸드 복기를 지원합니다.

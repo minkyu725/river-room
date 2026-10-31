@@ -1,0 +1,20 @@
+{
+  "version": 1,
+  "status": "foundation-verified; full tables in progress",
+  "connectedSupports": 52,
+  "matchingDegrees": 6,
+  "coefficientHostGraphs": 68,
+  "homomorphismHostGraphs": 86,
+  "nativePrefixGraphs": 870,
+  "nativeVerticesUpTo": 47,
+  "sourceSha256": {
+    "scripts/generate-river-five-six.cpp": "b15c00894c4f9a166dab1a73519bc09aa92e5b26cf5fd27e65f24eba9cbef141",
+    "scripts/matching-five-six.hpp": "814e5523d424386706340141032c36f563c0a94717be7092c331fad1e511001c",
+    "scripts/matching-supports.hpp": "633af8c1c3e1bede973981c7ee4d8177c82101ec2c9488d636bf348053e97adb",
+    "scripts/matching-four.hpp": "4e9673fbaf5a0f175d9e32bccbcc899610842005d7b6884c5234f29bdad92dff",
+    "scripts/matching-three.hpp": "28941f08fe5d0a8767e45804788e6d8c1aebbf62e63805a3e7ce35bdd1487c82",
+    "scripts/matching-catalogue.json": "4773e8cf11a225c621aa46c59a03291e58626c5e60ff081305e371a919f55df8",
+    "scripts/matching-homomorphisms.json": "a4d9b41f911804aad1a385bc7490ba3c6bd62793cf42241b40da5796c91a5e55",
+    "data/river-hu-v1/keys.bin": "f9fb897f5f35060406b5a95b3c39bfe1779328f616ea15d998eed9b976de97d5"
+  }
+}

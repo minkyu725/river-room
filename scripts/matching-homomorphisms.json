@@ -1,0 +1,434 @@
+{
+  "forms": [
+    [],
+    [
+      0
+    ],
+    [
+      0,
+      0
+    ],
+    [
+      0,
+      1
+    ],
+    [
+      0,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      1
+    ],
+    [
+      1,
+      1
+    ],
+    [
+      1
+    ],
+    [
+      0,
+      0,
+      2
+    ],
+    [
+      1,
+      2
+    ],
+    [
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      0,
+      1
+    ],
+    [
+      0,
+      1,
+      1
+    ],
+    [
+      1,
+      8
+    ],
+    [
+      2
+    ],
+    [
+      8
+    ],
+    [
+      0,
+      0,
+      0,
+      0,
+      1
+    ],
+    [
+      0,
+      0,
+      1,
+      1
+    ],
+    [
+      0,
+      1,
+      2
+    ],
+    [
+      1,
+      15
+    ],
+    [
+      0,
+      0,
+      0,
+      2
+    ],
+    [
+      1,
+      4
+    ],
+    [
+      1,
+      1,
+      1
+    ],
+    [
+      0,
+      1,
+      8
+    ],
+    [
+      2,
+      2
+    ],
+    [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    [
+      8,
+      8
+    ]
+  ],
+  "descriptors": [
+    {
+      "kind": "tree",
+      "form": 1
+    },
+    {
+      "kind": "tree",
+      "form": 2
+    },
+    {
+      "kind": "cycle",
+      "weights": [
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "tree",
+      "form": 3
+    },
+    {
+      "kind": "tree",
+      "form": 4
+    },
+    {
+      "kind": "cycle",
+      "weights": [
+        1,
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "cycle",
+      "weights": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "tree",
+      "form": 5
+    },
+    {
+      "kind": "tree",
+      "form": 6
+    },
+    {
+      "kind": "tree",
+      "form": 7
+    },
+    {
+      "kind": "diamond"
+    },
+    {
+      "kind": "cycle",
+      "weights": [
+        8,
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "cycle",
+      "weights": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "cycle",
+      "weights": [
+        2,
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "cycle",
+      "weights": [
+        1,
+        1,
+        0
+      ]
+    },
+    {
+      "kind": "cycle",
+      "weights": [
+        1,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "tree",
+      "form": 9
+    },
+    {
+      "kind": "tree",
+      "form": 10
+    },
+    {
+      "kind": "tree",
+      "form": 11
+    },
+    {
+      "kind": "tree",
+      "form": 12
+    },
+    {
+      "kind": "tree",
+      "form": 13
+    },
+    {
+      "kind": "tree",
+      "form": 14
+    },
+    {
+      "kind": "clique4"
+    },
+    {
+      "kind": "k23"
+    },
+    {
+      "kind": "diamond-leaf2"
+    },
+    {
+      "kind": "bowtie"
+    },
+    {
+      "kind": "house"
+    },
+    {
+      "kind": "diamond-leaf3"
+    },
+    {
+      "kind": "cycle",
+      "weights": [
+        1,
+        8,
+        0
+      ]
+    },
+    {
+      "kind": "cycle",
+      "weights": [
+        2,
+        1,
+        0
+      ]
+    },
+    {
+      "kind": "cycle",
+      "weights": [
+        2,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "cycle",
+      "weights": [
+        8,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "cycle",
+      "weights": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "cycle",
+      "weights": [
+        1,
+        0,
+        1,
+        0
+      ]
+    },
+    {
+      "kind": "cycle",
+      "weights": [
+        4,
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "cycle",
+      "weights": [
+        15,
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "cycle",
+      "weights": [
+        3,
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "cycle",
+      "weights": [
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "kind": "cycle",
+      "weights": [
+        1,
+        1,
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "cycle",
+      "weights": [
+        1,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "cycle",
+      "weights": [
+        16,
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "tree",
+      "form": 17
+    },
+    {
+      "kind": "tree",
+      "form": 18
+    },
+    {
+      "kind": "tree",
+      "form": 19
+    },
+    {
+      "kind": "tree",
+      "form": 20
+    },
+    {
+      "kind": "tree",
+      "form": 21
+    },
+    {
+      "kind": "tree",
+      "form": 22
+    },
+    {
+      "kind": "tree",
+      "form": 23
+    },
+    {
+      "kind": "tree",
+      "form": 24
+    },
+    {
+      "kind": "tree",
+      "form": 25
+    },
+    {
+      "kind": "tree",
+      "form": 26
+    },
+    {
+      "kind": "tree",
+      "form": 27
+    }
+  ]
+}

@@ -1,0 +1,7 @@
+import test from 'node:test';import assert from 'node:assert/strict';import {readMultiwayStreetCounts,readMultiwayRiverCounts} from '../multiway-probabilities.js';
+const mask=(1n<<64n)-1n;
+function put(buffer,offset,value,bytes){buffer.writeBigUInt64LE(value&mask,offset);if(bytes===16)buffer.writeBigUInt64LE(value>>64n,offset+8);}
+const ab=b=>b.buffer.slice(b.byteOffset,b.byteOffset+b.byteLength);
+test('five-opponent uint64 street counts preserve values above Number safety',()=>{const b=Buffer.alloc(28);b.write('RT51');b.writeUInt32LE(1,4);b.writeUInt32LE(123,8);const win=9007199254740993n;put(b,12,win,8);put(b,20,0n,8);const r=readMultiwayStreetCounts(ab(b),123,'turn',5);assert.equal(r.wins,win);assert.equal(r.denominator,361767238232400n*46n);assert.equal(r.equity,null);});
+test('six-opponent uint128 flop values and exact denominator survive decoding',()=>{const b=Buffer.alloc(44);b.write('RF61');b.writeUInt32LE(1,4);b.writeUInt32LE(321,8);const d=215251506748278000n*1081n,w=d*2n/3n,t=d-w;put(b,12,w,16);put(b,28,t,16);const r=readMultiwayStreetCounts(ab(b),321,'flop',6);assert.equal(r.wins,w);assert.equal(r.ties,t);assert.equal(r.denominator,d);assert.equal(r.strongest,1);assert.equal(r.equity,null);});
+test('six-opponent river joint first place is 100 percent even with only ties',()=>{const b=Buffer.alloc(12+17296);b.write('R6W1');b.writeUInt32LE(0,4);b.writeUInt32LE(1,8);put(b,12,0n,8);put(b,20,215251506748278000n,8);const r=readMultiwayRiverCounts(ab(b),0,0,6);assert.equal(r.win,0);assert.equal(r.tie,1);assert.equal(r.strongest,1);});

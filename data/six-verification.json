@@ -1,0 +1,28 @@
+{
+  "opponents": 6,
+  "river": {
+    "states": 145350179,
+    "independentStates": 1051,
+    "directSubsetRealCardStates": 1,
+    "manifestSha256": "72e284f554456811e26e1b09d6221c51b8b47b20c8212e7395a5a74c17c5fa7b"
+  },
+  "streets": {
+    "turn": {
+      "states": 13960050,
+      "independentStates": 169,
+      "manifestSha256": "e60de96f4c428cd6478ab5a3a1864b1d30ccf537bdb1d1896d3c005485852985"
+    },
+    "flop": {
+      "states": 1286792,
+      "independentStates": 3,
+      "manifestSha256": "7e306954981d81e683222388cd058de136bd364f92fb3883a04700b894c08875"
+    }
+  },
+  "allArtifactBytesLocked": true,
+  "fullBoundsCheck": "pack-many-tables.py exhaustive; all resulting bytes integrity-locked here",
+  "referenceRunouts": 11017,
+  "preflopHands": 169,
+  "preflopSha256": "561db7c28675019aea297b73f27962ce8bfc889f007dfa5a589c750b9a694d76",
+  "verifierSha256": "f854a661203de6c3416ada9df175302d081473c3af7a91c9623f8573b4e12656",
+  "seconds": 43.882
+}

@@ -1,17 +1,18 @@
-import {loadSixOpponentProbabilities} from './six-opponent-probabilities.js?v=30';
-import {loadFiveOpponentProbabilities} from './five-opponent-probabilities.js?v=30';
-import {exactPercent} from './exact-probability.js?v=30';
-import {loadFourOpponentProbabilities} from './four-opponent-probabilities.js?v=30';
-import {loadThreeOpponentProbabilities} from './three-opponent-probabilities.js?v=30';
-import {loadTwoOpponentProbabilities} from './two-opponent-probabilities.js?v=30';
-import {loadHeadsUpProbabilities} from './headsup-probabilities.js?v=30';
-import {loadFlopProbabilities} from './flop-probabilities.js?v=30';
-import {suits,rank,suit,shuffled,evaluate,describeHand,settle,botDecision,calculateEquity} from './engine.js?v=30';
+import {loadSixOpponentProbabilities} from './six-opponent-probabilities.js?v=31';
+import {loadFiveOpponentProbabilities} from './five-opponent-probabilities.js?v=31';
+import {exactPercent} from './exact-probability.js?v=31';
+import {loadFourOpponentProbabilities} from './four-opponent-probabilities.js?v=31';
+import {loadThreeOpponentProbabilities} from './three-opponent-probabilities.js?v=31';
+import {loadTwoOpponentProbabilities} from './two-opponent-probabilities.js?v=31';
+import {loadHeadsUpProbabilities} from './headsup-probabilities.js?v=31';
+import {loadFlopProbabilities} from './flop-probabilities.js?v=31';
+import {suits,rank,suit,shuffled,evaluate,describeHand,settle,botDecision,calculateEquity} from './engine.js?v=31';
 const $=s=>document.querySelector(s);
 const profiles=[{name:'민',style:'균형형',aggression:.58,bluffRate:.12},{name:'루나',style:'공격형',aggression:.85,bluffRate:.28},{name:'제이',style:'신중형',aggression:.34,bluffRate:.07},{name:'노아',style:'변칙형',aggression:.73,bluffRate:.32},{name:'유진',style:'분석형',aggression:.5,bluffRate:.16},{name:'하늘',style:'수비형',aggression:.38,bluffRate:.08}];
 let saved=[];try{saved=JSON.parse(localStorage.getItem('river-history')||'[]');if(!Array.isArray(saved))saved=[];}catch{}
 let history=saved.filter(validRecord).slice(0,30),hand=0,dealer=-1,game,timer,token=0,calcId=0;
-let equityRequest,sequence;
+let equityRequest,sequence,raiseTurnState;
+const BB=20,bbPresets=[['bb-2',2],['bb-2-5',2.5],['bb-3',3]];
 const actionEffects=new Set();
 const CARD_MS=200; // Leave a frame after the 180ms CSS motion before continuing.
 let animationPreference=true,reducedMotion;
@@ -204,7 +205,11 @@ function render(){
  const turn=g.turn===0&&!g.done&&!g.busy&&!g.finishing&&g.pending.has(0),p=g.players[0],call=Math.min(p.stack,g.current-p.bet);$('#actions').hidden=g.done;$('#next').hidden=!g.done;$('#next').disabled=g.done&&(g.players[0].stack===0||g.players.filter(p=>p.stack>0).length<2);$('#next').textContent=$('#next').disabled?'테이블 종료 · 새 테이블로 시작하세요':'다음 핸드';$('#results').hidden=!g.done;
  for(const id of ['fold','call','raise'])$('#'+id).disabled=!turn;$('#raise').disabled=!turn||!canRaise(0);$('#call').textContent=call?`콜 ${call}`:'체크';
  for(const id of ['half-pot','full-pot','all-in'])$('#'+id).disabled=!turn||!canRaise(0);
- const min=Math.min(p.bet+p.stack,g.current+g.minRaise),max=p.bet+p.stack,slider=$('#raise-size');slider.min=min;slider.max=Math.max(min,max);if(Number(slider.value)<min)slider.value=min;if(Number(slider.value)>max)slider.value=max;$('#raise-value').textContent=slider.value;$('#raise').textContent=Number(slider.value)===max?'올인':`레이즈 ${slider.value}`;slider.disabled=!turn||!canRaise(0);
+ const min=Math.min(p.bet+p.stack,g.current+g.minRaise),max=p.bet+p.stack,slider=$('#raise-size');slider.min=min;slider.max=Math.max(min,max);
+ if(turn&&(!raiseTurnState?.active||raiseTurnState.game!==g||raiseTurnState.street!==g.street))slider.value=min;
+ raiseTurnState={game:g,street:g.street,active:turn};
+ if(Number(slider.value)<min)slider.value=min;if(Number(slider.value)>max)slider.value=max;showRaiseTarget();slider.disabled=!turn||!canRaise(0);
+ for(const [id,bb] of bbPresets)$('#'+id).disabled=!turn||!canRaise(0)||bb*BB<min||bb*BB>max;
 }
 function renderBoard(g){
  const html=Array.from({length:5},(_,i)=>{const revealed=i<g.board.length,c=revealed?g.board[i]:i<g.runoutShown?g.fullBoard[i]:null;return c===null?emptyCard('미공개 보드'):card(c).replace('class="card ',`class="card ${revealed?'':'unplayed '}`);});
@@ -283,7 +288,10 @@ document.addEventListener?.('pointerdown',e=>{if(!$('#player-picker').contains(e
 $('#next').onclick=()=>{if(!game.done)return;unlockAudio();start();};
 function heroAction(type){if(game.done||game.busy||game.finishing||game.turn!==0||!game.pending.has(0))return;act(0,type,Number($('#raise-size').value));if(type==='fold')calculate();advance();}
 $('#fold').onclick=()=>heroAction('fold');$('#call').onclick=()=>heroAction('call');$('#raise').onclick=()=>heroAction('raise');
-$('#raise-size').oninput=()=>{const n=Number($('#raise-size').value);$('#raise-value').textContent=n;$('#raise').textContent=n===game.players[0].bet+game.players[0].stack?'올인':`레이즈 ${n}`;};
+function showRaiseTarget(){const slider=$('#raise-size'),n=Number(slider.value),bb=`${Number((n/BB).toFixed(2))} BB`;$('#raise-value').textContent=n;$('#raise-bb').textContent=`· ${bb}`;slider.setAttribute('aria-valuetext',`${n}칩, ${bb}`);$('#raise').textContent=n===game.players[0].bet+game.players[0].stack?'올인':`레이즈 ${n}`;}
+$('#raise-size').oninput=showRaiseTarget;
+function presetBB(bb){if(game.done||game.busy||game.finishing||game.turn!==0||!game.pending.has(0)||!canRaise(0))return;const slider=$('#raise-size'),target=bb*BB;if(target<Number(slider.min)||target>Number(slider.max))return;slider.value=target;showRaiseTarget();}
+for(const [id,bb] of bbPresets)$('#'+id).onclick=()=>presetBB(bb);
 function preset(fraction){if(game.done||game.busy||game.finishing||game.turn!==0||!game.pending.has(0)||!canRaise(0))return;const p=game.players[0],slider=$('#raise-size'),pot=game.players.reduce((s,p)=>s+p.total,0),target=fraction===Infinity?p.bet+p.stack:game.current+Math.max(game.minRaise,Math.round(pot*fraction));slider.value=Math.min(Number(slider.max),Math.max(Number(slider.min),target));slider.oninput();}
 $('#half-pot').onclick=()=>preset(.5);$('#full-pot').onclick=()=>preset(1);$('#all-in').onclick=()=>preset(Infinity);
 $('#toggle-equity').onclick=()=>{const el=$('#equity-content');el.hidden=!el.hidden;$('#toggle-equity').textContent=el.hidden?'보기':'가리기';};

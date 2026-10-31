@@ -1,4 +1,4 @@
-import {createMultiwayLoader,readMultiwayRiverCounts,readMultiwayStreetCounts} from './multiway-probabilities.js?v=29';
+import {createMultiwayLoader,readMultiwayRiverCounts,readMultiwayStreetCounts} from './multiway-probabilities.js?v=30';
 export const createSixOpponentLoader=fetcher=>createMultiwayLoader(6,fetcher);
 export const readSixRiverCounts=(buffer,index,ordinal)=>readMultiwayRiverCounts(buffer,index,ordinal,6);
 export const readSixStreetCounts=(buffer,key,street)=>readMultiwayStreetCounts(buffer,key,street,6);

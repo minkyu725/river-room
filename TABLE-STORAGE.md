@@ -1,3 +1,21 @@
+# Current offline app size
+
+Measured file bodies (decimal MB), excluding HTTP headers, browser overhead and additional HTTP compression:
+
+| Item | Bytes | MB |
+|---|---:|---:|
+| Initial cached app and model | 8,583,834 | 8.58 |
+| Embedded gzip-block flop model | 8,397,454 | 8.40 |
+| Entire Pages build including verification metadata | 8,718,882 | 8.72 |
+
+The model is stored once on initial installation. Later probability queries do not fetch tables. A UI update reuses an unchanged SHA-addressed model. Cache deletion or a changed model requires installation again. The exact source files are retained in Git, not published into the app package. See [accuracy and CPU tradeoff](./OFFLINE-MODEL.md).
+
+## Archived previous exact-table delivery sizes
+
+The figures below describe the old on-demand exact-table deployment, not the current app's download behavior.
+
+---
+
 # 확률표 저장·전송 크기
 
 2026-10-31 파일 실측. MB/GB는 10진 단위입니다. 실제 HTTP 전송량은 추가 HTTP 압축·캐시·메타데이터 요청에 따라 다릅니다.

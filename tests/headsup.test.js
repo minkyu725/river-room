@@ -23,7 +23,7 @@ test('all flop and turn heads-up shards have exact integer bounds and hashes',as
  }
 });
 test('river loader uses exact wins and ties; a royal board is 100% strongest, not 50%',async()=>{
- const requests=[];const loader=createRiverLoader(async url=>{requests.push(url);const file=url.split('/').at(-1);if(file==='manifest.json')return {ok:true,json:async()=>manifest};const raw=await readFile(new URL(file,root));return {ok:true,arrayBuffer:async()=>ab(raw)};});
+ const requests=[];const loader=createRiverLoader(async url=>{requests.push(url);const file=url.split('/').at(-1);if(file==='gzip-manifest.json')return {ok:true,json:async()=>JSON.parse(await readFile(new URL('gzip-manifest.json',root)))};const raw=await readFile(new URL(file,root));return {ok:true,arrayBuffer:async()=>ab(raw)};});
  const hole=[13,27],board=[12,11,10,9,8],r=await loader(hole,board);assert.equal(r.wins,0);assert.equal(r.ties,990);assert.equal(r.strongest,1);assert.equal(r.equity,.5);
  await loader(hole.reverse(),board.reverse());assert.equal(requests.length,3);
  // K quads with an A kicker can only win or share first place.
@@ -46,9 +46,9 @@ test('own exact preflop counts conserve symmetry and match independent historica
  assert.equal(weighted,1326n*2097572400n);const r=calculateEquity([12,25],[],1);assert.equal(r.strongest,r.win+r.tie);assert.ok(r.strongest>r.equity);
 });
 test('street loader retries failures, verifies checksums, deduplicates and bounds cached shards',async()=>{
- const dir=new URL('../data/turn-hu-v1/',import.meta.url),m=JSON.parse(await readFile(new URL('manifest.json',dir))),requests=[];let broken=true;
- const loader=createStreetLoader('turn',async url=>{requests.push(url);if(broken)return {ok:false};const file=url.split('/').at(-1);return file==='manifest.json'?{ok:true,json:async()=>m}:{ok:true,arrayBuffer:async()=>ab(await readFile(new URL(file,dir)))};});
- const hole=[0,1],board=[8,23,45,50];await assert.rejects(loader(hole,board));broken=false;const [a,b]=await Promise.all([loader(hole,board),loader(hole,board)]);assert.deepEqual(a,b);assert.equal(a.strongest,(a.wins+a.ties)/45540);assert.equal(requests.filter(p=>p.endsWith('/1.bin')).length,1);
- for(const n of [2,3,4])await loader([0,n],board);await loader(hole,board);assert.equal(requests.filter(p=>p.endsWith('/1.bin')).length,2);
+ const dir=new URL('../data/turn-hu-v1/',import.meta.url),m=JSON.parse(await readFile(new URL('gzip-manifest.json',dir))),requests=[];let broken=true;
+ const loader=createStreetLoader('turn',async url=>{requests.push(url);if(broken)return {ok:false};const file=url.split('/').at(-1);return file==='gzip-manifest.json'?{ok:true,json:async()=>m}:{ok:true,arrayBuffer:async()=>ab(await readFile(new URL(file,dir)))};});
+ const hole=[0,1],board=[8,23,45,50];await assert.rejects(loader(hole,board));broken=false;const [a,b]=await Promise.all([loader(hole,board),loader(hole,board)]);assert.deepEqual(a,b);assert.equal(a.strongest,(a.wins+a.ties)/45540);assert.equal(requests.filter(p=>p.endsWith('/1.bin.gz')).length,1);
+ for(const n of [2,3,4])await loader([0,n],board);await loader(hole,board);assert.equal(requests.filter(p=>p.endsWith('/1.bin.gz')).length,2);
  const corrupt=createStreetLoader('turn',async url=>url.endsWith('manifest.json')?{ok:true,json:async()=>m}:{ok:true,arrayBuffer:async()=>{const b=await readFile(new URL(url.split('/').at(-1),dir));b[10]^=1;return ab(b);}});await assert.rejects(corrupt(hole,board),/checksum/);
 });

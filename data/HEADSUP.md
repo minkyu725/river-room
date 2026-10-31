@@ -53,3 +53,6 @@ The derivation currently uses `/private/tmp/river-room-board-map.bin` as a local
 Verification covers every stored bound/hash, independent direct JavaScript river comparisons including one full representative board, independent turn comparisons across every hero shard, and complete direct enumeration of nine representative flop states. `headsup-verification.json` records 516 independently recomputed states and **32,720,490** opponent/runout comparisons. `river-hu-v1/verification.json` records its separate coverage. Exact integer preflop symmetry requires the combo-weighted sum of `2*wins+ties` to equal `1326*denominator`; all 169 new rows also agree with independent historical win/tie values within their rounding precision.
 
 At runtime the app only normalizes cards, fetches/checks the required binary and divides integer counts by the denominator. Each loader retains at most three shards/chunks in memory. Large datasets are excluded from service-worker installation and unbounded asset caching. Failed downloads stay explicit and stale responses cannot replace later streets or folded-hand state.
+
+
+전송본은 gzip-manifest.json / .bin.gz로 제공합니다. 원본 .bin과 이 문서의 생성 형식은 Git 재현·검증용으로 유지하며 Pages에서는 제외합니다. 압축 전후 SHA와 전체 byte 일치 검증 및 배포 선택 규칙은 [MULTIWAY.md](./MULTIWAY.md)의 레거시 HU 절을 참고하세요.

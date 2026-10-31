@@ -1,4 +1,4 @@
-import {checkedTableResponse} from './compressed-table.js?v=28';
+import {checkedTableResponse} from './compressed-table.js?v=29';
 const permutations=[];
 function permute(values,prefix=[]){if(!values.length){permutations.push(prefix);return;}values.forEach((v,i)=>permute(values.filter((_,j)=>i!==j),[...prefix,v]));}permute([0,1,2,3]);
 export function canonicalRiver(hole,board){

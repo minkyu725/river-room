@@ -33,3 +33,10 @@ Preserve audio, persistent stacks, fixed card nodes, dimmed undealt runout and h
 ## Seven-player table
 
 Keep the existing neutral page, green felt/rail, Avenir/Apple Gothic UI and Georgia card ranks. No new typeface, decorative frame or palette change. Six opponents use two top seats, two middle side seats and two lower side seats; the hero remains at the bottom center and the board stays centered. A uniformly spaced extra seat would crowd the shared board, so the lower pair is placed outside its card row. On mobile only the seven-player felt grows to 500px to keep portraits, board and the hero hand separate. Existing smaller tables retain their dimensions. Preserve the custom listbox, 44px options, keyboard navigation/cancellation, reduced motion and the separate hole/board card-view groups.
+
+
+## Compact probability and responsive review
+
+Probability details show only unique-win and tied-first percentages. Remove the exhaustive denominator and total runout counts from the play screen; shared-first meaning stays in the existing note. On small screens the header can grow and wrap its controls as a group, keeping the brand unbroken. Seven-card hole/board groups can wrap as groups in narrow history columns; the mobile sidebar columns use zero minimum tracks. Preserve the card mats, five selected cards, existing palette and type.
+
+Verified in the in-app browser at 320/390/720/768/950/1280/1440px, 2–7 players, completed/folded states and expanded history (42 layouts): no horizontal page overflow, header collision or board/seat-card collision. Targeted hero/side/lower-seat popovers checked at 320/768/1280px; short landscape help dialog at 844×390 scrolls within the viewport. Local QA fixtures set player count and completed state, use production rendering/CSS and are excluded from Pages. These are responsive browser checks, not a physical-device/all-OS certification.

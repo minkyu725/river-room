@@ -1,10 +1,10 @@
-import {preflopSix} from './preflop-six-counts.js?v=28';
-import {preflopFive} from './preflop-five-counts.js?v=28';
-import {bigProbability} from './exact-probability.js?v=28';
-import {preflopFour} from './preflop-four-counts.js?v=28';
-import {preflopThree} from './preflop-three-counts.js?v=28';
-import {preflopTwo} from './preflop-two-counts.js?v=28';
-import {preflopHeadsUp} from './preflop-headsup-counts.js?v=28';
+import {preflopSix} from './preflop-six-counts.js?v=29';
+import {preflopFive} from './preflop-five-counts.js?v=29';
+import {bigProbability} from './exact-probability.js?v=29';
+import {preflopFour} from './preflop-four-counts.js?v=29';
+import {preflopThree} from './preflop-three-counts.js?v=29';
+import {preflopTwo} from './preflop-two-counts.js?v=29';
+import {preflopHeadsUp} from './preflop-headsup-counts.js?v=29';
 export const suits=['♣','♦','♥','♠'];
 export const rank=c=>c%13+2;
 export const suit=c=>Math.floor(c/13);

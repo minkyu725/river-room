@@ -1,8 +1,8 @@
-import {bigProbability} from './exact-probability.js?v=28';
-import {tablePath} from './table-source.js?v=28';
-import {checkedTableResponse} from './compressed-table.js?v=28';
-import {canonicalRiver,findRiverBoard} from './river-probabilities.js?v=28';
-import {canonicalStreet} from './headsup-probabilities.js?v=28';
+import {bigProbability} from './exact-probability.js?v=29';
+import {tablePath} from './table-source.js?v=29';
+import {checkedTableResponse} from './compressed-table.js?v=29';
+import {canonicalRiver,findRiverBoard} from './river-probabilities.js?v=29';
+import {canonicalStreet} from './headsup-probabilities.js?v=29';
 const configs={2:{name:'two',denominators:{river:893970,turn:41122620,flop:966381570}},3:{name:'three',denominators:{river:733055400,turn:33720548400,flop:792432887400}},4:{name:'four',denominators:{river:543194051400,turn:24986926364400,flop:587192769563400}},5:{name:'five',denominators:{river:361767238232400n,turn:16641292958690400n,flop:391070384529224400n}},6:{name:'six',denominators:{river:215251506748278000n,turn:9901569310420788000n,flop:232686878794888518000n}}};
 function result(wins,ties,street,opponents){const denominator=configs[opponents].denominators[street];if(opponents>=5)return {method:`static-${street}-${configs[opponents].name}`,...bigProbability(wins,ties,denominator)};if(!Number.isSafeInteger(wins)||!Number.isSafeInteger(ties)||wins<0||ties<0||wins+ties>denominator)throw Error('Invalid multiway counts');return {method:`static-${street}-${configs[opponents].name}`,wins,ties,denominator,win:wins/denominator,tie:ties/denominator,strongest:(wins+ties)/denominator,equity:null};}
 export function readMultiwayRiverCounts(buffer,boardIndex,ordinal,opponents){const bytes=opponents===2?5405:opponents===3?8648:17296,v=new DataView(buffer);if(v.byteLength<12||v.getUint32(0,false)!==(0x52005731+((48+opponents)<<16)))throw Error('Invalid river table');const start=v.getUint32(4,true),n=v.getUint32(8,true);if(n<1||n>128||v.byteLength!==12+n*bytes||boardIndex<start||boardIndex>=start+n||!Number.isInteger(ordinal)||ordinal<0||ordinal>=1081)throw Error('Invalid river range');const o=12+(boardIndex-start)*bytes+ordinal*(opponents===2?5:opponents===3?8:16);if(opponents>=4)return result(opponents>=5?v.getBigUint64(o,true):Number(v.getBigUint64(o,true)),opponents>=5?v.getBigUint64(o+8,true):Number(v.getBigUint64(o+8,true)),'river',opponents);if(opponents===3)return result(v.getUint32(o,true),v.getUint32(o+4,true),'river',opponents);const value=v.getUint32(o,true)+v.getUint8(o+4)*4294967296;return result(value%1048576,Math.floor(value/1048576),'river',opponents);}

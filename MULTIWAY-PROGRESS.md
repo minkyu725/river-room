@@ -11,8 +11,8 @@
 | 상대 수 | 상태 | 내용 |
 |---|---|---|
 | 1 | 완료·배포 검증 | PR #20, merge `2b7b41495c10bb287a1c0d1c305f9a39bb057aec`, Pages run `41146072556` |
-| 2 | 작업 중 | 모든 스트리트 전체 표 생성·독립 검증 완료, 앱 연동 완료; PR/CI/Pages 확인 대기 |
-| 3 | 대기 | 2명 단계 배포 후 진행 |
+| 2 | 작업 중 | 완료·배포 검증: PR #22, merge `9f0e8dcebfd6ae704f0bb4a698c18e93365ddc5f`, Pages `41148159361` |
+| 3 | 작업 중 | matching 3개 정확 식 및 Hero 삭제 모멘트 검증 |
 | 4 | 대기 | 3명 단계 배포 후 진행 |
 | 5 | 대기 | 4명 단계 배포 후 진행 |
 | 6 | 대기 | 5명 단계 배포 후 진행, 총 7명 UI 포함 |
@@ -39,11 +39,28 @@
 ## 다음 작업
 
 1. 현재 branch `codex/exact-multiway-2`: 전체 표 생성 및 독립 검증 완료. data/MULTIWAY.md와 두 검증 보고서에 전체 범위·실측을 기록했습니다. 고정 24개 기본 회귀와 리버 1,051개 chunk별 직접 열거를 통과했습니다.
-2. PR/CI를 확인하고 머지한 커밋의 Pages 배포와 실제 공개 바이트를 확인합니다. 브라우저는 로컬 v23 첫 로드까지 확인했으나 Mac 잠금 상태와 CDP 입력 timeout으로 3인 테이블 조작을 끝내지 못했습니다. 이를 시각 검증 완료로 주장하지 않습니다. 실제 압축 데이터를 사용하는 앱 HUD 통합 테스트와 공개 HTTP 로더 확인을 별도로 수행합니다.
-3. 상대 2명 배포 성공 후 상태표와 merge/run 정보를 갱신한 뒤 상대 3명의 정확 matching 알고리즘으로 진행합니다.
+2. 상대 2명은 PR #22의 테스트 71개, Pages run 41148159361 성공, 공개 파일 20개 byte 일치 및 공개 HTTP 로더 4개 상태 일치를 확인했습니다. 로컬 브라우저 v23 첫 로드는 확인했지만 Mac 잠금 및 CDP 입력 timeout으로 3인 테이블 직접 조작/시각 검증은 완료하지 못했습니다. 이를 실제 압축 데이터를 사용하는 HUD 통합 테스트와 구별합니다.
+3. 현재 branch `codex/exact-multiway-3`의 graph matching 검증을 바탕으로 native incremental stats와 전체 상대 3명 생성기를 구현합니다.
 
-## 상대 3명 초기 수학 후보 (아직 검증 전)
+## 상대 3명 수학 기준 (소규모 독립 열거 검증, 전체 표 생성 전)
 
 k=3 matching은 원래 그래프 G의 line graph L(G)에서 independent vertex triple의 개수와 같습니다. 따라서 후보 식은 `C(m,3) − (m−2) Σ_v C(d(v),2) + Σ_(uv∈E) C(d(u)+d(v)−2,2) − Σ_v C(d(v),3) − triangles(G)`입니다. 이를 작은 임의 그래프의 직접 matching 열거와 완전 그래프 분모, 실제 카드의 독립 직접 열거로 먼저 검증해야 합니다. 상대 label 배정에는 3!을 곱합니다. Hero 두 카드 삭제 후 차수·간선 차수 모멘트·triangle 수를 효율적으로 갱신하는 방법을 벤치마크해야 전체 생성이 실용적입니다.
 
 상대 4~6명은 더 큰 matching 개수의 정확한 알고리즘이 필요합니다. 후보 식을 근거 없이 일반화하지 않습니다. 높은 상대 수의 프리플롭 count는 uint64를 넘으므로 uint128/BigInt와 정확한 정수 나눗셈을 설계합니다.
+
+
+### 다음 native 생성기 구현 지점
+
+`scripts/three-opponent-matching.mjs` 및 테스트는 line-graph inclusion/exclusion 식과 Hero 두 정점을 삭제한 O(vertices) 모멘트 식을 작은 무작위 그래프의 직접 열거 및 45정점 완전 그래프 분모 733,055,400과 비교합니다. 실제 카드 전체 표를 생성한 것은 아직 아닙니다.
+
+리버의 47정점 score-threshold 그래프를 점수순으로 sweep합니다. Hero 점수 그룹을 추가하기 전 strict count, 추가한 후 non-strict count를 계산합니다. 전체 그래프의 degree D, neighbor degree sum S, Q=sum_edges(Du*Dv), common=A², vertex triangles t, 전체 triangles T, 47bit adjacency를 유지하면 Hero 삭제 count는 정점 47개를 한 번 순회해 계산할 수 있습니다.
+
+새 간선 (a,b)를 넣을 때 기존 adjacency와 degree를 사용해 다음 순서로 갱신합니다 (아직 incremental 구현은 별도 검증 필요):
+
+- Q += S[a]+S[b]+(D[a]+1)*(D[b]+1).
+- 공통 이웃 mask=adj[a]&adj[b]. T += popcount(mask), t[a]/t[b]에도 같은 값, 각 공통 이웃의 t에는 1 추가.
+- 기존 a 이웃 v마다 S[v]++, common[v][b]++, common[b][v]++. 기존 b 이웃 v마다 S[v]++, common[v][a]++, common[a][v]++.
+- common[a][a]++, common[b][b]++, S[a]+=oldD[b]+1, S[b]+=oldD[a]+1.
+- D[a]++, D[b]++, 양쪽 adjacency에 간선 추가.
+
+먼저 이 incremental 갱신을 그래프 전체 재계산과 매 단계 비교하고, 삭제 공식도 함께 대조합니다. 이 방법은 Hero마다 990개 간선/삼각형을 다시 열거하는 비용을 피합니다. 상대 3명 리버 wins/ties는 u32 각각으로 저장할 수 있지만 턴 이후는 u64가 필요합니다. 높은 단계의 프리플롭은 u128/BigInt가 필요합니다. 압축 후 전체 Pages 크기를 단계마다 다시 확인합니다.

@@ -55,7 +55,7 @@ test('all 169 static starting hands are suit/order invariant and conserve rounde
  assert.ok(Math.abs(calculateEquity(c('Ac Ad'),[],1).equity-.8520)<.00005);
  assert.ok(Math.abs(calculateEquity(c('Ac Kd'),[],1).equity-.6532)<.00005);
  assert.ok(Math.abs(calculateEquity(c('7c 2d'),[],1).equity-.3458)<.00005);
- assert.equal(calculateEquity(c('Ac Ad'),[],3).equity,null);
+ assert.equal(calculateEquity(c('Ac Ad'),[],4).equity,null);
  assert.equal(calculateEquity(c('Ac Ad'),c('2c 3d 4h'),1).method,'unavailable');
 });
 

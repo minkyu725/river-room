@@ -1,0 +1,3 @@
+#include <iostream>
+#include "matching-five-six.hpp"
+int main(){int n,m,a,b;while(std::cin>>n>>m>>a>>b){FiveSixGraph g(n);for(int i=0;i<m;i++){int u,v;std::cin>>u>>v;g.insert(u,v);}const auto counts=g.without(a,b).matchings();const auto pair=g.query(a,b);if(pair[0]!=counts[5]*120||pair[1]!=counts[6]*720)throw std::runtime_error("cached matching mismatch");if(n<=14)for(int u=0;u<n;u++)for(int v=u+1;v<n;v++){const auto expected=g.without(u,v).matchings();const auto actual=g.query(u,v);if(actual[0]!=expected[5]*120||actual[1]!=expected[6]*720)throw std::runtime_error("twin cache mismatch");}for(int k=1;k<=6;k++)std::cout<<counts[k]<<(k==6?'\n':' ');}}

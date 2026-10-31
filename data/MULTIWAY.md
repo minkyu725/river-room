@@ -1,4 +1,4 @@
-# 상대 2~4명 정확 정적 최강 패 확률표
+# 상대 2~5명 정확 정적 최강 패 확률표
 
 내 점수가 두 상대 점수 이상인 확률입니다. 공동 1등을 포함하며 단독 승리, 공동 1등 동률을 별도 정수 카운트로 저장합니다. 팟 지분이나 몬테카를로 추정이 아닙니다. 모든 상대 홀카드 및 공개되지 않은 보드를 균등하게 가정하며 실제 게임에서 비공개로 알고 있는 상대 카드를 사용하지 않습니다.
 
@@ -50,7 +50,7 @@ npm test
 - `two-street-verification.json`: 전체 턴/플롭 파일의 키 정렬·count 경계·해시를 확인했습니다. 모든 169개 hero shard에서 턴 1개와 플롭 3개를 독립 JS로 재계산했습니다. 그중 플롭 1개는 1,081개 runout × 893,970개 상대 배정, 총 966,381,570개 경우를 직접 열거했습니다. 프리플롭 169개 분모·경계·헤즈업 이하 확률을 정수 곱셈으로 검사했습니다.
 - 일반 테스트는 생성된 모든 파일의 해시를 검증 보고서에 결합하고 로열 보드의 100% 공동 1등, 쿼드 A 키커의 카드 충돌, 대칭, 재시도·중복 요청·해시 오류·캐시 상한·폴드 후 지연 응답을 검사합니다.
 
-상대 5~6명은 아직 제공하지 않습니다. 상대 2명 식을 임의로 거듭제곱하지 않으며, 다음 단계는 더 큰 matching 개수의 정확한 알고리즘을 검증한 뒤 진행합니다.
+상대 6명은 아직 제공하지 않습니다. 상대 2명 식을 임의로 거듭제곱하지 않으며, 다음 단계는 더 큰 matching 개수의 정확한 알고리즘을 검증한 뒤 진행합니다.
 
 
 ## 상대 3명 확장
@@ -106,3 +106,29 @@ npm test
 기존 HU 원본과 manifest는 출처 검증·생성기 재현을 위해 Git에 그대로 보존합니다. `compress-legacy-headsup.py`가 원본 SHA를 검사하고 gzip 파일 및 `gzip-manifest.json`을 생성합니다. 1,389개 파일을 해제한 결과가 기존 검증본과 byte 단위로 같은지 테스트합니다. 압축 결과는 리버 64,108,468 / 턴 59,442,797 / 플롭 8,993,809바이트입니다.
 
 Pages의 `copy-pages-data.py`는 이 HU 원본 1,389개 shard만 전송본에서 제외하며 index keys.bin은 유지합니다. 앱은 gzip manifest와 파일만 조회하고 압축 전후 무결성을 검사합니다. 원본 `.bin` HTTP 경로는 Pages 제공 범위가 아니며 저장소 재현용입니다. 모든 postflop 조회에 Safari 16.4+ 압축 API가 필요합니다. 정확 계산된 표의 상태/의미는 그대로 유지합니다.
+
+
+## 상대 5명 확장
+
+| 스트리트 | 상태 수 | 분모 |
+|---|---:|---:|
+| 리버 | 145,350,179 | 361,767,238,232,400 |
+| 턴 | 13,960,050 | 16,641,292,958,690,400 |
+| 플롭 | 1,286,792 | 391,070,384,529,224,400 |
+| 프리플롭 | 169 | 766,497,953,677,279,824,000 |
+
+Connected edge-support Möbius 전개와 vertex-partition Möbius 전개로 matching 1~6개의 계수를 연결 그래프 52개의 homomorphism에 대한 정확한 정수식(scale 5040)으로 바꿉니다. 전개·나눗셈은 모두 정수이며, 7개 이하 정점의 작은 support를 전수 생성합니다. 이 방법은 추정이나 샘플링이 아닙니다. tree/cycle/bicyclic/K4 식을 빠르게 평가하고, 누적 행렬 A²/A³/A diag(degree) A에서 Hero 삭제 결과를 복원합니다. 구조적으로 동일한 twin 정점을 삭제한 값은 그래프 동형이므로 재사용합니다. 출처/유도/검증은 MATCHING-5-6-PLAN.md와 scripts/matching-*입니다.
+
+5/6명 리버는 동일한 중간 결과를 활용하여 공동 생성했습니다. 인원 단계의 완성·배포는 5명 다음 6명 순서로 진행합니다. 3개 native worker가 중복 없는 chunk를 담당하고 source fingerprint와 원자적 paired checkpoint를 보존합니다. 합산은 unsigned __int128, 모든 노출 count는 문자열/BigInt로 유지합니다.
+
+- `river-five-v1`: R5W1 + 시작/보드 수 u32 + 상태별 wins/ties u64. 보드당 17,296바이트, gzip 154,156,517바이트.
+- `turn-five-v1` / `flop-five-v1`: RT51/RF51 + 행 수 u32 + key u32,wins/ties u64의 20바이트 행. gzip 140,612,901 / 20,294,415바이트.
+- `preflop-five-counts.json` / JS 모듈: 정확한 십진 문자열. 프리플롭을 포함한 모든 표시 반올림은 BigInt로 수행합니다.
+- `derive-five-six.cpp 5`, `pack-many-tables.py 5`로 재현합니다. 원본 작업 경로와 generation fingerprint는 생성기 기본 경로를 참고합니다. 기존 chunk가 살아 있으면 중복 실행하지 않습니다.
+- `five-verification.json`: 전체 압축/원본 byte를 해시로 결합합니다. 모든 count 범위·배수·키 정렬은 생성기/packer에서 전수 검사했습니다. 독립 JS scoring/그래프 재구성으로 리버 1,051개 상태, 턴 169개·플롭 3개의 11,017개 runout을 검산했습니다. 별도로 실제 카드의 18개/15개 active vertex를 직접 subset-DP로 세어 matching 5/6개와 table count를 비교했습니다. 모든 프리플롭의 BigInt 경계 및 상대 4명 이하 확률도 검사합니다.
+
+## 동일 공개 저장소의 고정 커밋 전달
+
+GitHub Pages의 게시 크기는 1GB 제한입니다 ([공식 문서](https://docs.github.com/en/pages/getting-started-with-github-pages/github-pages-limits)). 따라서 큰 5명 표 315,063,833바이트는 이미 게시한 동일 공개 저장소의 검증된 데이터 커밋 `5a28a4ba726dfeb4d598cbf7be3e94b405d57e21`에서 직접 조회합니다. 앱과 작은 preflop 모듈은 Pages에 게시하며, `table-source.js`가 해당 커밋의 raw.githubusercontent.com 경로를 고정합니다. branch/main 최신 값을 사용하지 않습니다 ([커밋 고정 안내](https://docs.github.com/en/repositories/working-with-files/using-files/getting-permanent-links-to-files)).
+
+실제 고정 커밋 응답에서 CORS `*`, cross-origin resource policy, HTTP 200을 확인했습니다. 새 서비스/유료 저장소/추가 인증 권한을 만들지 않습니다. 기존 압축 전후 SHA 검증, 실패 재시도 및 3-shard 메모리 상한을 그대로 사용합니다. raw 전달 실패나 브라우저 미지원 시 추정값을 표시하지 않습니다. 모든 데이터 원본은 저장소와 재현 가능한 생성기로 검토할 수 있습니다.

@@ -13,8 +13,8 @@
 | 1 | 완료·배포 검증 | PR #20, merge `2b7b41495c10bb287a1c0d1c305f9a39bb057aec`, Pages run `41146072556` |
 | 2 | 작업 중 | 완료·배포 검증: PR #22, merge `9f0e8dcebfd6ae704f0bb4a698c18e93365ddc5f`, Pages `41148159361` |
 | 3 | 완료·배포 검증 | PR #23, merge `c97f5617cd0542e7dec9df2da9b7509c9f9702f2`, Pages `41150080074` |
-| 4 | 전체 생성·검증 완료 | 87개 테스트 통과, BigInt 표시·HU 압축 완료; PR/CI/배포 대기 |
-| 5 | 대기 | 4명 단계 배포 후 진행 |
+| 4 | 완료·배포 검증 | PR #24, merge `7172978b6f843f2953ee642785f18989d593f632`, Pages `41152755319` |
+| 5 | 전체 생성·독립 검증 완료 | 99개 테스트 예정, 데이터 commit 5a28a4ba726dfeb4d598cbf7be3e94b405d57e21 고정; UI/CI/배포 검증 대기 |
 | 6 | 대기 | 5명 단계 배포 후 진행, 총 7명 UI 포함 |
 
 ## 실행·한도·재개 규칙
@@ -78,3 +78,25 @@ PR #23 / merge c97f5617cd0542e7dec9df2da9b7509c9f9702f2 / Pages 41150080074 succ
 - 기존 matching-three.hpp는 상대 3명 데이터 manifest가 SHA를 고정합니다. 이를 수정하지 말고 matching-four.hpp에서 포함/확장하여 레거시 검증을 유지합니다.
 - 전체 데이터가 약 917MB이므로 상대 4명 배포 전에 기존 HU 리버/턴/플롭을 손실 없이 압축하고 모든 기존 상태가 동일하게 해제되는지 확인합니다.
 - 상대 4명 이상 프리플롭은 JS 안전 정수를 초과합니다. 정확한 uint128/BigInt 카운트와 안전한 비율 계산/분모 표시를 먼저 설계합니다.
+
+
+## 상대 4명 배포 완료 / 다음 실행
+
+PR #24, merge 7172978b6f843f2953ee642785f18989d593f632, Pages 41152755319 success를 확인했습니다. 공개 파일 23개와 상대 1~4명 실제 HTTP 조회 16개가 검증본과 일치했습니다. HU 원본 shard는 Pages에서 제외되고 gzip 전송을 사용합니다. 소스 원본은 Git에 유지하며 모든 해제 byte를 검사합니다.
+
+상대 5/6명 후보 전략을 MATCHING-5-6-PLAN.md에 보존했습니다. 먼저 52개 작은 연결 그래프 catalogue/정확 계수 생성 및 독립 subset-DP로 모든 matching 1~6개 계수의 일치를 검증하세요. 아직 후보이며 표 생성이 완료된 것이 아닙니다. 기존 native 헤더를 수정하지 말고 새 확장으로 출처 해시를 유지하세요. 임시 계산·검증 핸들은 /private/tmp/river-round/checkpoint.md도 확인하세요. 현재 큰 계산 프로세스는 모두 완료됐으며 새 실행에서 중복 작업 여부를 재확인해야 합니다.
+
+실제 get_usage_limits가 허용하는 동안 진행하고, 소진 시 체크포인트를 유지한 채 등록된 heartbeat의 리셋 후 실행에서 재개합니다. 한도 누락 값을 0으로 보거나 크레딧을 구매하지 않습니다.
+
+
+## 리셋 후 5·6명 계산 재개
+
+2026-10-31 한도 리셋을 실제 get_usage_limits로 확인하고 작업을 재개했습니다. 작은 연결 그래프 52개와 정수 계수(scale 5040)를 생성했습니다. 모든 matching 1~6개에 대해 68개 host의 독립 subset-DP/완전 그래프 색칠 포함배제와 일치했고, 빠른 homomorphism은 86개 host에서 직접 hom 열거와 일치했습니다. Native 누적 행렬·Hero 삭제·구조적 twin 캐시는 870개 prefix(최대47정점)와 독립 재구성에 일치했습니다. 실제 카드 사례의 18정점/15정점 subset-DP에서도 5/6명 count가 일치합니다.
+
+현재 native 전체 리버를 /private/tmp/river-room-mw56-v1 아래에 공동 생성 중입니다. source fingerprint generation.json과 live worker/session/PID는 /private/tmp/river-round/mw56-workers.json에 보존합니다. worker 로그는 mw56-worker-{0,1,2}.log입니다. 재시작 전 반드시 살아 있는 handle 또는 해당 PID를 확인해 중복 작업을 피하세요. chunk는 각각 원자적 rename되며 두 상대 수의 paired checkpoint가 모두 있어야 건너뜁니다. 아직 전체 표가 완성된 것은 아닙니다.
+
+생성 완료 후 scripts/derive-five-six.cpp를 5 인자로 실행하고 scripts/pack-many-tables.py 5로 포장합니다. 6명 리버는 공동 계산하지만 전체 스트리트 합산/검증/배포는 5명부터 완료합니다. uint128 합산 및 6명 플롭 128bit 행을 구현했으나 전체 생성 데이터와의 검증은 대기 중입니다.
+
+Pages의 공식 1GB 제한 때문에 큰 5/6명 파일은 동일한 기존 공개 GitHub 저장소의 immutable commit URL을 고려합니다. 실제 기존 커밋 .gz 응답에서 CORS * 및 cross-origin 전달 가능을 확인했습니다. 새 서비스·유료 비용·권한 확대 없이 동일한 검증 byte를 조회하며, 원본 commit를 고정하고 압축 전후 SHA를 계속 검증해야 합니다. table-source.js는 아직 빈 설정(로컬 조회)이며, 검증된 데이터 commit가 게시된 뒤에만 revision을 채웁니다.
+
+리버 5/6명 1,051 paired chunk가 모두 완성됐고 worker 3개는 exit0으로 확인했습니다. 상대 5명 전체 스트리트를 생성·검증했으며 data/five-verification.json을 참고하세요. 실제 계정 한도 리셋 후 정상 허용 상태에서 진행했습니다. 상대 6명은 아직 리버 원본만 완료한 단계입니다.

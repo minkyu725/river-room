@@ -1,0 +1,11 @@
+{
+  "opponents": 4,
+  "riverStates": 145350179,
+  "independentlyEnumeratedStates": 1051,
+  "bruteStates": 9,
+  "orderedDealSpacePerBruteState": 543194051400,
+  "matchingHeaderSha256": "4e9673fbaf5a0f175d9e32bccbcc899610842005d7b6884c5234f29bdad92dff",
+  "manifestSha256": "65fbebf997532f1c898fca11425178ac32591ce9f36a7bcf91e1d350853ddee9",
+  "verifierSha256": "cc45a397e46c9dd7d12a88c6ef835869df667cce19e6bfff310b1b3c697d105c",
+  "seconds": 22.082
+}

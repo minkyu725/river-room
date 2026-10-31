@@ -1,0 +1,3 @@
+// Integer rounding at the displayed precision; safe even beyond Number integers.
+export function exactPercent(numerator,denominator){const n=BigInt(numerator),d=BigInt(denominator);if(d<=0n||n<0n||n>d)throw Error('Invalid exact probability');const tenths=(n*2000n+d)/(2n*d);return `${tenths/10n}.${tenths%10n}`;}
+export function bigProbability(wins,ties,denominator){const w=BigInt(wins),t=BigInt(ties),d=BigInt(denominator);if(d<=0n||w<0n||t<0n||w+t>d)throw Error('Invalid exact counts');return {wins:w,ties:t,denominator:d,win:Number(w)/Number(d),tie:Number(t)/Number(d),strongest:Number(w+t)/Number(d),equity:null};}

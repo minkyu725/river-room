@@ -1,3 +1,4 @@
+import {checkedTableResponse} from './compressed-table.js?v=25';
 const permutations=[];
 function permute(values,prefix=[]){if(!values.length){permutations.push(prefix);return;}values.forEach((v,i)=>permute(values.filter((_,j)=>i!==j),[...prefix,v]));}permute([0,1,2,3]);
 export function canonicalRiver(hole,board){
@@ -16,8 +17,8 @@ export function readRiverCounts(buffer,boardIndex,ordinal){
 }
 export function createRiverLoader(fetcher=(...args)=>fetch(...args)){
  let metadata;const cache=new Map(),pending=new Map();
- async function checked(path,entry){const response=await fetcher('./data/river-hu-v1/'+path);if(!response.ok)throw Error('River table unavailable');const buffer=await response.arrayBuffer();if(buffer.byteLength!==entry.bytes)throw Error('River table truncated');const digest=await globalThis.crypto.subtle.digest('SHA-256',buffer),hash=[...new Uint8Array(digest)].map(b=>b.toString(16).padStart(2,'0')).join('');if(hash!==entry.sha256)throw Error('River checksum mismatch');return buffer;}
- async function meta(){if(!metadata)metadata=(async()=>{const r=await fetcher('./data/river-hu-v1/manifest.json');if(!r.ok)throw Error('River manifest unavailable');const m=await r.json();if(m.version!==1||m.canonicalization!=='river-board-suit-min-v1'||m.boards!==134459||m.denominator!==990||m.bytesPerBoard!==2703||Object.keys(m.chunks||{}).length!==1051)throw Error('Invalid river manifest');return {m,keys:await checked('keys.bin',m.keys)};})().catch(e=>{metadata=null;throw e;});return metadata;}
+ async function checked(path,entry){return checkedTableResponse(await fetcher('./data/river-hu-v1/'+path+(entry.rawBytes===undefined?'':'.gz')),entry);}
+ async function meta(){if(!metadata)metadata=(async()=>{const r=await fetcher('./data/river-hu-v1/gzip-manifest.json');if(!r.ok)throw Error('River manifest unavailable');const m=await r.json();if(m.version!==1||m.canonicalization!=='river-board-suit-min-v1'||m.boards!==134459||m.denominator!==990||m.bytesPerBoard!==2703||Object.keys(m.chunks||{}).length!==1051)throw Error('Invalid river manifest');return {m,keys:await checked('keys.bin',m.keys)};})().catch(e=>{metadata=null;throw e;});return metadata;}
  return async(hole,board)=>{const key=canonicalRiver(hole,board),{m,keys}=await meta(),boardIndex=findRiverBoard(keys,key.boardKey),chunk=Math.floor(boardIndex/128);let buffer;
   if(cache.has(chunk)){buffer=cache.get(chunk);cache.delete(chunk);cache.set(chunk,buffer);}else{if(!pending.has(chunk))pending.set(chunk,checked(chunk+'.bin',m.chunks[chunk]).then(value=>{cache.set(chunk,value);while(cache.size>3)cache.delete(cache.keys().next().value);return value;}).finally(()=>pending.delete(chunk)));buffer=await pending.get(chunk);}
   const {wins,ties}=readRiverCounts(buffer,boardIndex,key.ordinal);return {method:'static-river-hu',wins,ties,win:wins/990,tie:ties/990,equity:(wins+ties/2)/990,strongest:(wins+ties)/990,denominator:990};

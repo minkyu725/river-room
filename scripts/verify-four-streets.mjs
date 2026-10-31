@@ -1,0 +1,16 @@
+import fs from 'node:fs';import {gunzipSync} from 'node:zlib';import {createHash} from 'node:crypto';import assert from 'node:assert/strict';import {countFourOpponents} from './four-opponent-reference.mjs';
+const hash=b=>createHash('sha256').update(b).digest('hex'),pre=JSON.parse(fs.readFileSync('data/preflop-four-counts.json')),hu=JSON.parse(fs.readFileSync('data/preflop-three-counts.json'));let referenceRunouts=0;const t=Date.now();
+function oracle(hole,board){const deck=Array.from({length:52},(_,i)=>i).filter(c=>![...hole,...board].includes(c));let wins=0,ties=0;const add=rest=>{const r=countFourOpponents(hole,[...board,...rest],false);wins+=r.wins;ties+=r.ties;referenceRunouts++;};if(board.length===4)deck.forEach(c=>add([c]));else for(let i=0;i<46;i++)for(let j=i+1;j<47;j++)add([deck[i],deck[j]]);return {wins,ties};}
+const report={opponents:4,streets:{}};
+for(const [street,magic,states,den] of [['turn','RT41',13960050,24986926364400],['flop','RF41',1286792,587192769563400]]){
+ const root=`data/${street}-four-v1/`,m=JSON.parse(fs.readFileSync(root+'manifest.json'));assert.equal(m.generatorSha256,hash(fs.readFileSync('scripts/derive-four.cpp')));assert.equal(m.parentManifestSha256,hash(fs.readFileSync('data/river-four-v1/manifest.json')));assert.equal(Object.keys(m.shards).length,169);let total=0,probes=0,shard=0;
+ for(const [hk,entry] of Object.entries(m.shards)){
+  const packed=fs.readFileSync(root+hk+'.bin.gz');assert.equal(hash(packed),entry.sha256);assert.equal(packed.length,entry.bytes);const raw=gunzipSync(packed);assert.equal(hash(raw),entry.rawSha256);assert.equal(raw.length,entry.rawBytes);assert.equal(raw.toString('ascii',0,4),magic);const n=raw.readUInt32LE(4);const get64=o=>{const v=raw.readBigUInt64LE(o);assert.ok(v<=BigInt(Number.MAX_SAFE_INTEGER));return Number(v);};assert.equal(raw.length,8+n*20);assert.equal(n,entry.rows);let previous=-1;
+  for(let row=0;row<n;row++){const o=8+row*20,k=raw.readUInt32LE(o),wins=get64(o+4),ties=get64(o+12);assert.ok(k>previous);assert.ok(wins+ties<=den);previous=k;}total+=n;
+  if(street==='turn'||[0,84,168].includes(shard)){const o=8+Math.floor(n/2)*20;let k=raw.readUInt32LE(o),board=[];for(let j=0;j<(street==='turn'?4:3);j++){board.unshift(k%64);k=Math.floor(k/64);}const hole=[Math.floor(Number(hk)/64),Number(hk)%64],expected=oracle(hole,board);assert.deepEqual({wins:get64(o+4),ties:get64(o+12)},expected);probes++;}
+  if(++shard%32===0)console.log({street,shard,probes,seconds:(Date.now()-t)/1000});
+ }
+ assert.equal(total,states);report.streets[street]={states:total,independentStates:probes,manifestSha256:hash(fs.readFileSync(root+'manifest.json'))};
+}
+assert.equal(Object.keys(pre).length,169);for(const [k,r] of Object.entries(pre)){assert.equal(BigInt(r[2]),1150897828344264000n);assert.ok(BigInt(r[0])+BigInt(r[1])<=BigInt(r[2]));const h=hu[k];assert.ok(BigInt(r[0])*BigInt(h[2])<=BigInt(h[0])*BigInt(r[2]));assert.ok((BigInt(r[0])+BigInt(r[1]))*BigInt(h[2])<=(BigInt(h[0])+BigInt(h[1]))*BigInt(r[2]));}
+Object.assign(report,{referenceRunouts,preflopHands:169,preflopSha256:hash(fs.readFileSync('data/preflop-four-counts.json')),verifierSha256:hash(fs.readFileSync(import.meta.filename)),seconds:(Date.now()-t)/1000});fs.writeFileSync('data/four-street-verification.json',JSON.stringify(report,null,2)+'\n');console.log(report);

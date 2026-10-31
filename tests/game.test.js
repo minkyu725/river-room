@@ -1,3 +1,5 @@
+import {createFourOpponentLoader} from '../four-opponent-probabilities.js';
+import {exactPercent} from '../exact-probability.js';
 import {createThreeOpponentLoader} from '../three-opponent-probabilities.js';
 import {createTwoOpponentLoader} from '../two-opponent-probabilities.js';
 import test from 'node:test';
@@ -18,7 +20,7 @@ function harness(options={}){
  const document={body:options.motionAPI?node('body'):undefined,documentElement:node('html'),querySelector(s){if(!nodes.has(s))nodes.set(s,node());return nodes.get(s);},querySelectorAll(){return [...nodes.values()].flatMap(el=>el.children).filter(el=>el.classList.contains('dealing')||el.classList.contains('flipping'));},createElement:node};document.querySelector('#players').value=String(options.players??4);
  const media={matches:!!options.reducedMotion,addEventListener(event,fn){this.onchange=fn;},addListener(fn){this.onchange=fn;}};
  if(options.legacyMedia)delete media.addEventListener;
- const context=vm.createContext({...engine,loadThreeOpponentProbabilities:options.loadThreeOpponentProbabilities??(()=>Promise.reject(Error('No network in harness'))),loadTwoOpponentProbabilities:options.loadTwoOpponentProbabilities??(()=>Promise.reject(Error('No network in harness'))),loadHeadsUpProbabilities:options.loadHeadsUpProbabilities??(()=>Promise.reject(Error('No network in harness'))),loadFlopProbabilities:options.loadFlopProbabilities??(()=>Promise.reject(Error('No network in game harness'))),shuffled:options.shuffled??engine.shuffled,botDecision:options.botDecision??engine.botDecision,document,console,localStorage:{getItem:key=>{if(options.storageFails)throw Error('storage blocked');return storage.get(key)??null;},setItem(key,value){if(options.storageFails)throw Error('storage blocked');storage.set(key,value);}},matchMedia:options.noMatchMedia?undefined:()=>media,navigator:options.navigator??{},AudioContext:options.AudioContext,Worker:class{constructor(){if(options.workerUnavailable)throw Error('unavailable');workers.push(this);}postMessage(data){if(options.postFails)throw Error('post failed');this.request=data;}terminate(){this.terminated=true;}},confirm:()=>options.confirm!==false,setTimeout:f=>{timers.set(++timerId,f);return timerId;},clearTimeout:id=>timers.delete(id)});
+ const context=vm.createContext({...engine,exactPercent,loadFourOpponentProbabilities:options.loadFourOpponentProbabilities??(()=>Promise.reject(Error('No network in harness'))),loadThreeOpponentProbabilities:options.loadThreeOpponentProbabilities??(()=>Promise.reject(Error('No network in harness'))),loadTwoOpponentProbabilities:options.loadTwoOpponentProbabilities??(()=>Promise.reject(Error('No network in harness'))),loadHeadsUpProbabilities:options.loadHeadsUpProbabilities??(()=>Promise.reject(Error('No network in harness'))),loadFlopProbabilities:options.loadFlopProbabilities??(()=>Promise.reject(Error('No network in game harness'))),shuffled:options.shuffled??engine.shuffled,botDecision:options.botDecision??engine.botDecision,document,console,localStorage:{getItem:key=>{if(options.storageFails)throw Error('storage blocked');return storage.get(key)??null;},setItem(key,value){if(options.storageFails)throw Error('storage blocked');storage.set(key,value);}},matchMedia:options.noMatchMedia?undefined:()=>media,navigator:options.navigator??{},AudioContext:options.AudioContext,Worker:class{constructor(){if(options.workerUnavailable)throw Error('unavailable');workers.push(this);}postMessage(data){if(options.postFails)throw Error('post failed');this.request=data;}terminate(){this.terminated=true;}},confirm:()=>options.confirm!==false,setTimeout:f=>{timers.set(++timerId,f);return timerId;},clearTimeout:id=>timers.delete(id)});
  const src=readFileSync(new URL('../app.js',import.meta.url),'utf8').replace(/^import[^\n]+\n/gm,'');vm.runInContext(src+'\nglobalThis.inspect=()=>game;globalThis.restart=start;globalThis.currentRequest=()=>equityRequest;',context);
  return {context,nodes,timers,workers,storage,media,animations,game:()=>context.inspect(),tick(){const [id,fn]=timers.entries().next().value||[];if(fn){timers.delete(id);fn();return true;}return false;}};
 }
@@ -62,7 +64,7 @@ test('game uses static lookup without constructing a worker or simulation',()=>{
  const before=h.nodes.get('#equity').innerHTML;h.context.calculate();assert.equal(h.nodes.get('#equity').innerHTML,before);
 });
 test('multiway preflop shows exact category probabilities without estimated equity',()=>{
- const h=harness({players:5});assert.equal(h.nodes.get('#equity').innerHTML,'—<span>%</span>');assert.ok(h.nodes.get('#equity-detail').textContent.includes('상대 4명'));assert.equal((h.nodes.get('#hand-odds-body').innerHTML.match(/<tr>/g)||[]).length,9);
+ const h=harness({players:6});assert.equal(h.nodes.get('#equity').innerHTML,'—<span>%</span>');assert.ok(h.nodes.get('#equity-detail').textContent.includes('상대 5명'));assert.equal((h.nodes.get('#hand-odds-body').innerHTML.match(/<tr>/g)||[]).length,9);
 });
 
 test('hand odds toggle is independent and clears old results when folding',()=>{
@@ -308,14 +310,19 @@ test('two-opponent static replies show joint first place and cannot overwrite a 
 test('real compressed three-player tables reach the HUD on flop, turn and river',async()=>{
  const load=createTwoOpponentLoader(async url=>{const bytes=readFileSync(new URL('../'+url.replace(/^\.\//,''),import.meta.url));return url.endsWith('.json')?{ok:true,json:async()=>JSON.parse(bytes)}:{ok:true,arrayBuffer:async()=>bytes.buffer.slice(bytes.byteOffset,bytes.byteOffset+bytes.byteLength)};});
  const h=harness({players:3,loadTwoOpponentProbabilities:load}),g=h.game();g.board=g.deck.splice(-3);
- for(const n of [3,4,5]){if(n>3)g.board.push(g.deck.pop());await h.context.calculate();const r=await load([...g.players[0].hole],[...g.board]);assert.equal(h.nodes.get('#equity').innerHTML,`${(r.strongest*100).toFixed(1)}<span>%</span>`);assert.ok(h.nodes.get('#equity-detail').textContent.includes(r.denominator.toLocaleString()));}
+ for(const n of [3,4,5]){if(n>3)g.board.push(g.deck.pop());await h.context.calculate();const r=await load([...g.players[0].hole],[...g.board]);assert.equal(h.nodes.get('#equity').innerHTML,`${exactPercent(BigInt(r.wins)+BigInt(r.ties),r.denominator)}<span>%</span>`);assert.ok(h.nodes.get('#equity-detail').textContent.includes(r.denominator.toLocaleString()));}
 });
 test('real compressed four-player tables reach the HUD on flop, turn and river',async()=>{
  const load=createThreeOpponentLoader(async url=>{const bytes=readFileSync(new URL('../'+url.replace(/^\.\//,''),import.meta.url));return url.endsWith('.json')?{ok:true,json:async()=>JSON.parse(bytes)}:{ok:true,arrayBuffer:async()=>bytes.buffer.slice(bytes.byteOffset,bytes.byteOffset+bytes.byteLength)};});
  const h=harness({players:4,loadThreeOpponentProbabilities:load}),g=h.game();g.board=g.deck.splice(-3);
- for(const n of [3,4,5]){if(n>3)g.board.push(g.deck.pop());await h.context.calculate();const r=await load([...g.players[0].hole],[...g.board]);assert.equal(h.nodes.get('#equity').innerHTML,`${(r.strongest*100).toFixed(1)}<span>%</span>`);assert.ok(h.nodes.get('#equity-detail').textContent.includes(r.denominator.toLocaleString()));}
+ for(const n of [3,4,5]){if(n>3)g.board.push(g.deck.pop());await h.context.calculate();const r=await load([...g.players[0].hole],[...g.board]);assert.equal(h.nodes.get('#equity').innerHTML,`${exactPercent(BigInt(r.wins)+BigInt(r.ties),r.denominator)}<span>%</span>`);assert.ok(h.nodes.get('#equity-detail').textContent.includes(r.denominator.toLocaleString()));}
 });
 
 test('three-opponent pending reply cannot overwrite a fold',async()=>{
  let resolve;const h=harness({players:4,loadThreeOpponentProbabilities:()=>new Promise(r=>resolve=r)}),g=h.game();g.board=g.deck.splice(-4);const promise=h.context.calculate();g.players[0].folded=true;h.context.calculate();const before=h.nodes.get('#equity-detail').textContent;resolve({strongest:1,win:1,tie:0,denominator:33720548400});await promise;assert.equal(h.nodes.get('#equity-detail').textContent,before);assert.equal(h.nodes.get('#equity').innerHTML,'—<span>%</span>');
+});
+test('real compressed five-player tables reach the HUD on flop, turn and river',async()=>{
+ const load=createFourOpponentLoader(async url=>{const bytes=readFileSync(new URL('../'+url.replace(/^\.\//,''),import.meta.url));return url.endsWith('.json')?{ok:true,json:async()=>JSON.parse(bytes)}:{ok:true,arrayBuffer:async()=>bytes.buffer.slice(bytes.byteOffset,bytes.byteOffset+bytes.byteLength)};});
+ const h=harness({players:5,loadFourOpponentProbabilities:load}),g=h.game();g.board=g.deck.splice(-3);
+ for(const n of [3,4,5]){if(n>3)g.board.push(g.deck.pop());await h.context.calculate();const r=await load([...g.players[0].hole],[...g.board]);assert.equal(h.nodes.get('#equity').innerHTML,`${exactPercent(BigInt(r.wins)+BigInt(r.ties),r.denominator)}<span>%</span>`);assert.ok(h.nodes.get('#equity-detail').textContent.includes(r.denominator.toLocaleString()));}
 });

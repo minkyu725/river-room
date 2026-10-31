@@ -1,0 +1,20 @@
+{
+  "opponents": 4,
+  "streets": {
+    "turn": {
+      "states": 13960050,
+      "independentStates": 169,
+      "manifestSha256": "4dc0215a87849f61ed4befbbcaa0061b8675eb50603c68270bc88c93c5f92a87"
+    },
+    "flop": {
+      "states": 1286792,
+      "independentStates": 3,
+      "manifestSha256": "98363f255cc7a658d7548d2898a9fd2b8628964690b730b544d6b9b8916c932e"
+    }
+  },
+  "referenceRunouts": 11017,
+  "preflopHands": 169,
+  "preflopSha256": "c46ab1ea80c0c30bba30857c1fb73b7c4ed94450f25bc1d370582321b4bbf1dc",
+  "verifierSha256": "ebc4502524f45a0531a58ca2eaaeae434d0488316dc7421f78dcd4fddc67910c",
+  "seconds": 20.797
+}

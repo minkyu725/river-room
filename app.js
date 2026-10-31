@@ -1,8 +1,10 @@
-import {loadThreeOpponentProbabilities} from './three-opponent-probabilities.js?v=24';
-import {loadTwoOpponentProbabilities} from './two-opponent-probabilities.js?v=24';
-import {loadHeadsUpProbabilities} from './headsup-probabilities.js?v=24';
-import {loadFlopProbabilities} from './flop-probabilities.js?v=24';
-import {suits,rank,suit,shuffled,evaluate,describeHand,settle,botDecision,calculateEquity} from './engine.js?v=24';
+import {exactPercent} from './exact-probability.js?v=25';
+import {loadFourOpponentProbabilities} from './four-opponent-probabilities.js?v=25';
+import {loadThreeOpponentProbabilities} from './three-opponent-probabilities.js?v=25';
+import {loadTwoOpponentProbabilities} from './two-opponent-probabilities.js?v=25';
+import {loadHeadsUpProbabilities} from './headsup-probabilities.js?v=25';
+import {loadFlopProbabilities} from './flop-probabilities.js?v=25';
+import {suits,rank,suit,shuffled,evaluate,describeHand,settle,botDecision,calculateEquity} from './engine.js?v=25';
 const $=s=>document.querySelector(s);
 const profiles=[{name:'민',style:'균형형',aggression:.58,bluffRate:.12},{name:'루나',style:'공격형',aggression:.85,bluffRate:.28},{name:'제이',style:'신중형',aggression:.34,bluffRate:.07},{name:'노아',style:'변칙형',aggression:.73,bluffRate:.32},{name:'유진',style:'분석형',aggression:.5,bluffRate:.16}];
 let saved=[];try{saved=JSON.parse(localStorage.getItem('river-history')||'[]');if(!Array.isArray(saved))saved=[];}catch{}
@@ -215,8 +217,8 @@ function calculate(){const id=++calcId;equityRequest=null;$('#equity').innerHTML
  const base=calculateEquity(data.hole,data.board,data.opponents);
  if(!data.board.length||data.opponents===0){showEquity({id,...base});return;}
  const categoryRequest=data.board.length===3?loadFlopProbabilities(data.hole,data.board):Promise.resolve(base);
- const winRequest=data.opponents===1?loadHeadsUpProbabilities(data.hole,data.board):data.opponents===2?loadTwoOpponentProbabilities(data.hole,data.board):data.opponents===3?loadThreeOpponentProbabilities(data.hole,data.board):Promise.resolve(null);
- $('#equity').innerHTML='—<span>%</span>';$('#equity-detail').textContent=data.opponents<=3?'정확한 사전 승률표를 불러오는 중…':`상대 ${data.opponents}명 정확 승률표는 미제공입니다.`;
+ const winRequest=data.opponents===1?loadHeadsUpProbabilities(data.hole,data.board):data.opponents===2?loadTwoOpponentProbabilities(data.hole,data.board):data.opponents===3?loadThreeOpponentProbabilities(data.hole,data.board):data.opponents===4?loadFourOpponentProbabilities(data.hole,data.board):Promise.resolve(null);
+ $('#equity').innerHTML='—<span>%</span>';$('#equity-detail').textContent=data.opponents<=4?'정확한 사전 승률표를 불러오는 중…':`상대 ${data.opponents}명 정확 승률표는 미제공입니다.`;
  $('#hand-odds-status').textContent='사전 계산표를 불러오는 중…';
  return Promise.allSettled([categoryRequest,winRequest]).then(([category,win])=>{
   const result=category.status==='fulfilled'?category.value:{method:'unavailable',categoryError:true};
@@ -227,9 +229,10 @@ function percent(n){return n===0?'0.0%':n<.001?'<0.1%':(n*100).toFixed(1)+'%';}
 function showEquity(data){
  if(data.id!==calcId||game.busy||game.players[0].dealt<2)return;
  const chance=Number.isFinite(data.strongest)?data.strongest:Number.isFinite(data.win)&&Number.isFinite(data.tie)?data.win+data.tie:null;
- const n=chance===null?null:(chance*100).toFixed(1),opponents=active().length-1;
+ const hasCounts=data.wins!==undefined&&data.ties!==undefined&&data.denominator!==undefined,winText=hasCounts?exactPercent(data.wins,data.denominator):(data.win*100).toFixed(1),tieText=hasCounts?exactPercent(data.ties,data.denominator):(data.tie*100).toFixed(1);
+ const n=chance===null?null:hasCounts?exactPercent(BigInt(data.wins)+BigInt(data.ties),data.denominator):(chance*100).toFixed(1),opponents=active().length-1;
  $('#equity').innerHTML=`${n??'—'}<span>%</span>`;$('#equity-bar').style.width=(n??0)+'%';
- $('#equity-detail').textContent=n!==null?opponents===0?'남은 상대 없음 · 최강 패 100%':`공동 1등 포함 · 단독 승리 ${(data.win*100).toFixed(1)}% / 동률 ${(data.tie*100).toFixed(1)}% · ${data.denominator.toLocaleString()}가지 전수 계산`:data.winError?'정확한 사전 승률표를 불러오지 못했습니다.':`상대 ${opponents}명 정확 승률표는 아직 미제공입니다.`;
+ $('#equity-detail').textContent=n!==null?opponents===0?'남은 상대 없음 · 최강 패 100%':`공동 1등 포함 · 단독 승리 ${winText}% / 동률 ${tieText}% · ${data.denominator.toLocaleString()}가지 전수 계산`:data.winError?'정확한 사전 승률표를 불러오지 못했습니다.':`상대 ${opponents}명 정확 승률표는 아직 미제공입니다.`;
  const categories=Array.isArray(data.categories)?data.categories:[];
  $('#hand-odds-body').innerHTML=categories.slice().reverse().map(c=>`<tr><th scope="row">${c.name}</th><td>${percent(c.probability)}</td></tr>`).join('');
  $('#hand-odds-status').textContent=data.categoryError?'족보 확률표를 불러오지 못했습니다. 다음 액션 또는 새로고침 후 다시 시도합니다.':!categories.length?'턴의 족보 완성 분포표는 미제공입니다. 상단 최강 패 확률과는 별개입니다.':game.board.length===3?'1,081가지 전수 계산표 · 족보 완성 확률 · 상단 최강 패 확률과는 별개입니다.':game.board.length===5?'리버의 확정 족보 · 상대보다 강할 확률은 상단에서 확인하세요.':'2,118,760개 보드 전수 계산 · 족보 완성 확률 · 상단 최강 패 확률과는 별개입니다.';

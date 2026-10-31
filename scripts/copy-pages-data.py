@@ -1,10 +1,7 @@
-"""Publish compressed delivery files while retaining reproducible raw repo data."""
+"""Publish only the embedded offline model; preserve every exact source in Git."""
 import pathlib,shutil
-source=pathlib.Path('data');target=pathlib.Path('_site/data');copied=skipped=0
+source=pathlib.Path('data/offline-v1');target=pathlib.Path('_site/data')
 if target.exists():shutil.rmtree(target)
-for p in source.rglob('*'):
- if not p.is_file():continue
- if p.parent.name in {'river-five-v1','turn-five-v1','flop-five-v1','river-six-v1','turn-six-v1','flop-six-v1'}:skipped+=1;continue
- if p.parent.name in {'river-hu-v1','turn-hu-v1','flop-hu-v1'} and p.suffix=='.bin' and p.name!='keys.bin':skipped+=1;continue
- dest=target/p.relative_to(source);dest.parent.mkdir(parents=True,exist_ok=True);shutil.copyfile(p,dest);copied+=p.stat().st_size
-print(f'Published data bytes={copied}; source-only raw shards={skipped}')
+if not (source/'flop.bin').exists():raise RuntimeError('Build and verify the offline model first')
+shutil.copytree(source,target/'offline-v1')
+print(f'Offline data bytes={sum(p.stat().st_size for p in source.iterdir() if p.is_file())}; exact originals retained in repository')

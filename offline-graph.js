@@ -1,0 +1,24 @@
+// Browser kernel derived from the independently verified exact generator.
+// Fast exact homomorphisms of every connected <=6-edge support.
+export function compileCatalogue(graphs){const forms=[[]],ids=new Map([['[]',0]]);const form=children=>{children.sort((a,b)=>a-b);const key=JSON.stringify(children);if(!ids.has(key)){ids.set(key,forms.length);forms.push(children);}return ids.get(key);};
+ const descriptors=graphs.map(g=>{const adj=Array.from({length:g.n},()=>[]);for(const [a,b]of g.edges){adj[a].push(b);adj[b].push(a);}const remaining=new Set(Array.from({length:g.n},(_,i)=>i));let leaves=[...remaining].filter(v=>adj[v].length<2);while(leaves.length){for(const v of leaves)remaining.delete(v);leaves=[...remaining].filter(v=>adj[v].filter(u=>remaining.has(u)).length<2);}const rooted=(v,parent,blocked)=>form(adj[v].filter(u=>u!==parent&&!blocked.has(u)).map(u=>rooted(u,v,blocked)));
+  if(!remaining.size){const eccentricity=root=>{const seen=new Set([root]);let layer=[root],depth=0;while(layer.length){const next=[];for(const v of layer)for(const u of adj[v])if(!seen.has(u)){seen.add(u);next.push(u);}if(next.length)depth++;layer=next;}return depth;},root=Array.from({length:g.n},(_,i)=>i).sort((a,b)=>eccentricity(a)-eccentricity(b))[0];return {kind:'tree',form:rooted(root,-1,new Set())};}
+  const core=[...remaining],degree=v=>adj[v].filter(u=>remaining.has(u)).length;
+  if(core.every(v=>degree(v)===2)){const order=[core[0]];let previous=-1,v=core[0];do{const next=adj[v].find(u=>remaining.has(u)&&u!==previous);previous=v;v=next;if(v!==order[0])order.push(v);}while(v!==order[0]);return {kind:'cycle',weights:order.map(v=>rooted(v,-1,remaining))};}
+  if(core.length===4&&core.every(v=>degree(v)===3))return {kind:'clique4'};
+  if(core.length===4){const anchor=core.find(v=>adj[v].some(u=>!remaining.has(u)));return {kind:anchor===undefined?'diamond':degree(anchor)===3?'diamond-leaf3':'diamond-leaf2'};}
+  if(core.some(v=>degree(v)===4))return {kind:'bowtie'};
+  let triangle=false;for(const [a,b]of g.edges)if(remaining.has(a)&&remaining.has(b)&&adj[a].some(c=>remaining.has(c)&&adj[b].includes(c)))triangle=true;return {kind:triangle?'house':'k23'};
+ });return {forms,descriptors};}
+export function prepareHost(n,edges,includeClique4=true){const A=Array.from({length:n},()=>Array(n).fill(0));for(const [a,b]of edges)A[a][b]=A[b][a]=1;const d=A.map(row=>row.reduce((a,b)=>a+b,0)),C=Array.from({length:n},()=>Array(n).fill(0)),P=C.map(r=>[...r]),B=C.map(r=>[...r]);
+ for(let i=0;i<n;i++)for(let j=0;j<n;j++)for(let k=0;k<n;k++)C[i][j]+=A[i][k]*A[k][j];for(let i=0;i<n;i++)for(let k=0;k<n;k++)if(A[i][k])for(let j=0;j<n;j++){P[i][j]+=C[k][j];B[i][j]+=d[k]*A[k][j];}
+ let clique4=0;if(includeClique4)for(let a=0;a<n;a++)for(let b=a+1;b<n;b++)if(A[a][b])for(let c=b+1;c<n;c++)if(A[a][c]&&A[b][c])for(let e=c+1;e<n;e++)if(A[a][e]&&A[b][e]&&A[c][e])clique4++;
+ return {n,A,d,C,P,B,clique4};}
+export function fastHomomorphisms(host,compiled){const {n,A,d,C,P,B,clique4}=host,fCache=new Map(),mCache=new Map();function weights(id){if(!fCache.has(id)){const children=compiled.forms[id],f=Array(n).fill(1);for(const child of children){const msg=message(child);for(let v=0;v<n;v++)f[v]*=msg[v];}fCache.set(id,f);}return fCache.get(id);}function message(id){if(!mCache.has(id)){const f=weights(id),out=A.map(row=>row.reduce((sum,x,u)=>sum+x*f[u],0));mCache.set(id,out);}return mCache.get(id);}
+ const pair=fn=>{let sum=0;for(let i=0;i<n;i++)for(let j=0;j<n;j++)sum+=fn(i,j);return sum;};
+ return compiled.descriptors.map(spec=>{if(spec.kind==='tree')return weights(spec.form).reduce((a,b)=>a+b,0);if(spec.kind==='clique4')return clique4*24;if(spec.kind==='diamond')return pair((i,j)=>A[i][j]*C[i][j]**2);if(spec.kind==='diamond-leaf3')return pair((i,j)=>A[i][j]*d[i]*C[i][j]**2);if(spec.kind==='diamond-leaf2')return pair((i,j)=>A[i][j]*C[i][j]*B[i][j]);if(spec.kind==='bowtie')return P.reduce((sum,row,i)=>sum+row[i]**2,0);if(spec.kind==='house')return pair((i,j)=>A[i][j]*C[i][j]*P[i][j]);if(spec.kind==='k23')return pair((i,j)=>C[i][j]**3);
+  const ws=spec.weights,active=ws.flatMap((id,i)=>id?[i]:[]),f=active.length?weights(ws[active[0]]):Array(n).fill(1);
+  if(ws.length===3){if(active.length<2)return f.reduce((sum,x,i)=>sum+x*P[i][i],0);if(active.length===2){const g=weights(ws[active[1]]);return pair((i,j)=>A[i][j]*f[i]*g[j]*C[i][j]);}if(ws.some(id=>compiled.forms[id].length!==1||compiled.forms[id][0]!==0))throw Error('Unexpected triangle attachment');return pair((i,j)=>A[i][j]*d[i]*d[j]*B[i][j]);}
+  if(ws.length===4){if(active.length<2)return pair((i,j)=>f[i]*C[i][j]**2);const adjacent=Math.abs(active[0]-active[1])!==2;return adjacent?pair((i,j)=>A[i][j]*d[i]*d[j]*P[i][j]):pair((i,j)=>d[i]*d[j]*C[i][j]**2);}
+  if(ws.length===5)return pair((i,j)=>f[i]*C[i][j]*P[i][j]);if(ws.length===6)return pair((i,j)=>P[i][j]**2);throw Error('Unknown support');
+ });}

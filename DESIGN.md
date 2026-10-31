@@ -42,3 +42,8 @@ Probability details show only unique-win and tied-first percentages. Remove the 
 Verified in the in-app browser at 320/390/720/768/950/1280/1440px, 2–7 players, completed/folded states and expanded history (42 layouts): no horizontal page overflow, header collision or board/seat-card collision. Targeted hero/side/lower-seat popovers checked at 320/768/1280px; short landscape help dialog at 844×390 scrolls within the viewport. Local QA fixtures set player count and completed state, use production rendering/CSS and are excluded from Pages. These are responsive browser checks, not a physical-device/all-OS certification.
 
 A follow-up at 721px found two lower nameplates touching the board by about 2px in the narrow desktop grid. Between 721 and 800px, move the side rail below the table into two columns so the table retains usable width. Check the 800/801px transition as well as the existing 720/721 and 950/951 transitions.
+
+
+## Offline probabilities
+
+Keep existing table/card/control design. A small installation/ready status sits below settings. Flop values are visibly approximate and carry a maximum display-error note; other streets remain exact. Full definitions stay in help. All app/model cache bodies total about8.58MB, with no per-query network calls.

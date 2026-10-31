@@ -1,3 +1,11 @@
+# Current offline probability implementation
+
+See [OFFLINE-MODEL.md](./OFFLINE-MODEL.md). All original exact tables remain preserved. Current delivery is exact for preflop/turn/river and bounded approximate for flop, with all probability work local after initial caching.
+
+The following section describes the archived exact-table delivery stage; its no-live-computation and network-table statements are historical.
+
+---
+
 # 화면의 확률 정의와 정확 계산표
 
 상단 **최강 패 확률**은 내 패보다 강한 상대가 없는 확률입니다. 공동 1등을 포함하며 `단독 승리 확률 + 동률로 공동 1등일 확률`입니다. 동률일 때 팟을 나누는 에퀴티와는 다른 값입니다. 예를 들어 보드가 로열 플러시면 상대 1명 기준 최강 패 확률은 100%, 단독 승리는 0%, 동률은 100%입니다.

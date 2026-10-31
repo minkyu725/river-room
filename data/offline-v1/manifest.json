@@ -1,0 +1,59 @@
+{
+  "version": 1,
+  "q": 255,
+  "states": 1286792,
+  "bytes": 8397454,
+  "sha256": "4382f39e979f9cf049c020e7523ebfb8fbe4e4917e80177d17f4b6d232c03cd2",
+  "boundPp": {
+    "strongest": 0.19607843137254902,
+    "win": 0.19607843137254902,
+    "tie": 0.39215686274509803
+  },
+  "maxObservedErrorPp": {
+    "1": {
+      "win": 0.19607843137254902,
+      "strongest": 0.19607843137254902,
+      "tie": 0.39155773878525146
+    },
+    "2": {
+      "win": 0.19607840093760942,
+      "strongest": 0.19607835224170608,
+      "tie": 0.39208364845441523
+    },
+    "3": {
+      "win": 0.19607790901990774,
+      "strongest": 0.19607842424631927,
+      "tie": 0.39190077196925077
+    },
+    "4": {
+      "win": 0.19607829682276756,
+      "strongest": 0.19607842594985844,
+      "tie": 0.3917917917571207
+    },
+    "5": {
+      "win": 0.19607815411458865,
+      "strongest": 0.196078335851252,
+      "tie": 0.3917261659511267
+    },
+    "6": {
+      "win": 0.19607842562512012,
+      "strongest": 0.1960784282694084,
+      "tie": 0.3917382539099204
+    }
+  },
+  "generatorSha256": "3ed0d652b4862dcb06f65f127374b14415bdf81c26defa809b323bf875328947",
+  "verifierSha256": "694043676ae181472ad8957c0004568e6cdaaf4a944518b219e12af400c95cc2",
+  "asset": "./data/offline-v1/flop.bin?sha=4382f39e979f9cf049c020e7523ebfb8fbe4e4917e80177d17f4b6d232c03cd2",
+  "originalCommit": "62b7485d5f87d2ae94a0d432d0346e75178fa728",
+  "streetModes": {
+    "preflop": "preserved-exact-inline",
+    "flop": "nearest-8bit-quantization",
+    "turn": "exact-local-enumeration",
+    "river": "exact-local-matching"
+  },
+  "displayMaxErrorPp": {
+    "strongest": 0.25,
+    "win": 0.25,
+    "tie": 0.45
+  }
+}

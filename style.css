@@ -270,3 +270,6 @@ dialog p { color: var(--muted); font-size: 13px; line-height: 1.9; }
 
 .preset-group { display: flex; gap: 7px; }
 .raise-bb { color: var(--muted); font-size: .9em; font-weight: 400; }
+
+.offline-status { color: var(--muted); font-size: 10px; line-height: 1.5; margin: 0 0 14px; }
+#approx-note { margin-top: 2px; }

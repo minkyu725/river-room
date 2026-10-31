@@ -1,0 +1,2016 @@
+{
+  "version": 1,
+  "q": 255,
+  "states": 1286792,
+  "opponents": 6,
+  "checkedProbabilities": 23162256,
+  "method": "all states against preserved exact integer counts; nearest fixed-point rounding, no learned model",
+  "boundPp": {
+    "strongest": 0.19607843137254902,
+    "win": 0.19607843137254902,
+    "tie": 0.39215686274509803
+  },
+  "maxObservedErrorPp": {
+    "1": {
+      "win": 0.19607843137254902,
+      "strongest": 0.19607843137254902,
+      "tie": 0.39155773878525146
+    },
+    "2": {
+      "win": 0.19607840093760942,
+      "strongest": 0.19607835224170608,
+      "tie": 0.39208364845441523
+    },
+    "3": {
+      "win": 0.19607790901990774,
+      "strongest": 0.19607842424631927,
+      "tie": 0.39190077196925077
+    },
+    "4": {
+      "win": 0.19607829682276756,
+      "strongest": 0.19607842594985844,
+      "tie": 0.3917917917571207
+    },
+    "5": {
+      "win": 0.19607815411458865,
+      "strongest": 0.196078335851252,
+      "tie": 0.3917261659511267
+    },
+    "6": {
+      "win": 0.19607842562512012,
+      "strongest": 0.1960784282694084,
+      "tie": 0.3917382539099204
+    }
+  },
+  "worstCases": [
+    [
+      {
+        "hero": 20,
+        "boardKey": 45857,
+        "row": 5774
+      },
+      {
+        "hero": 8,
+        "boardKey": 75167,
+        "row": 4136
+      },
+      {
+        "hero": 146,
+        "boardKey": 18011,
+        "row": 2497
+      }
+    ],
+    [
+      {
+        "hero": 469,
+        "boardKey": 33381,
+        "row": 4373
+      },
+      {
+        "hero": 144,
+        "boardKey": 58913,
+        "row": 7085
+      },
+      {
+        "hero": 137,
+        "boardKey": 4758,
+        "row": 466
+      }
+    ],
+    [
+      {
+        "hero": 332,
+        "boardKey": 58853,
+        "row": 3278
+      },
+      {
+        "hero": 407,
+        "boardKey": 5530,
+        "row": 1198
+      },
+      {
+        "hero": 10,
+        "boardKey": 25762,
+        "row": 1700
+      }
+    ],
+    [
+      {
+        "hero": 84,
+        "boardKey": 95840,
+        "row": 9141
+      },
+      {
+        "hero": 469,
+        "boardKey": 1441,
+        "row": 504
+      },
+      {
+        "hero": 87,
+        "boardKey": 26147,
+        "row": 3635
+      }
+    ],
+    [
+      {
+        "hero": 199,
+        "boardKey": 50144,
+        "row": 2632
+      },
+      {
+        "hero": 24,
+        "boardKey": 42721,
+        "row": 5616
+      },
+      {
+        "hero": 274,
+        "boardKey": 5207,
+        "row": 1110
+      }
+    ],
+    [
+      {
+        "hero": 340,
+        "boardKey": 5728,
+        "row": 1231
+      },
+      {
+        "hero": 88,
+        "boardKey": 37918,
+        "row": 5003
+      },
+      {
+        "hero": 196,
+        "boardKey": 9118,
+        "row": 837
+      }
+    ]
+  ],
+  "bytes": 8397454,
+  "sha256": "4382f39e979f9cf049c020e7523ebfb8fbe4e4917e80177d17f4b6d232c03cd2",
+  "generatorSha256": "3ed0d652b4862dcb06f65f127374b14415bdf81c26defa809b323bf875328947",
+  "verifierSha256": "694043676ae181472ad8957c0004568e6cdaaf4a944518b219e12af400c95cc2",
+  "rawBlockHashes": [
+    {
+      "hero": 1,
+      "rows": 4494,
+      "sha256": "d007584b4e30fd04007c4a2641e9583763c917924400e43e4faf99b88af90750"
+    },
+    {
+      "hero": 2,
+      "rows": 4494,
+      "sha256": "5271d5d3a549732e350b2556c72d13538262f885a50b2c86b7a1b196b3c77cbb"
+    },
+    {
+      "hero": 3,
+      "rows": 4494,
+      "sha256": "5c1433c1941e13e194dc1b24060bf29e1f6a0b46aec3af381ae93e3a2ab0d724"
+    },
+    {
+      "hero": 4,
+      "rows": 4494,
+      "sha256": "2db0aa39dd26368a07ec254b8617f53f862b33cda24a45f60ffa4cf918374f82"
+    },
+    {
+      "hero": 5,
+      "rows": 4494,
+      "sha256": "1e1b9ecab9c444cba1ab5d20b6faa85c69d761e1e6ccc112694ac04a217adc31"
+    },
+    {
+      "hero": 6,
+      "rows": 4494,
+      "sha256": "f28aae6dec5e89da792bf6521329e8caaac51bde96aa85ba874c6c8864de1879"
+    },
+    {
+      "hero": 7,
+      "rows": 4494,
+      "sha256": "1295dac4fb48d8084f2db8cb7547262a60b2a5a9dd0e0835d18298c2e7641db8"
+    },
+    {
+      "hero": 8,
+      "rows": 4494,
+      "sha256": "d43c18bc86d7140276d253181ee7f5765975d7e46d90213cc133ebb14cbb6650"
+    },
+    {
+      "hero": 9,
+      "rows": 4494,
+      "sha256": "1743fc2651db7b7eecdc676d6ff48ca4d63695751e6c33b6013d45cdb72a80e5"
+    },
+    {
+      "hero": 10,
+      "rows": 4494,
+      "sha256": "6c78669442e74b745757bdad6e9052af80f9931138422a48cf10c3ed332c724a"
+    },
+    {
+      "hero": 11,
+      "rows": 4494,
+      "sha256": "f9263ac0120f9f21858e8bacadeca3a949e40f9b6199f50c4f6564d3818a88a0"
+    },
+    {
+      "hero": 12,
+      "rows": 4494,
+      "sha256": "46f37f32d0223dd686be5ca59cb0d123badaaccb177aa23634914ca640a39a55"
+    },
+    {
+      "hero": 13,
+      "rows": 6212,
+      "sha256": "5101b9310bb20b0a00fa739b00b1b66879714fa7fc0834639667fa598703e10d"
+    },
+    {
+      "hero": 14,
+      "rows": 10968,
+      "sha256": "79bf0018968d4c0c07105a7c37d3a6b786362ff4f7aa78f86e3e34e3ae53c868"
+    },
+    {
+      "hero": 15,
+      "rows": 10968,
+      "sha256": "ce1a89cc5d750ed5373800fdab083c45f5c878cc7f9b091efbadf7ed5f84b05b"
+    },
+    {
+      "hero": 16,
+      "rows": 10968,
+      "sha256": "4ff1178e2590215ec98f8aabcf61147f9055a458bc7a648cc10f8e37c1ca0eb3"
+    },
+    {
+      "hero": 17,
+      "rows": 10968,
+      "sha256": "c27f25d0f59a0f0dc68d2cd64039a0e1edd3705f4fd6f8ae53b15943068ff829"
+    },
+    {
+      "hero": 18,
+      "rows": 10968,
+      "sha256": "87793c2f0c0d87a64d2b204bbc9d165e715b8ed1c5e1c3b254b61a9842603466"
+    },
+    {
+      "hero": 19,
+      "rows": 10968,
+      "sha256": "9376ffe0ff7a1a9ffe20a586154589913cc2d011db2926f0e68d90659e24bfb0"
+    },
+    {
+      "hero": 20,
+      "rows": 10968,
+      "sha256": "2decf145209ebb0c2496a6309bdf849869a092f8241b517129973adab86d27bd"
+    },
+    {
+      "hero": 21,
+      "rows": 10968,
+      "sha256": "6fbed262880130171eb92d2be03a8f74abab46975f73dc15d649ae318cd0163e"
+    },
+    {
+      "hero": 22,
+      "rows": 10968,
+      "sha256": "da38b5153afacda43e4b852911f33b9c6846e4f297525c3b9e68a5b6e935803b"
+    },
+    {
+      "hero": 23,
+      "rows": 10968,
+      "sha256": "9112e4a0c5a7d27ec1aa404cc5931f7890219410348ebbff08a4d3abfb5683bc"
+    },
+    {
+      "hero": 24,
+      "rows": 10968,
+      "sha256": "02938a80e21f7907e9a19131ef33a168f77413b0c7a8896f5c497b4f8f7bd930"
+    },
+    {
+      "hero": 25,
+      "rows": 10968,
+      "sha256": "1e6c1f56a240652b50fb83d07e5d016779f5a7b43f1a8cee8c28a0d4319b9926"
+    },
+    {
+      "hero": 66,
+      "rows": 4494,
+      "sha256": "d603bf93f399161a84f7f19cc51d8882fd3295b2906a30cbca0c02001f36e455"
+    },
+    {
+      "hero": 67,
+      "rows": 4494,
+      "sha256": "c0ad3716c3f4ee26642a01974b18658f4cfcf767c50200bb1cbfce418b5ed4d5"
+    },
+    {
+      "hero": 68,
+      "rows": 4494,
+      "sha256": "843771000feadcd310b758346437f1cb48e72b9f64c0bffbf9fb268fad63b766"
+    },
+    {
+      "hero": 69,
+      "rows": 4494,
+      "sha256": "b1d21b73f1c4b7bee6c70f521779173ad7fcc231397c1b735a61a7ba1b914dea"
+    },
+    {
+      "hero": 70,
+      "rows": 4494,
+      "sha256": "a0755a7643a90f02965596276fd0250ca00f7bdfeae734b6d8cd13656b5f9dfa"
+    },
+    {
+      "hero": 71,
+      "rows": 4494,
+      "sha256": "48d10b7de735fb51824a9c128fb3e9cd0b941972a957202798e6485a0b0583db"
+    },
+    {
+      "hero": 72,
+      "rows": 4494,
+      "sha256": "1cc1489c2d1a1adf0280cd4f2832781abd75742c97e2a72ee0a86ba6dce60642"
+    },
+    {
+      "hero": 73,
+      "rows": 4494,
+      "sha256": "18e75c050870504a24fc5b3fb6a6fac0ed3dec549db8b7fc0b51a75f74ca0f44"
+    },
+    {
+      "hero": 74,
+      "rows": 4494,
+      "sha256": "eff72511d337b4df822d94b1e33cae910563d4642542425f19356dd58e15284a"
+    },
+    {
+      "hero": 75,
+      "rows": 4494,
+      "sha256": "f130bcee2548caca54c234110a43435d05415cc84af4eb0f409b1a50fa290ce8"
+    },
+    {
+      "hero": 76,
+      "rows": 4494,
+      "sha256": "0a3c10e21429223d63d66b31bdbb398c0ec4c3b9d113c84db82d9ca8acf392cd"
+    },
+    {
+      "hero": 78,
+      "rows": 6212,
+      "sha256": "846737d811f2ec4f8655bb1435b3144812045b143b56625913cdeda2476af364"
+    },
+    {
+      "hero": 79,
+      "rows": 10968,
+      "sha256": "f46877154be529dc55a971961125cb132dced911bf4958328c10a79dfe3b4b93"
+    },
+    {
+      "hero": 80,
+      "rows": 10968,
+      "sha256": "3a407229d5e5c595f7276777d13db926f0437d78d268125b817f2d3a3847fbf8"
+    },
+    {
+      "hero": 81,
+      "rows": 10968,
+      "sha256": "187cda4ef37ebe7668aceef71c29b0d7d882b1a744b71f5da4ebabd2756332f8"
+    },
+    {
+      "hero": 82,
+      "rows": 10968,
+      "sha256": "d3995d22ede5183795e4d3b473a2ebab53db1f4c76d05660280d0de2341b89f5"
+    },
+    {
+      "hero": 83,
+      "rows": 10968,
+      "sha256": "1369b5830c4565754e445443fcb4fb8f8446587a7208e624740bd402ac933643"
+    },
+    {
+      "hero": 84,
+      "rows": 10968,
+      "sha256": "0af3e1bcbd0c98b6a3a5076f06cfdb86586a9d38fad67804a3d2106cf6dc4662"
+    },
+    {
+      "hero": 85,
+      "rows": 10968,
+      "sha256": "d55abff57285493bc8de5d7a6c0eda9e57ac501fe43309a59708552a544c95ee"
+    },
+    {
+      "hero": 86,
+      "rows": 10968,
+      "sha256": "22325ff834f59a6ab3f2a12b13829fe179ad08f34232300219c25ffd28871e41"
+    },
+    {
+      "hero": 87,
+      "rows": 10968,
+      "sha256": "8a25d6f7da8b64314f28d45fcb70a340debb7dfcb3063db0e0884cf76951a8e6"
+    },
+    {
+      "hero": 88,
+      "rows": 10968,
+      "sha256": "6609738472763dbdf91aa62184b7f0f5730b048a31e8ac6b8fd406290fb8267b"
+    },
+    {
+      "hero": 89,
+      "rows": 10968,
+      "sha256": "1ff98e3b96594b2327eb39247a8956e7bb1fd7d7a672e9d90ed8643931600117"
+    },
+    {
+      "hero": 131,
+      "rows": 4494,
+      "sha256": "4010a1f75b7c1da70741ad04563a9a0da1a32e6ebf5b707fceeeeaf134141ba1"
+    },
+    {
+      "hero": 132,
+      "rows": 4494,
+      "sha256": "b18e2ba93a199c04f67e97e08835cd92861bcbdb09e2fa7b243fa896fb8747e0"
+    },
+    {
+      "hero": 133,
+      "rows": 4494,
+      "sha256": "7bbceb59d51ae2b4a7f230cb1c55d33561a27e08e6ffac43d4df1e851fe3a77e"
+    },
+    {
+      "hero": 134,
+      "rows": 4494,
+      "sha256": "9836dcafe7ac5258146878b86e9b916100f0bf3af35f022cc71668f892f34968"
+    },
+    {
+      "hero": 135,
+      "rows": 4494,
+      "sha256": "b50074501427999801bd924a74679460d6a36e9ea048fd79178a20e503fb34ab"
+    },
+    {
+      "hero": 136,
+      "rows": 4494,
+      "sha256": "65a89108a3b87ae5df172e17246364d00753f6a4a3e7ad1aab1138a314877603"
+    },
+    {
+      "hero": 137,
+      "rows": 4494,
+      "sha256": "1cd7853a4cb1fb90fa91dbdc54deba03cb5382d117e0b3c26fb8c28b81b2a2b8"
+    },
+    {
+      "hero": 138,
+      "rows": 4494,
+      "sha256": "5df004f9d410b88c837c678725ab71a0d2e2e6523d138f8cce99280cc5d04f64"
+    },
+    {
+      "hero": 139,
+      "rows": 4494,
+      "sha256": "45005846319e6a8872dedcb6c9a8d63df2ae8dd1b3eb6cc6f7f54acb00432e76"
+    },
+    {
+      "hero": 140,
+      "rows": 4494,
+      "sha256": "21a4719862fa932e7ef3c784cbd6dd4ee2becea72c919b842e0aa5e8c45cbdfc"
+    },
+    {
+      "hero": 143,
+      "rows": 6212,
+      "sha256": "1ece052afaf48df9632cdaf6c3068ecd0d6fa7b2b7da0401d8be733a55896047"
+    },
+    {
+      "hero": 144,
+      "rows": 10968,
+      "sha256": "49759db8d3b3633356bdc68d2874cfa54236a99b275001923532578c8be58377"
+    },
+    {
+      "hero": 145,
+      "rows": 10968,
+      "sha256": "934f756a692e3637f7a80207c960161647b917e9fe98d5d63985758ad4833874"
+    },
+    {
+      "hero": 146,
+      "rows": 10968,
+      "sha256": "6743e4d086728ba0e86a7e8e9fcfe0cd41604a47d9376d919e2eb33a15e4cf0b"
+    },
+    {
+      "hero": 147,
+      "rows": 10968,
+      "sha256": "e26ecbb14e41b8a54f7fb3c8d2efcb42a4f492040a5ae8a1e817d8048221554d"
+    },
+    {
+      "hero": 148,
+      "rows": 10968,
+      "sha256": "7c403453b185a1eedf869dbedef3b4fc94f846920c28e818ab6f16c8376e4866"
+    },
+    {
+      "hero": 149,
+      "rows": 10968,
+      "sha256": "7d99762994b2c92f705df5a44ae0453de47dac63dd9d45cf7c12f3fdb67da2b7"
+    },
+    {
+      "hero": 150,
+      "rows": 10968,
+      "sha256": "13cdd17ef12bba3d307a578711b351a097d483e63cf2ab52704a83f3fffdfd22"
+    },
+    {
+      "hero": 151,
+      "rows": 10968,
+      "sha256": "ae7d618419df555872ef6e3d239147fad6cce55513856deb65d84351e7cf6efc"
+    },
+    {
+      "hero": 152,
+      "rows": 10968,
+      "sha256": "89b1c6eb71375cb1e1d8d2e015c73f51d24626b5bb2e927240c58630e54bac94"
+    },
+    {
+      "hero": 153,
+      "rows": 10968,
+      "sha256": "7a5bc98ac1bf2d139e5b476710ed5a8c90868040533516011058df5fcbe8923a"
+    },
+    {
+      "hero": 196,
+      "rows": 4494,
+      "sha256": "ab48e6de797c00e8e4016fe68391d1c3418abd5e49e6227e668755438ee179ec"
+    },
+    {
+      "hero": 197,
+      "rows": 4494,
+      "sha256": "f794702182168858d6eee43cc2c1445a5568433d18af2b7566aa567e7d239ce5"
+    },
+    {
+      "hero": 198,
+      "rows": 4494,
+      "sha256": "2c8e439272721f4aaa12e117440b671f04c616ff0de32ae775f69b47877df3be"
+    },
+    {
+      "hero": 199,
+      "rows": 4494,
+      "sha256": "ab750e0e4c4491436d382fa3795a1f3616df242d109b3c9abf5413d4a5ef84d1"
+    },
+    {
+      "hero": 200,
+      "rows": 4494,
+      "sha256": "5e55f7c8a9b3009b107f49aba2c0a4e499026fe3331efb7a2c88c03c4b125d1a"
+    },
+    {
+      "hero": 201,
+      "rows": 4494,
+      "sha256": "d5706bfd8f59517a191d2dac50c3ed80ff1f76bc4d5de7beecc14c5dee3977a7"
+    },
+    {
+      "hero": 202,
+      "rows": 4494,
+      "sha256": "60b6e8afc4d60112eecb199db13aa4ab00f0d85fcf9dca33d067494fc3643ff2"
+    },
+    {
+      "hero": 203,
+      "rows": 4494,
+      "sha256": "3e63034ca8f76ff9b0b44dc29d74b472da073ce805b105be7c547425a48d6c72"
+    },
+    {
+      "hero": 204,
+      "rows": 4494,
+      "sha256": "5c085bada6b9befe8ffba95d83a6ee085294904659cef441139b24cf2c87815e"
+    },
+    {
+      "hero": 208,
+      "rows": 6212,
+      "sha256": "fc79641c79b814c5a810fe9a524d5a6b971fb6adfadb7cce513cb35374320333"
+    },
+    {
+      "hero": 209,
+      "rows": 10968,
+      "sha256": "af50fd261b9a4496d949815adc758ce9f0a505b839fcdb8216244434e7ed257a"
+    },
+    {
+      "hero": 210,
+      "rows": 10968,
+      "sha256": "c56c9c916faf14b900f4d0d04ccf57424ffb56fa6a772e8328b579728a93850f"
+    },
+    {
+      "hero": 211,
+      "rows": 10968,
+      "sha256": "9506fe6607ac99dc27bdeead6338a1a4e30e4222b60c76b85d7844667d322406"
+    },
+    {
+      "hero": 212,
+      "rows": 10968,
+      "sha256": "588ad5398d1d8776c2113890f1ef5ff260f5421449ca950f3443788cc9b90ce3"
+    },
+    {
+      "hero": 213,
+      "rows": 10968,
+      "sha256": "9e9b2f6dfc90994047ffad79c18520bb4157f59a9c584bec7a7c70e22d2aefa4"
+    },
+    {
+      "hero": 214,
+      "rows": 10968,
+      "sha256": "d692d20e297ce19ec8760092881a2cce62b6022b9ac42b15566be6bd0fadc50c"
+    },
+    {
+      "hero": 215,
+      "rows": 10968,
+      "sha256": "948e58429bac7a23cad2957079aa67abce611043dd93142a5db9d1297c4c08e5"
+    },
+    {
+      "hero": 216,
+      "rows": 10968,
+      "sha256": "735b255089ec6f8494dc0540f1df42ff667eeab63ddde3ae6b39e4515c1f1bd3"
+    },
+    {
+      "hero": 217,
+      "rows": 10968,
+      "sha256": "33445c0880af3d73b2cfefc64038ecbf077a5c1efee82b4a5151dfde0b61f000"
+    },
+    {
+      "hero": 261,
+      "rows": 4494,
+      "sha256": "9cbf2801707c498cce8f11a6201acf81dfce128f0d8ef420c3e8b3597eca42e2"
+    },
+    {
+      "hero": 262,
+      "rows": 4494,
+      "sha256": "32f16866b6dc9c133c447eeb4f975367c6a57f72ae6ca596eb348be36e1e5945"
+    },
+    {
+      "hero": 263,
+      "rows": 4494,
+      "sha256": "ae5fd196919097e387a83206226c66e38da996f01ec86977ece38b98b52d9286"
+    },
+    {
+      "hero": 264,
+      "rows": 4494,
+      "sha256": "ebccb5ce0274255513e0692d30590ecd50f43de2da2f4bafceadd9465de00974"
+    },
+    {
+      "hero": 265,
+      "rows": 4494,
+      "sha256": "f8c6fa6978edf993f707f6dae8b984818640d93e0a7bc23813402d6ee2231443"
+    },
+    {
+      "hero": 266,
+      "rows": 4494,
+      "sha256": "0a2bd693aaa830e8e01b69052ef715b90bf531bdc52e3019a534bc62f3924e08"
+    },
+    {
+      "hero": 267,
+      "rows": 4494,
+      "sha256": "23dcb2f9a799fa0abf741ae011108623980e4e004fc231755010304d6e61e271"
+    },
+    {
+      "hero": 268,
+      "rows": 4494,
+      "sha256": "5c6d2ae4613946487aa0b9f8fa465e47c00419fd6f5b9d646cbfc4cffd87ccf2"
+    },
+    {
+      "hero": 273,
+      "rows": 6212,
+      "sha256": "221d00babde8638b9adb109643e97308e83adf9e69cd6d9b17676c8a848b3cd7"
+    },
+    {
+      "hero": 274,
+      "rows": 10968,
+      "sha256": "f6fc3863e049a68364de358bc28428b0b3faeebeaeb7bf0754973fafe7aa1602"
+    },
+    {
+      "hero": 275,
+      "rows": 10968,
+      "sha256": "d986e1a9037470be59fd048430a715ae42a9b2a2765d7c15ead63cf51af23e83"
+    },
+    {
+      "hero": 276,
+      "rows": 10968,
+      "sha256": "c415497c1525e88dc0063d649654d735eeac1f7a8d7ebf8e93a223d965360598"
+    },
+    {
+      "hero": 277,
+      "rows": 10968,
+      "sha256": "4327438d04d7ab9bbcbb8038f5a02ec2643e2ba6b1b7da530249555a05166574"
+    },
+    {
+      "hero": 278,
+      "rows": 10968,
+      "sha256": "45eb2b0518a792d254516b35ef251f47f2f30977bf67add639817e36b7be9e7c"
+    },
+    {
+      "hero": 279,
+      "rows": 10968,
+      "sha256": "2d55d08c867d4080462f5451ef84de3f56609bb084e263ed4f98bdf3afc45e90"
+    },
+    {
+      "hero": 280,
+      "rows": 10968,
+      "sha256": "ed9bd685444b782459cadb1b935b874f17765445892390b115cdf1d39b5576d6"
+    },
+    {
+      "hero": 281,
+      "rows": 10968,
+      "sha256": "9dbd80573bc2be9902e88fb1187ddd51e3057241fd0583a1264a769a9ea08ca6"
+    },
+    {
+      "hero": 326,
+      "rows": 4494,
+      "sha256": "1a7ce728ee0058ade0cee079dd1ec866fd4d3f24a7ae3ca31f889177d815d956"
+    },
+    {
+      "hero": 327,
+      "rows": 4494,
+      "sha256": "eccf6b48b97f6aab05d136c4c6e1b9369dd11ff057e9a4f5ccd0e0b07f3b3780"
+    },
+    {
+      "hero": 328,
+      "rows": 4494,
+      "sha256": "b6fe45805375fcfadd4e1f4e3489ca0080bb441fe36056075493cd9d2ac84a1c"
+    },
+    {
+      "hero": 329,
+      "rows": 4494,
+      "sha256": "90c628b02260307b1497ba629744d0441b095818a6b5a18c10ed9589c588af93"
+    },
+    {
+      "hero": 330,
+      "rows": 4494,
+      "sha256": "405dc502caba48c47dd273d05b9bc31c2f70fee2e37763d881f50e3ed505de1b"
+    },
+    {
+      "hero": 331,
+      "rows": 4494,
+      "sha256": "2a47f7821584bcb240119d4e232e91de1ef6a69099d5117fc080d95573f83ce9"
+    },
+    {
+      "hero": 332,
+      "rows": 4494,
+      "sha256": "cb53b1760b8ee6e9ec78349ba50a79a0b65262bdc329fb3e456b7ecb3f73500e"
+    },
+    {
+      "hero": 338,
+      "rows": 6212,
+      "sha256": "7b96e5b3a22c44f7cafd987eace9dc3b57ec83d690356de0c49e57fcaa8920ff"
+    },
+    {
+      "hero": 339,
+      "rows": 10968,
+      "sha256": "e5b77c90f17b4486f5c4fd2a04a99cac9bdd181310a27e633f71d3a63f8fccfb"
+    },
+    {
+      "hero": 340,
+      "rows": 10968,
+      "sha256": "2e787fefa9c9c1c12da0d74de4c5d5742560083d47d9eba7aafb749aad45e88a"
+    },
+    {
+      "hero": 341,
+      "rows": 10968,
+      "sha256": "9e64b3c7313e85477b82c385f42c99a067594fe12f0a3abfcb09d52beb3e38af"
+    },
+    {
+      "hero": 342,
+      "rows": 10968,
+      "sha256": "a3c9b2ff87f88e13d3ce12653392820a3dc0895e52b59fe81af098fc69c6924e"
+    },
+    {
+      "hero": 343,
+      "rows": 10968,
+      "sha256": "2951e11e18df963fe0a843fc7819b1dfc72c33956e161a15e755cac146b0f1fc"
+    },
+    {
+      "hero": 344,
+      "rows": 10968,
+      "sha256": "7f920e980125d43fd854af5ae198a79bc13d97c7f3b1d019b3010eece2e66919"
+    },
+    {
+      "hero": 345,
+      "rows": 10968,
+      "sha256": "c7fe4e1439b737a2bddddb906fe200de8ecc3674e0859b6d48814e6bdfaefbd0"
+    },
+    {
+      "hero": 391,
+      "rows": 4494,
+      "sha256": "80a4cc6224a96e05c84ea7012943b5608b7c224095ee04d3b701a8b8dcd8f451"
+    },
+    {
+      "hero": 392,
+      "rows": 4494,
+      "sha256": "175834534f3e1ab4e2ec8c402c7c5a8d86356406041769b97e96d846e8af10cd"
+    },
+    {
+      "hero": 393,
+      "rows": 4494,
+      "sha256": "7aca1a2a749fc2ff94145ad4681a5bb5d73ce5915dc9434a14734a7adaf092cb"
+    },
+    {
+      "hero": 394,
+      "rows": 4494,
+      "sha256": "9017801c19d241b7fc3b239ac50801b6d4f7af103234f4688d195960b9230245"
+    },
+    {
+      "hero": 395,
+      "rows": 4494,
+      "sha256": "451162566b81fb51a7c4bdcc44fa3e9a11a0bf6f410943dfe835e5cb09e3c5fb"
+    },
+    {
+      "hero": 396,
+      "rows": 4494,
+      "sha256": "35984e0040d4d0b2744bef5bb38221f6372449c3a725354c44edb398d1a7855b"
+    },
+    {
+      "hero": 403,
+      "rows": 6212,
+      "sha256": "5946393826a70457727cad9927cf0e9cd4f178b23376ff260ae8cff1cce8eff3"
+    },
+    {
+      "hero": 404,
+      "rows": 10968,
+      "sha256": "1a73fd3342075e2d7a93e27f1398982ae72f1a044a16cb00be74a67b5603c28b"
+    },
+    {
+      "hero": 405,
+      "rows": 10968,
+      "sha256": "7766271ea6146bbd9ceeb8ba26c5fe1cfb6950f17ee16cbddf5f43f4532fc27a"
+    },
+    {
+      "hero": 406,
+      "rows": 10968,
+      "sha256": "8f58eb7f1acaf2fcc7c7205e913f2f92fd4a117edbd969b6e5880f986803a2b0"
+    },
+    {
+      "hero": 407,
+      "rows": 10968,
+      "sha256": "7fa04eb1a03350e89a5797fa5bc6b4348b41d363aa5b3a1e309e5a16becbbc9f"
+    },
+    {
+      "hero": 408,
+      "rows": 10968,
+      "sha256": "c3711b057ba5bcc353d09c197b99a9f85abbf58c5b61dc2aa3d343cd6d18f3f6"
+    },
+    {
+      "hero": 409,
+      "rows": 10968,
+      "sha256": "5b7d828740f907074708d72bdd7ccccb5932bb460bc5f583f438d480976e3c7d"
+    },
+    {
+      "hero": 456,
+      "rows": 4494,
+      "sha256": "5724d47ad9bbefa3800bd25093dcc454e3773184ea415259e9b5f4e9dbe5e518"
+    },
+    {
+      "hero": 457,
+      "rows": 4494,
+      "sha256": "99448ec4046630ba2db259b1d9afec294bf7dc8ce83fad2479d2b410eee7ef21"
+    },
+    {
+      "hero": 458,
+      "rows": 4494,
+      "sha256": "6b8a2b5c35c94984193389980d98105d7faba993b60647fe64dd697a9ef816f6"
+    },
+    {
+      "hero": 459,
+      "rows": 4494,
+      "sha256": "fcf96a376b3aafdb248b8c16868e763194db6d463609ac4c2d38667434049e73"
+    },
+    {
+      "hero": 460,
+      "rows": 4494,
+      "sha256": "a056d5901be884540593b6df6f93a8256324b589d40233d242396575ee06fbf4"
+    },
+    {
+      "hero": 468,
+      "rows": 6212,
+      "sha256": "db5e72ac8b3046f808dcc646189018fd60d0e206bc7e7d20108856cc5bab1d4c"
+    },
+    {
+      "hero": 469,
+      "rows": 10968,
+      "sha256": "8f1111eeb466188411bd2127f73cfdbd70237053d609172126cc3187aecb0939"
+    },
+    {
+      "hero": 470,
+      "rows": 10968,
+      "sha256": "06aef44c9634cb593cd1d1359c4528cbbff8dce4de81635ece117abd7f4ecd7f"
+    },
+    {
+      "hero": 471,
+      "rows": 10968,
+      "sha256": "a5cb5108e33febfbded298181a1f5f671f091e02d5eec06a9e2251421e191ac2"
+    },
+    {
+      "hero": 472,
+      "rows": 10968,
+      "sha256": "5b2d0475b73bf111e026d8eb1233aaf77f02fd1182801accb38848c0652cf61d"
+    },
+    {
+      "hero": 473,
+      "rows": 10968,
+      "sha256": "8e5031861f070daa186d564ac7608a64bc1ba909b3d2a3f7511dd606cc968e49"
+    },
+    {
+      "hero": 521,
+      "rows": 4494,
+      "sha256": "d13e807138f7d1a27080c9de22014d1ac131192d9e64c198828cfc4886ae50cb"
+    },
+    {
+      "hero": 522,
+      "rows": 4494,
+      "sha256": "5826274bc4b0f433dea9511d9ccce8be7d318647899fc593f21c0bc36d165df9"
+    },
+    {
+      "hero": 523,
+      "rows": 4494,
+      "sha256": "5e851c3e36f25e35dcfcf4935f5ee08d75bb2353d43adb8a8c35feb741e0d08a"
+    },
+    {
+      "hero": 524,
+      "rows": 4494,
+      "sha256": "82129719052269d17af078822dd6ed98a2704e12f4e28bd3dd31ec0b708151df"
+    },
+    {
+      "hero": 533,
+      "rows": 6212,
+      "sha256": "c6963b4fd4adfa12ffbc725d70b12cf583f8695e352efe1e78da0a242362e3b3"
+    },
+    {
+      "hero": 534,
+      "rows": 10968,
+      "sha256": "73b5366063f3f714952cc7b186e127921ff1179b2c4e14b5c7d9739f58feee15"
+    },
+    {
+      "hero": 535,
+      "rows": 10968,
+      "sha256": "1f6e99cd45781cfe178a632915cbbcfa7e6fb6c112aec4d12518ff6a75a2097d"
+    },
+    {
+      "hero": 536,
+      "rows": 10968,
+      "sha256": "82659a3f6548a2d981cedebbccb38fea95a1a43de1faab1635ec6bfde03aec2d"
+    },
+    {
+      "hero": 537,
+      "rows": 10968,
+      "sha256": "1cc7ddbbbac26f2e00291137b5b783ef6e6790fd193b483e783cca7cdf87ee79"
+    },
+    {
+      "hero": 586,
+      "rows": 4494,
+      "sha256": "865fad2e64c36064d75e52ad5cd2103e955508ba8d7c1175ae593b92e76fd227"
+    },
+    {
+      "hero": 587,
+      "rows": 4494,
+      "sha256": "438d4124d162647fc8476e09856d7f54d091fa801f0e35bfd3baa4f159e13446"
+    },
+    {
+      "hero": 588,
+      "rows": 4494,
+      "sha256": "673eba5ffd38fb58c47b6e880f79360007e83afabf3762dbbcea449442dab977"
+    },
+    {
+      "hero": 598,
+      "rows": 6212,
+      "sha256": "bbf798499a72f46a2561409224c627f001bc16b6b3b8be4f119c0d54e30b5826"
+    },
+    {
+      "hero": 599,
+      "rows": 10968,
+      "sha256": "0cf7481b34aa7897c3357ba581f350fbc9e28782e59e971917d8fe14002c0fdb"
+    },
+    {
+      "hero": 600,
+      "rows": 10968,
+      "sha256": "c1c06d3f875b1eb82e6555ab1ad822dca88b53c9b93bce94675a7ced65a1e88d"
+    },
+    {
+      "hero": 601,
+      "rows": 10968,
+      "sha256": "e97061040ffd4d52d216c69d996ac0560d5794c3224595dc00753970715d9513"
+    },
+    {
+      "hero": 651,
+      "rows": 4494,
+      "sha256": "a8f54944c7d506fd00ee1939f41659197148333693ca229cf5e408c8fa7afda2"
+    },
+    {
+      "hero": 652,
+      "rows": 4494,
+      "sha256": "52c2a883b9b38ff451983da1fc75721839edee16bcc116551aa209779f38964a"
+    },
+    {
+      "hero": 663,
+      "rows": 6212,
+      "sha256": "74bca8ff9599036dc43440701052807d1bbfcce5741a9b2245f591c5ae3e154e"
+    },
+    {
+      "hero": 664,
+      "rows": 10968,
+      "sha256": "90a648d6a9e267c83748d990e62ddb1dd4df1a4b9f1d5c2672cd27d1311d4b0e"
+    },
+    {
+      "hero": 665,
+      "rows": 10968,
+      "sha256": "9366a86b6f990b5e155b7b4b691b56c84dd2ba3e7a56b11b7c736d3c8bfd714a"
+    },
+    {
+      "hero": 716,
+      "rows": 4494,
+      "sha256": "0e628bc8cf6665f564eae13e0feb7bdb0e9da88ba39e905077d6b010be607e5d"
+    },
+    {
+      "hero": 728,
+      "rows": 6212,
+      "sha256": "3b04fcd1cb65e2514fdfd7e4c4750f910e467d0a0e05a069c5e5c739eff6aaff"
+    },
+    {
+      "hero": 729,
+      "rows": 10968,
+      "sha256": "5cdc32456a266c3dd1ae098770dd6f318f9518ee5a496a2389ce7026c9cb8b45"
+    },
+    {
+      "hero": 793,
+      "rows": 6212,
+      "sha256": "e8d171eace02f45066216e1b01eb21d08774cd87a7d1ff6c803fbcb6e5e7b71a"
+    }
+  ],
+  "sourceHashes": {
+    "data/flop-hu-v1/1.bin.gz": "2f3a5012cd237d4f54e2b940550bf584dbf0105918bd6cf9f8de58b832b963fb",
+    "data/flop-two-v1/1.bin.gz": "364585b9b3211057bf348615e29ae151018c15bf03679e85fc0543b3fd5c209d",
+    "data/flop-three-v1/1.bin.gz": "b186a219a6c3c6c8935200b5099827d13459e64e8d1622e24b34880276df27db",
+    "data/flop-four-v1/1.bin.gz": "0190d817366f50737066cf4ea6f51f047071280fc6954a0640029b37c0ef5e89",
+    "data/flop-five-v1/1.bin.gz": "52b665cf1893aa60f935b81d63bbd92c599bdc0a31831b127d9aad9e74c22bf9",
+    "data/flop-six-v1/1.bin.gz": "9bef8e71628a23f9db430c81c152f0af6651270fda20a414fc2c9fbc97247bef",
+    "data/flop-hu-v1/2.bin.gz": "a6858d17619f20df4612b2844a4f4554971f7a40c9adff7bd51706cb5f8eb549",
+    "data/flop-two-v1/2.bin.gz": "c0394b14afefeb91e2134cacd386dad13efdd6583958552963307889de7cfa50",
+    "data/flop-three-v1/2.bin.gz": "0d19845a96604d489159d65bc4d2c05a86954a959fcdceeef7040c45335ddb3e",
+    "data/flop-four-v1/2.bin.gz": "cfd21f91d7a6a7f2700e2d7d77399944d232595795c73b9bae1883dd8515982b",
+    "data/flop-five-v1/2.bin.gz": "c64ba8aefae18399fb002b7c548581a41f4aeac053db271323d23427e2c5afd0",
+    "data/flop-six-v1/2.bin.gz": "2bbe93ca8c433eab799568f397dd313f016c3772e425b5843b99552621949885",
+    "data/flop-hu-v1/3.bin.gz": "c8a927815ab972775678b13aa3fdec07257a02bdbc9be68bd0f054ddf0a33be1",
+    "data/flop-two-v1/3.bin.gz": "8ff73e8836a8ae706260c8f62acf24a9e29e7665c89b7f008cd6dd58555b1e27",
+    "data/flop-three-v1/3.bin.gz": "c809bbd5879ebb6df24b888e89ddb872b50ed094db8863178dbc1b2f862d0f23",
+    "data/flop-four-v1/3.bin.gz": "4cac9e0c59ef79b580abdd49c03d042679efa4c9df874606d92ba4a5413274b6",
+    "data/flop-five-v1/3.bin.gz": "7f5c1192828819c2c244ea341988fbf6cad5512100fe3c2afb2dca2c9ea4312b",
+    "data/flop-six-v1/3.bin.gz": "e1407a7d6739568591329c4af564977a5518cdb2c6a7814244fd7586082c2944",
+    "data/flop-hu-v1/4.bin.gz": "d7c18992b32810f7cf9551d1e8e8dc78c5907e97c5aa2250ee8a386e99296087",
+    "data/flop-two-v1/4.bin.gz": "dcd9f6cd083c0bf991e7c9b5ac0d6c15c1283a37387e8c31b2ef163fde3b5fc4",
+    "data/flop-three-v1/4.bin.gz": "6ba38318e3f6af210d0d9cbe5f8a5f161ccc2be0ea26e5c0fa46ec7a2ee6aeaa",
+    "data/flop-four-v1/4.bin.gz": "c1030f82d30f94b708b1d9f6552eaf4d77a235b33df08024cc4d7ef939d37237",
+    "data/flop-five-v1/4.bin.gz": "424e7969412138ac87eceaf88b6fc21d41c8a9d8c955dd8c3a8115358d6a0854",
+    "data/flop-six-v1/4.bin.gz": "928b24bb971cd6d8b6336ef83736d636f5bcfe7744b17450f23fd49e1c635fee",
+    "data/flop-hu-v1/5.bin.gz": "e90d23fbd5a9cb7ba453880d04d2174d3337dc4dae2b60bab8b3ffeeaea0a759",
+    "data/flop-two-v1/5.bin.gz": "3cd0ca64ec9d9b8ee33f182bd1820180c56f0575599f35fa21f62528144b84e6",
+    "data/flop-three-v1/5.bin.gz": "afc738702f9bbfab69e2a375a989a6a9733c62708f058bd6aecab54faf70169a",
+    "data/flop-four-v1/5.bin.gz": "ae4cce85377a91e225b94f65dc108e308a5bd884adaad65d4b570d9ea5fdda5e",
+    "data/flop-five-v1/5.bin.gz": "55072d25d7ee976f835ae92b11b73e418133fbd2e84b3968329a7e487288404b",
+    "data/flop-six-v1/5.bin.gz": "8a039c29d3a7dbd98146b3364ccc0f3083f93dddbaeaaba70477d6eaa80d41a2",
+    "data/flop-hu-v1/6.bin.gz": "28e205a2b621bfca67aa4973f9bde2b37824dfcb6c8c48e22d6a5ff0a61fb17b",
+    "data/flop-two-v1/6.bin.gz": "f3718705dd6ad4412f39f4e40c5a4caa330423cf92430856aa502ae2d60285ce",
+    "data/flop-three-v1/6.bin.gz": "21c36d0a40f760b68d3b0b688dbdac60eb94a9c0a26fcda82090f353d8d31b5d",
+    "data/flop-four-v1/6.bin.gz": "83e788b20c6c653b822c8f8d97262467afffc15dffe6d97ff1938122bd7058bc",
+    "data/flop-five-v1/6.bin.gz": "1792c51cd9422b0d7a183e6f972cdd6e2f2c97cae31719bd6fb3c86d751f8650",
+    "data/flop-six-v1/6.bin.gz": "86aaab6042b60b1d2649b1a24ef3ed63059d9329d39f8231b2fe242ec04b5916",
+    "data/flop-hu-v1/7.bin.gz": "009b3e6f92f7d372dbf026ae14ce7020b33eee742500b08d482ed8fd350b3416",
+    "data/flop-two-v1/7.bin.gz": "2a138e780d3985b13a9cec2e12b9eb5b6b1bccc3c853aa38a15da16062deef6e",
+    "data/flop-three-v1/7.bin.gz": "b1e9aa06d60b39afde4348ee58c698d317ca8510ff7e8dacd085ddbdb76ad4d0",
+    "data/flop-four-v1/7.bin.gz": "3cd67b785773a019ea19b0e05b9210c8c7d9cd294d22d1a284495736b9aeee2d",
+    "data/flop-five-v1/7.bin.gz": "9f5bd437cf1de5ccac3e8bdb9dc257f03ea0519b54cfc1db0d6c2118c875b19e",
+    "data/flop-six-v1/7.bin.gz": "2a9e9fb9160296d9b98e58c6bc7db794b625a972e425372d1eb82845c5031856",
+    "data/flop-hu-v1/8.bin.gz": "880395dc572437539b1d4e70baaca51a4c3af323baa62383f0c233db8ddf8a5c",
+    "data/flop-two-v1/8.bin.gz": "1697d3202c9b7963fa38ac6044eccf6139978da054e4e844e264101cb13728e6",
+    "data/flop-three-v1/8.bin.gz": "afe6dd13ec76e2440b63519dc8579df8fcdb015b439d247c28e8dd2e00797d6d",
+    "data/flop-four-v1/8.bin.gz": "48bc8e21260ec2a576251f82f16d9a322aa9cd44b39dbb07c941fc6c2778f265",
+    "data/flop-five-v1/8.bin.gz": "5e2cc056642394c25424fcda522eb4a428b63c52c3a2d142e5545c857d9bfe4b",
+    "data/flop-six-v1/8.bin.gz": "db0ec121832649351a99b7a3fb46e84091bc8b4c61be3be2bc1b7e6fd795fb64",
+    "data/flop-hu-v1/9.bin.gz": "b44db8cb9d6e8c2a610a8e92b413cdc5cdc11d46bb0692bbbfc7a0bcb641ebb5",
+    "data/flop-two-v1/9.bin.gz": "3703bfa98b46eb1031b9ce5f45b7b683ebb6771caddded6a8dcd19655e939781",
+    "data/flop-three-v1/9.bin.gz": "1ee06f7607fb063187cb4830909548c49343f46fc1b67c9763a71a9450e514e5",
+    "data/flop-four-v1/9.bin.gz": "f1d395f990711059de951b3680cfb405e60d52a994a2457d19e6983efa9ab456",
+    "data/flop-five-v1/9.bin.gz": "3ec32e171148b63a7cbeef9f5d30793413411524e7d34b110fbf500317969c4e",
+    "data/flop-six-v1/9.bin.gz": "aa4cf2303f048d345c65552bcf652156490840aebd50ccd74f80255c0a7a6277",
+    "data/flop-hu-v1/10.bin.gz": "08ddd6e5762441bf2cb0b46233dd934d3357f0d18f2668b48bc99d85cc2ff304",
+    "data/flop-two-v1/10.bin.gz": "77d22b1d44a2a9423eedf6927b7c90b31c99d1285d82fccc3116f0f700e6c83f",
+    "data/flop-three-v1/10.bin.gz": "74450af9c0e03d39076407f5f700e525681884537000fe1c6088271443baf852",
+    "data/flop-four-v1/10.bin.gz": "d5dd20480d9da984db865b2d984eca2fbc89153362908ff967bf972aba1c0161",
+    "data/flop-five-v1/10.bin.gz": "424309767097374134af36948a99573ce72450e097714467072f3d80bdda7418",
+    "data/flop-six-v1/10.bin.gz": "4a33a4131325e3cac9649f179cc576dfd450aa25db014db775bc097e61b037fc",
+    "data/flop-hu-v1/11.bin.gz": "bb2b17a7f8872abc4c7ec158f2d35b433d245dff817252becac0534ff5804fc5",
+    "data/flop-two-v1/11.bin.gz": "5acdcfc9bca0d0d98c9c510e28a6bdc5f1c17eaf262e7548525e5189e7704be8",
+    "data/flop-three-v1/11.bin.gz": "404ec50db04dcf4c9cafc47d74792c3bba01a152c8e7c893c2455d279dfde848",
+    "data/flop-four-v1/11.bin.gz": "70f76ad66bb9126ea0d6c486aa33e4c3a064f5d082e0900e1abde0afa8b5f0f1",
+    "data/flop-five-v1/11.bin.gz": "bb5c39ebe69fae18954602dfc700b4a5658c10ec2af2367ce2682c72fe77bb0b",
+    "data/flop-six-v1/11.bin.gz": "7524b986d23d38da2d93f0f87eb626899f6b7fceb57e0369629a233bca24fd98",
+    "data/flop-hu-v1/12.bin.gz": "941f836f241f3ea70de81978cd18eeed4c2bd2be0faf0c58a0a3cb1fd64462dc",
+    "data/flop-two-v1/12.bin.gz": "de36f8078c34b9475040d82c1c3a04fdef9084a3c47d8c62eebde2f461ad2bcc",
+    "data/flop-three-v1/12.bin.gz": "31dbb1cf9af24ca69ccfd7dcf18e0b37892d7a610dd9f8b7fe15295533006634",
+    "data/flop-four-v1/12.bin.gz": "6626ac08979d1bdf6e9766cea5afd8f0742993a56cd8e247849f7f4bfbba57f5",
+    "data/flop-five-v1/12.bin.gz": "877af902978d56d61b43cc2cb12012bb1622bff46641a5fc38c6e5224544073c",
+    "data/flop-six-v1/12.bin.gz": "4db2a6e2572da06889a6ab0d505271ef98ff019ebac1df006366ab6c15f0c5dd",
+    "data/flop-hu-v1/13.bin.gz": "cbaff0f083af236f2e117c2ee1502bd450459f08adadecdcf05940ac56550818",
+    "data/flop-two-v1/13.bin.gz": "26c95b255d47ed7e2dbd56da739d66796abb93c325174ad0f87a21a754d2d751",
+    "data/flop-three-v1/13.bin.gz": "eb52d0f0a5fc8a10f3da6bfebcfb017aff94431aac3e800dd8c6677d225b2423",
+    "data/flop-four-v1/13.bin.gz": "d450f64768b0d6d22f162e5af68513bee01f2666866c484d3bc84780bdba0602",
+    "data/flop-five-v1/13.bin.gz": "736669ea4e5420c92bcc04b5703a35c4223abbda5c32ef5cc5f1d85dd981fb3b",
+    "data/flop-six-v1/13.bin.gz": "7c0fadf6bf4c898a43eff1a4e7ace83beaeb0aeabf72d1c9cb9f826b676f357e",
+    "data/flop-hu-v1/14.bin.gz": "97da8e53d752f582cf588dee6ce843d44414fcc39229613f40298862f8f36dbe",
+    "data/flop-two-v1/14.bin.gz": "0457fcd39525e7d5aadfe5b0e1e5cd726dc205a28598d1f22dacf252f358cba5",
+    "data/flop-three-v1/14.bin.gz": "afd8097a137e5378b6a3f463bd8bd076b59d4d6adfe6cb87b1aa2477cb642526",
+    "data/flop-four-v1/14.bin.gz": "ce172c002745adc85bc48b0fb84823f88e5f88907a1f9e868abb78dda8c4629a",
+    "data/flop-five-v1/14.bin.gz": "914a5e465336bae4dd739f712c32397815c7cc6cae04e5dce22d86084e9cbd7c",
+    "data/flop-six-v1/14.bin.gz": "88914e6db0e1ac4825d5e20c6bef2ecd4cd0a89a41b53c490c62524703c861a4",
+    "data/flop-hu-v1/15.bin.gz": "88e7b1d3df296c32062d84c4a153c2bb7e79255fcec8cc9f86cb454b51734b00",
+    "data/flop-two-v1/15.bin.gz": "7cc4f62a758a7ab49a466805a07b40307c85f08e12551a628fbf47709ecc157e",
+    "data/flop-three-v1/15.bin.gz": "80ddb545e35e4900e651fb14815e2848a37db753b1cc8e45c21766b07ee9293c",
+    "data/flop-four-v1/15.bin.gz": "31218965870a5a3a5345d53c9eb679b379379eb2c930deca727020be96c8b19b",
+    "data/flop-five-v1/15.bin.gz": "f3105f68d9c11aafe639a8736dbc9e8a96b7f23f7746e7a1dfb517b9d24db553",
+    "data/flop-six-v1/15.bin.gz": "85228d98fbb0afcec1baa4c7ef9b8dc58c9ed94d88aa4a4ebe7cab2b86b24288",
+    "data/flop-hu-v1/16.bin.gz": "1406454c173d7f2badc13e5706b793594d64bd9f05643295691ddf22d9caa409",
+    "data/flop-two-v1/16.bin.gz": "408ef4421d9ba280a847c3c4c7ed60848893bc1dcc5f49ff88a7504f66f8ac1a",
+    "data/flop-three-v1/16.bin.gz": "0e658261d69ee45181b645d4fdc2c24aae0b7b02df5d1e956d2959c334c5e281",
+    "data/flop-four-v1/16.bin.gz": "5da9587ee4f41e7cd07b980ef8ff38ac1a457a3b0d61b948d477dfdcb1d15e95",
+    "data/flop-five-v1/16.bin.gz": "27fb2a574655c71a62d03f1e3db6ad51f699be0eb7857ee2507ee58dc44a2f49",
+    "data/flop-six-v1/16.bin.gz": "7022097e6d9d12779f9da34e819c2a6e03da62de4a7aec14235d750c18ae652d",
+    "data/flop-hu-v1/17.bin.gz": "11166c47248c83c174841632f137cff4e7de7cce332d66809cc9f7a9765a29b0",
+    "data/flop-two-v1/17.bin.gz": "0e3a40a8f74b465e344d816185dd660c61a4d3e0fa62adb8a6528832cb385ce2",
+    "data/flop-three-v1/17.bin.gz": "3eb4aa413239f487ec1cf5a8a91bd1db123e22b49b292d161d89ece277c47118",
+    "data/flop-four-v1/17.bin.gz": "8234a63d75dcd32f1cde26c50796c17c8e80e9d2d55dd7985987f13c9148385a",
+    "data/flop-five-v1/17.bin.gz": "aa8b84f985411bfebcb05a3a050ee62eabc120c289dc1e6fc573c6813c4b944a",
+    "data/flop-six-v1/17.bin.gz": "13e9cf100dd514af2b8d3baa12d68383e9d7eb9faeae1c9a57d7f6cf6d4f0b2d",
+    "data/flop-hu-v1/18.bin.gz": "fea6280b19d1cdb2221f3f6f89722b45c406584f8de512da89a767dc69b6b506",
+    "data/flop-two-v1/18.bin.gz": "ec7d2a93eb61a997665f858baa02ca6e78e7d6095016d22c01e6f07e2a58d9d2",
+    "data/flop-three-v1/18.bin.gz": "629decfb5309471b1cf3b15b81e57b9334959fe6a92d50958243c9b9edb5cb7e",
+    "data/flop-four-v1/18.bin.gz": "aeaa5724ba10c6f8c381286b5503c6e443f4909fdaa798b437827f3f5d780346",
+    "data/flop-five-v1/18.bin.gz": "46d5ed01d75a758f4e544303b8017be1cf270323c5abbb2cd53126b2f6f9f3bc",
+    "data/flop-six-v1/18.bin.gz": "a4245a07130681018cb80511001313e29a98067d51715fc26aa5b6515325e9bd",
+    "data/flop-hu-v1/19.bin.gz": "401a742d61a94913f91ca4d8dfb454a9919cd82eebabb2fde7dd581ea178282e",
+    "data/flop-two-v1/19.bin.gz": "86c223ca1a9fd70d9e8c90785323efd89f0fb6bfa5d0ef9010b1612741fadcc0",
+    "data/flop-three-v1/19.bin.gz": "d430308a8fe80418f5b570f5598d2de61a2e092f72798e2dae3f61d89f06b299",
+    "data/flop-four-v1/19.bin.gz": "10838f8eb62c4d86e1ff03da449e69028ce90cefd7c344cea4d1f001c045fdd4",
+    "data/flop-five-v1/19.bin.gz": "bc82967d2c2fb6947f45b36c0c5eae4cf3a74a0835cfa9a1b5ec40a2af967271",
+    "data/flop-six-v1/19.bin.gz": "445a657d0184629dcd3ab3794503d36f94c2283a3194899ea0602c69a0f18bc7",
+    "data/flop-hu-v1/20.bin.gz": "6ad6a7d4994ac4841af21697fba4d3b861cb37f32951bc3e183c5df7b36cd393",
+    "data/flop-two-v1/20.bin.gz": "2d3d9716e0de287fc2a1fdbdae72a4375ea0f7803d795efca44ffa555a970702",
+    "data/flop-three-v1/20.bin.gz": "ec19c3b91db5378c2ea92dbc74d2e2cb128a6cfb95e16818449a9c01e9ad9c8c",
+    "data/flop-four-v1/20.bin.gz": "639cced6b4fc166a7337b652324b2784ec78cae370772d4237fbd60d0f95f369",
+    "data/flop-five-v1/20.bin.gz": "d16d512385b30253743e24ac652b0c0a07335da02f87557fc38171aa611498a4",
+    "data/flop-six-v1/20.bin.gz": "abeab5dc903b69883507e651c877028e63f5a1b0c6af95d68812fcae0244df0f",
+    "data/flop-hu-v1/21.bin.gz": "f47c2c4588ff07062d5e261c7219acd9cc34a50bef2c3c34360fc38d01c85c3f",
+    "data/flop-two-v1/21.bin.gz": "1900b88a0c2e3e6d87371be4327bae58a00419a5b1d18fdf2a2c9f0aa298db42",
+    "data/flop-three-v1/21.bin.gz": "2e89336aac99099fb3e2c16e437e409be38246cd4a130a6a2671426c3523bc70",
+    "data/flop-four-v1/21.bin.gz": "d3509cb0c39d2b3360ea51085a4db462b5aefe58a2b0e8b3e69c906a800e3a9c",
+    "data/flop-five-v1/21.bin.gz": "ffd4dc074b554a8fc8c8091c197d6ad62f3c8fe3498ef7391e8d2bd314f87b92",
+    "data/flop-six-v1/21.bin.gz": "469c833ce0459ef487c6bb1e1b0e1f7768895e8db5594c12a086b6638a5ac21c",
+    "data/flop-hu-v1/22.bin.gz": "4d1b080777d4ef7e1f39c03b2526b483b560821feb76a5ecc7cacfe838816b27",
+    "data/flop-two-v1/22.bin.gz": "1a7f644a4a0448aad8af23abc003c0fff7315244a30ad108b1baeabe8d81f9e0",
+    "data/flop-three-v1/22.bin.gz": "fb1fe6813203532cf7ca002e7eae0db7e0e232536cffed73003178c025d2fbb2",
+    "data/flop-four-v1/22.bin.gz": "be9a967b73422e7492189c54aa20a87a6f0798d5f17e38d975d58bb5e5e99952",
+    "data/flop-five-v1/22.bin.gz": "aa16137baae243733bbde74803a8173b3ba7529e4e7622b8dd931363aed10aed",
+    "data/flop-six-v1/22.bin.gz": "41ba185278a64842e9cb5719ff3b0b2f8accf148d8d7bad25ac7b65f7579d692",
+    "data/flop-hu-v1/23.bin.gz": "b285c1bf0c1644bccc32f83f600bdae3f11f1e6ad9541900b38816e987e61979",
+    "data/flop-two-v1/23.bin.gz": "eddaa429c52de39ce08ea468f673f6329753d04ec6e334d2d02f766960316cad",
+    "data/flop-three-v1/23.bin.gz": "ff2e110c4495d7c00da750f21fb583f934a8d3f33904ddec3aedc39aef9266ac",
+    "data/flop-four-v1/23.bin.gz": "1778e4a7d12b1be3882000df997cb314a5710529a169d9fba8f9ee00c5be6f07",
+    "data/flop-five-v1/23.bin.gz": "8fd224ec4547bae131771cfb27358489f7635828cf44003aac46baecc4a1afa7",
+    "data/flop-six-v1/23.bin.gz": "1ff993b2bfc92b31db3a1c7b91d02fab0d84ce3a9a6acd363a6d427ee7b11a91",
+    "data/flop-hu-v1/24.bin.gz": "71ab43d643134d2215d54e93157a79a31c671364d9345c3cf4785575f3ad803e",
+    "data/flop-two-v1/24.bin.gz": "bd59b658fad15ef0d0db8549128d1fd0de36c0b85ec439c53a69624ec00c5812",
+    "data/flop-three-v1/24.bin.gz": "e5d1a319df965215d7a2dbeb9d2796a1ca1d01d58905d26632f5213809ca7a08",
+    "data/flop-four-v1/24.bin.gz": "eaedce8cd3cb33faf200418e532414d985f7a0260a9fd81cc957b4122b0be077",
+    "data/flop-five-v1/24.bin.gz": "e81c26025993c3c4b3cc331f7ab9e33d9bbf7d79a0dba98a8933dd03ab6d0d4b",
+    "data/flop-six-v1/24.bin.gz": "32c6079a390cd334e5547785fdd0587fbd733fa90160865a44449b31056b3e1d",
+    "data/flop-hu-v1/25.bin.gz": "3f0708f55f948ca9f5c04dce7e2fd8c69632035b3387177d50e2cd46ebf49665",
+    "data/flop-two-v1/25.bin.gz": "db19e3768d7c358ebf7f38aa9a0ce615c2dd0c063ab552bfbf2ba097324983b8",
+    "data/flop-three-v1/25.bin.gz": "7ffbb61b939f9623a49f0e39b7150f83b6737534dbc6bc842b041d67b08dfdf8",
+    "data/flop-four-v1/25.bin.gz": "e510c672c56b370f093cabe845ccaf8c6207c05f079ecb3325f8dd38b783996d",
+    "data/flop-five-v1/25.bin.gz": "df0ad9438ceaa0d0038b587ef18b161572e43e45ceac122b6b9aa1b3585bb39c",
+    "data/flop-six-v1/25.bin.gz": "4cbb75064056cde3d15895f58f69119aaece4f90f6bd263577c7781404a96400",
+    "data/flop-hu-v1/66.bin.gz": "cd35dcad65401c57ce7cc61210965b8980ee6c13636d1bf4aaae4aa5c5a5f8a9",
+    "data/flop-two-v1/66.bin.gz": "f2ed342d4a3121b0b9c1fd1b074505dda1c6ab8e791c4e5dd5057f4036286b34",
+    "data/flop-three-v1/66.bin.gz": "e1f953c4c722c40ba5be2784725765c265cec4af7c2cd0505f21bf375428d88c",
+    "data/flop-four-v1/66.bin.gz": "9ddf9d7e4e2d9b64c36f758c753fbcdf357e9eb1053a921504d180e43a8826c6",
+    "data/flop-five-v1/66.bin.gz": "065034bad3a482d330d19b3d8e4de98e9b589a1379a52808c9b0582a9666ae13",
+    "data/flop-six-v1/66.bin.gz": "0a1b0a06f2e49a29f3084f94aeeb3a9fc277deb54158d54aa130ec9d3f1a3418",
+    "data/flop-hu-v1/67.bin.gz": "351bf95f78b9b9dfdbb3047e3e0072323e3a06712c24894367d705c24812ef0c",
+    "data/flop-two-v1/67.bin.gz": "c5afb3f64a0ae8d20a9bffa51d9e25adc46296d577bc016b75e9f474b93e78c4",
+    "data/flop-three-v1/67.bin.gz": "c9eb09e2b741bba71a77b1d0498f8e8e6367bbe70c60c871b70a3ab5154cbc16",
+    "data/flop-four-v1/67.bin.gz": "44ad2700faa15c8e69ff010eb687ce903b76f7cec79ee1b04bc13d3973039621",
+    "data/flop-five-v1/67.bin.gz": "7abdbf0c98c04b80a29d6c4e6d2c91074861c0d32937dedb939a596eecd2e79a",
+    "data/flop-six-v1/67.bin.gz": "541884282d44079d1c356c14e3ed5b92e5e2a74ba3b6e1cf08548b36e5089004",
+    "data/flop-hu-v1/68.bin.gz": "534f4a441f965840fc506a61d5380b6672f5179b17de17f849db0fef227725c2",
+    "data/flop-two-v1/68.bin.gz": "4f252409861565129138d98720f7a81db866be3f64a90703827dd838548547b4",
+    "data/flop-three-v1/68.bin.gz": "91b41a40e6eb48c4c7bb3183b507a4925e9c41c6845bf105c6c2df8b977a7333",
+    "data/flop-four-v1/68.bin.gz": "b526b3868558d447ac82d029c90228e55d8f3bf096050163e579b10fe235111d",
+    "data/flop-five-v1/68.bin.gz": "7e4d8a99f764d2f385f09f4d2eafae7e71f3db887ed98c01febf506956a2d142",
+    "data/flop-six-v1/68.bin.gz": "4be90d4fecb6d6579ac2e1d32e7ca19864c7733145afa67e03de0ea55d43ba34",
+    "data/flop-hu-v1/69.bin.gz": "0872faf333380c501e0102bc4a2a5d9b2bf167d03a9137107e112c54a441c024",
+    "data/flop-two-v1/69.bin.gz": "48bbcfbc6dfea72d22781100cc1451ef7d5a2c711552efed369436149b026796",
+    "data/flop-three-v1/69.bin.gz": "1cebd0fdfc1a1493e8c2694f88cbc9141536c7410f7498361df5d1b16ba760a6",
+    "data/flop-four-v1/69.bin.gz": "657ad66c1a7f41fb91342ffa337604e261fda635afdf59a331bcb40f84a0bc49",
+    "data/flop-five-v1/69.bin.gz": "13879afdef7c1cc23096e9dfe2ae2c4a9b1024e19b0ca21d92d4319da84449a9",
+    "data/flop-six-v1/69.bin.gz": "26609407d478b80496f2501a77687382f1450193e9ab78e4d197c73dd1483123",
+    "data/flop-hu-v1/70.bin.gz": "748f7f9d2297df66785bae56f0150d15ed41fafd00a10524e7912e26f51dc45d",
+    "data/flop-two-v1/70.bin.gz": "b1c4379201132b277ba67d60644e774838191f4fd28d81c83e86ecc6a5b7c179",
+    "data/flop-three-v1/70.bin.gz": "c20cab20bc35988a6cad56c993c33e8d78c46d93b41cea9e97f81f40bf91b73e",
+    "data/flop-four-v1/70.bin.gz": "b9b2e4c254f7bd03e657c7a88de4d6164fa601bd2d8825f15c3316e78a29b22c",
+    "data/flop-five-v1/70.bin.gz": "a85b133d51e69ae672f06c450531ce9594e8cae1165b024631d30ac837fa835a",
+    "data/flop-six-v1/70.bin.gz": "9065dc387ecd34903822dde370fe2945d9c15dd0dc2373110617cce5e8623aca",
+    "data/flop-hu-v1/71.bin.gz": "0781e90f3b1293802e7bc1fb1639958fca4864765d262796e4d16cffb0bc379f",
+    "data/flop-two-v1/71.bin.gz": "21d66bec0d0c66a2c29a7bf92a4edb55a5155d221dac46a84de11ea6b6304e26",
+    "data/flop-three-v1/71.bin.gz": "d2785c9610af55fcddd7669b13464ff1ffe44f99fd0f1f5e1a0d750d5598cecf",
+    "data/flop-four-v1/71.bin.gz": "ee75ba77815371eb3ab37c373cdac793448e5079331a12df15e2350e7e70ba71",
+    "data/flop-five-v1/71.bin.gz": "1609701196f24f0affce495e36b5df83a2c0adc4dc7b21bc37b7653da6e24236",
+    "data/flop-six-v1/71.bin.gz": "7c1aa7f3740d815021543b0b1185f8d0d0483ed71268e0cbbcaf2e4a2ae5e817",
+    "data/flop-hu-v1/72.bin.gz": "cac54df5106851176736ee0c728358f14ea13a27e27aac33cac5553102c84814",
+    "data/flop-two-v1/72.bin.gz": "c70e667f66af07c4a8ee16115f82abb61aad7bc22bc28c8e5568499baf58b96d",
+    "data/flop-three-v1/72.bin.gz": "0a7491278aa33cc86d983beb86a70eacba9f6df23cedd4a0b0795a24f47ede7f",
+    "data/flop-four-v1/72.bin.gz": "ab6610d190d249912c72c0a183a38ecbe04678875b940633fe7b3fbd50adadc0",
+    "data/flop-five-v1/72.bin.gz": "bde06d80404ff9553c9f3850ba6f3873d606c4f4555ac76b40e92f4e504ce7fc",
+    "data/flop-six-v1/72.bin.gz": "280fef17de26dc00c7c53b1c618bb1b2c43f897cc6377db1f74e229cdb3dbeee",
+    "data/flop-hu-v1/73.bin.gz": "27b0ed63da0f4a1ee10651162f032acdbde408d8f2f043a48492baf18267ac13",
+    "data/flop-two-v1/73.bin.gz": "6dbe9733b62af672bca8410c6de00a6936182b542741ed26f1fdcc6d1a228d07",
+    "data/flop-three-v1/73.bin.gz": "dbd9e516266ce8262dfe0a5a1ad994432f1dad606d79cceb0951908db116cb6c",
+    "data/flop-four-v1/73.bin.gz": "e259acd421ce6b5c2523c4a129573afd9f7d1cbf43378126d5dbf2bdc8e0fd1d",
+    "data/flop-five-v1/73.bin.gz": "8349c457a158da0b730e372a861247c3759055790106df226df130cd633d19ba",
+    "data/flop-six-v1/73.bin.gz": "1e1008a0facf021d7079df9cce5c04e569225a317c6abe7381af543cca335e93",
+    "data/flop-hu-v1/74.bin.gz": "13a8708bd0a726975090e3a6a7725008dc86b32af02ea7e56ce85d6c10c70ff1",
+    "data/flop-two-v1/74.bin.gz": "7f08254c216010c798a79910adaca61261285694c018827ff218593d7ebb973a",
+    "data/flop-three-v1/74.bin.gz": "b619343ce853d73676f405ab2d9a807a236e2c3b51fe93f1046d14722c7a3a85",
+    "data/flop-four-v1/74.bin.gz": "88b0467626762b406f14ebe884037aeb092065025029a7ab576442a8f4fea089",
+    "data/flop-five-v1/74.bin.gz": "5e4efe12d06fa76a307795ed9b588d8c96fe98af8c1b98d13f699de3be87a756",
+    "data/flop-six-v1/74.bin.gz": "4adaf25aac56d00f0440fc3fd5339743609005f491cf6b8da78a789f2db4a999",
+    "data/flop-hu-v1/75.bin.gz": "c9fbce9e50f8439650849b330daea296e02f76d6969a91ef1292aef28efeb29d",
+    "data/flop-two-v1/75.bin.gz": "d9d645902d923051d8762c02375766ca553ad8b91dfe39bf331e2f19bc736682",
+    "data/flop-three-v1/75.bin.gz": "761d99606f9cab426a0a97e3da57a6820277381db71af84721e748d783e42549",
+    "data/flop-four-v1/75.bin.gz": "29cf8e0cab9f6eb3bfb8a7780d385399e030d88f1002265e7a0ee5faaa5c8e46",
+    "data/flop-five-v1/75.bin.gz": "5f5697d351fa56165995da8e3d5e391a272fd15f08090c3b4e36f1d948e50d2c",
+    "data/flop-six-v1/75.bin.gz": "e9425cf24b5a51f2b9684acb45f3f2c06bc50b3e00b7f4239de070e3ee2b387f",
+    "data/flop-hu-v1/76.bin.gz": "6b028fe4871a9cbdc6f8b6bc5db2a7479596bc856c7f08215e6ad208e6dcfa85",
+    "data/flop-two-v1/76.bin.gz": "e1b71fcd9022b295f47b459a4d0742c78a7e94ad3352cf43b61278af6928c86e",
+    "data/flop-three-v1/76.bin.gz": "59a3c0886e599d8beff278feff5912eab2f8ed8061c9d604abfbfc5c5a72d6a9",
+    "data/flop-four-v1/76.bin.gz": "3032a68ce4d4e5abec46e4fcd03b2a78c64a7f60d0a5080ea3c2866e0bb9c96a",
+    "data/flop-five-v1/76.bin.gz": "007cbb039264e0056e597df9f790c19bf242e7266eebadb034b96220aa719c2c",
+    "data/flop-six-v1/76.bin.gz": "eb968d3d7be21d297cec28e52c0ac915d6547c7d67c04869ef720ee3cefa6a4c",
+    "data/flop-hu-v1/78.bin.gz": "f5e5de7439d33aa90f45d13feed6371e7d7a53368ed23783322725184ba695b1",
+    "data/flop-two-v1/78.bin.gz": "3adfc9c7e266c52151fc25bb75b28156ca1697bba328a34a54d68bef2487f89a",
+    "data/flop-three-v1/78.bin.gz": "d135aa336c478b3602b05b799c0779b6ebb0fd0f103613861b8bc3d5c53668a0",
+    "data/flop-four-v1/78.bin.gz": "394a9d3472aaa13606b10694f4993c084d4241a2e4eb0fce2a622760a97e4a7d",
+    "data/flop-five-v1/78.bin.gz": "3e87a7df795b06fe7dc2ab01315620aeb340a569f68bb2548d006fdaf51059a3",
+    "data/flop-six-v1/78.bin.gz": "84a44172225349a52183aee8219ecca16e02ed103a4996e5d8fd4a30d84b74c7",
+    "data/flop-hu-v1/79.bin.gz": "655630d6db578787d1a6f8e21bbd54e7a62a9e0b256bc4926015eebb4f0cc414",
+    "data/flop-two-v1/79.bin.gz": "785ed7fc46488cef15c4575240a36ca72da38e50d74aca89916d47d9f710006c",
+    "data/flop-three-v1/79.bin.gz": "2cffe36eb80d494820bbcd6927ab7cfd5594c932aafcfa4fd7d8fa91bb06b087",
+    "data/flop-four-v1/79.bin.gz": "f07ed5e1ebd80e0b42c39febfa6d6be850c8f36e8805421e8c8f83c5aac82ef4",
+    "data/flop-five-v1/79.bin.gz": "f5e48156ac27d3adbbb3e61e195b73efba3a0a0a469ac55a91b4cf9702e30471",
+    "data/flop-six-v1/79.bin.gz": "4822133ff4626d1f28ce34823b46759635a552c6b994d9a0ac4563a4801f3ac9",
+    "data/flop-hu-v1/80.bin.gz": "5fc7ae76620f567771a4ca8c014f871a3a9fcbab01f89c68ad8cca8b526ff63e",
+    "data/flop-two-v1/80.bin.gz": "33785e89dc9c6f79488d21eed924c6e9f9ff1ca0fc788bae3651bea1870b6e5a",
+    "data/flop-three-v1/80.bin.gz": "21a163d8a77e64e64f5a0a79ea5c43366a992c4bcaa239b73518a4488c73ab8b",
+    "data/flop-four-v1/80.bin.gz": "6f8aabf24075d2aca9a11a91a428889f93550fe088459c6eaf08d38cc32b9193",
+    "data/flop-five-v1/80.bin.gz": "5d594f2fd63aef7c0923203abcdb2cfe07875b1d99e7b24b7d89c644d6acef63",
+    "data/flop-six-v1/80.bin.gz": "d44f73a7e28eddcacfdaffad86f13987cd29fe4dc9ee9e3b3707cc2d09f71af7",
+    "data/flop-hu-v1/81.bin.gz": "c5af8aeae9a13f94ca37aa4cb375df7b159842c02908f3852d963ea6e32ceea7",
+    "data/flop-two-v1/81.bin.gz": "b284ac3e5c219ea0aa02d376c37bb8b35bd31aa85539940c245fb8bec95c4cec",
+    "data/flop-three-v1/81.bin.gz": "d98b2242388ad1ceb12ad44b9a875a2818716089e34630e39a65380b66877e23",
+    "data/flop-four-v1/81.bin.gz": "b03facb43a04a29ec93df04bb118b266fa170d3d73cc7855e8e306243129bb6f",
+    "data/flop-five-v1/81.bin.gz": "d83abd7dc064c666bb13f0aa1905e226dd44f576eea0e1e0c9e29c76dee1d46a",
+    "data/flop-six-v1/81.bin.gz": "5b64a4343b8cc26b15b44a3f0db09fb54db1c3274b8c8059904ea0fd0aa9a0a1",
+    "data/flop-hu-v1/82.bin.gz": "abc24562f420183e08f68e67f81a3a7fab9f0ccd17ca82831190ad154d48ff01",
+    "data/flop-two-v1/82.bin.gz": "0e172f085b3788455e579dc72f63868dad92688a205f556936302e9bf41dd275",
+    "data/flop-three-v1/82.bin.gz": "9c033c7206921b4b99eb6e4261c87063f32da055ee9a72b341df3764bdf14e0d",
+    "data/flop-four-v1/82.bin.gz": "3f0c8e7362db2f921e0f68f49fe51cb0ef2b740fb69c6806d9bef190377ea199",
+    "data/flop-five-v1/82.bin.gz": "dda643ff17c20b1c903445d19a2cee9a0407815c364783ae93240630674b1373",
+    "data/flop-six-v1/82.bin.gz": "31668d71faef5b914bdb64816bda79f8eb2a77a9b8ebd8c4e6b04e2823d9c346",
+    "data/flop-hu-v1/83.bin.gz": "a72655d6d3091b5deb8738192d8ffcaef6e42db3d25dba99bf3eca58bb5be335",
+    "data/flop-two-v1/83.bin.gz": "23f49e89952d85c1bc3e5ee3971e71b934ba59196dd57480a7b50dea1aedff9b",
+    "data/flop-three-v1/83.bin.gz": "476e746449a1814d4fb460f8a6036a9a0b9430fd35302c8d743a98788b7af7f6",
+    "data/flop-four-v1/83.bin.gz": "386e991583c8fc528b3c66f73a5b7d5976ded30359f66626ec2466ecc27846d5",
+    "data/flop-five-v1/83.bin.gz": "0b9cd5501328ac852d1c0b2796b573bdad42dd46f4dee8dc26b88ba7cef689d8",
+    "data/flop-six-v1/83.bin.gz": "e91f91c97a61fbb75611ac858d8cbd745c7c621bdcd33de17e057259c23436fa",
+    "data/flop-hu-v1/84.bin.gz": "390f3cf176618586b1f860f750916a3b499c43d43cc5eb4d07e602f9a7679eae",
+    "data/flop-two-v1/84.bin.gz": "849b6e3826e810336274edf97da8da5dadd116452183c9889a8a32b0c7d2a280",
+    "data/flop-three-v1/84.bin.gz": "036e257ec7eaee99be7e0bfff1e6d3e1c89e74b36849f8aa1005b87bef1e1f19",
+    "data/flop-four-v1/84.bin.gz": "434ac3cdfcc073d93ce126b4448a68e4b4f74572ac74229ea8624d005141531e",
+    "data/flop-five-v1/84.bin.gz": "a894829991db71e84b56a466aaff5ad595f73b0b4f6035217e18f3b4420b8094",
+    "data/flop-six-v1/84.bin.gz": "db95ab07386ddf8f7212ba8940b072645a633123c2610a6252dc3bfdbfa5a93e",
+    "data/flop-hu-v1/85.bin.gz": "0b5d86dd4919f2a56a2eec6f8dfdfc8e69b72ed5ef92dd46b3980c223b087cf5",
+    "data/flop-two-v1/85.bin.gz": "69ccc8827f8d794e4dc60b5bb750aa2b575c27ac1b7e9dad21ce2198924df531",
+    "data/flop-three-v1/85.bin.gz": "32670edd15676029445e448da72883bf50173a782803d7c79830682744f47b1a",
+    "data/flop-four-v1/85.bin.gz": "05205f2593e5898603aea5ac677d7eb0784fc7fe3b769b669a632d22dbbf75f6",
+    "data/flop-five-v1/85.bin.gz": "b8410de492c4c8d3842d3cbd8caf2578dfaee2f637ecb1a4e3ace830963a4cf3",
+    "data/flop-six-v1/85.bin.gz": "19380d1856b4a95f47553a53cbf3219593cd488548e6331f82db6a86d7821b14",
+    "data/flop-hu-v1/86.bin.gz": "7678c165e4533f3eb60ef4f148d133e3873437bdb9cafefc8adbaa230d00f5fc",
+    "data/flop-two-v1/86.bin.gz": "56054e541f106e91cd675496e3fc8c4b5b66081ab53f8e27c6882a17b7e1b6f7",
+    "data/flop-three-v1/86.bin.gz": "5c1bfd232ba333686500af1e6b67043dc89a198bbbea32533b74c920444bd673",
+    "data/flop-four-v1/86.bin.gz": "7e59811a1e7b1281acc790f145f88b39d31169add7c60d7b976b3ad06a901bd3",
+    "data/flop-five-v1/86.bin.gz": "1182e458030600c01130607e03ab67f47353e3e72601621812279d37cee7b641",
+    "data/flop-six-v1/86.bin.gz": "c0fde14f2a52ec136a95afb6c5d9e02e1cf73d95fa19d1851b88f66213fa2b18",
+    "data/flop-hu-v1/87.bin.gz": "be62ef0309c99fe9a9d0b8e05b77b19c91ebc2b9d256d99a60877da609550372",
+    "data/flop-two-v1/87.bin.gz": "5016c881c6195a27230ec576d794540797e0bedb5402e639c86dda0a684ffa7c",
+    "data/flop-three-v1/87.bin.gz": "f4e0857e70bf5d848798f43568dd6c17e3a69e00368dfb5a04cd6a22e48251e4",
+    "data/flop-four-v1/87.bin.gz": "89bb64220694fdec64d7e31f9a029ea37613601140097a0b1c972d90638d5da5",
+    "data/flop-five-v1/87.bin.gz": "c14165e27a29d409f76224304e9cd189a335f4cb90561ef4cf9078cceb75e2ad",
+    "data/flop-six-v1/87.bin.gz": "8cc9dd2d4dae8b5555cd5eadbc3b9e38ef423971be0cde1a4f1b38de69a429b4",
+    "data/flop-hu-v1/88.bin.gz": "814c58db13923792b821e7e36a6ff52413f499f531cd28848488131252976e47",
+    "data/flop-two-v1/88.bin.gz": "508fd831b93dc5b4b9372038168700ae8d9ef59402cb56a052f351499ff34320",
+    "data/flop-three-v1/88.bin.gz": "0d04d83c617fff4ff1ae89e7253a56903067a796c5664e09aa712d82ec4acb21",
+    "data/flop-four-v1/88.bin.gz": "402cfe5a4fd26ac3c5f8407592587f41b9b11ad6114d71711242edccdc9654c3",
+    "data/flop-five-v1/88.bin.gz": "fb0376ebb5f701ee34fe9a043b287884c3add07daacdb9fd8c2bcd7c07dbbe3c",
+    "data/flop-six-v1/88.bin.gz": "ab3d6426114930592f63c922663ad19e4e5e2c284e117bceeeee8d14acb55fd8",
+    "data/flop-hu-v1/89.bin.gz": "63209576d395d5273e7c93b96db22ab839f7ecc58d032b662a9c88d317374639",
+    "data/flop-two-v1/89.bin.gz": "36507c907b42c93e2a36d83294a182e351bfb019f0dc292cbd7dbb9f43c918e5",
+    "data/flop-three-v1/89.bin.gz": "47508d3b249f85ddeb7969b2f3d2d6680ab07e558c8a70ca7afdc6c707beb99c",
+    "data/flop-four-v1/89.bin.gz": "97f6533b3d41b641b249d3ba5b393f37a373953f0599b7700512bc35ed821c91",
+    "data/flop-five-v1/89.bin.gz": "01e18e48f999cbec3cf94c53fb410c568aff0ef95d7c6cca54f0a775abb10466",
+    "data/flop-six-v1/89.bin.gz": "37b0b6cc5b96f248b976a1ef2a6013991de20fe146c28961399a1a7a17ace2f4",
+    "data/flop-hu-v1/131.bin.gz": "117334894aebdf1d25a9b9f6a23db384a1bf6dedca1049377b6239df39004743",
+    "data/flop-two-v1/131.bin.gz": "7152c78381bbf038447bd811aeca16998fb6c4ae3f2f3d26bc453e986bc0e7f9",
+    "data/flop-three-v1/131.bin.gz": "16bc5f74a92694d9368c3149edd0e7d77829c98552939a9a9c245ed3ddac6198",
+    "data/flop-four-v1/131.bin.gz": "b913f9bde8e245893a8d201c5fdf83c4015c60280e0a1694bdc2c1ec42ac34df",
+    "data/flop-five-v1/131.bin.gz": "d2a327e748d285e1199d1560268338b78d3088d6138bacd92d37afd4dd8b0748",
+    "data/flop-six-v1/131.bin.gz": "1c8cebd951a077bf03ff56568cb6c9dbf1afeeaf183334114a445dbe9487903c",
+    "data/flop-hu-v1/132.bin.gz": "9d177b8a2118e019a82b88c0f6767d30a1b158980e10fb8f3bde8f8499fecaa8",
+    "data/flop-two-v1/132.bin.gz": "b2c2c107c75a2a5176f4892d34283a7680ae7b7b2db22b56499155386fd5dc15",
+    "data/flop-three-v1/132.bin.gz": "1d3214084451e864a0f91d002a9ea9e3ec49a973d7fd1d7ac7ea6b921030aaf9",
+    "data/flop-four-v1/132.bin.gz": "2f4c845272e3920a0f02d2bef9bd4946778b99dc2617eece5a5bfc496acdef92",
+    "data/flop-five-v1/132.bin.gz": "a9b1067cb1ab0a98fef54da835998a4d90a8e9d4948b255cf7808a31c379ac7f",
+    "data/flop-six-v1/132.bin.gz": "a1b0f95d842cde6c412a39ad831b5d632cebb166e53ac6be4bbbfafe3c4c4b8c",
+    "data/flop-hu-v1/133.bin.gz": "ec98f8dd6f6c587cd715d0f8fcface9e61b5242f7b00f30ddb17430539bfe3b1",
+    "data/flop-two-v1/133.bin.gz": "e4604e261fc2eac44eb93e104f3cc5343b578896c5f675a14446d09a38583bfc",
+    "data/flop-three-v1/133.bin.gz": "ce4c7a3e145925c7ffd80fd6cbc7b2cf7fc90d1eb68ac7ae4f2590e34a3054ac",
+    "data/flop-four-v1/133.bin.gz": "fc788f32bde29dc98928008e7a445a32033067db6eb4e1417bdee065ddbb2402",
+    "data/flop-five-v1/133.bin.gz": "f5ef9ad09c8a9298e004a6991250cd0d858007673586376686aa0846384fb3f1",
+    "data/flop-six-v1/133.bin.gz": "a452b402e03e194e320f4ae767640148e197602c4c433611fe7b4586bd2a8574",
+    "data/flop-hu-v1/134.bin.gz": "4da6c186a5985fe297eb62e0762966f54233a27fca1d4b57996acc5291bdd6c4",
+    "data/flop-two-v1/134.bin.gz": "e00d3a4032f2842916de3149df60e82273ad94394a6d20e5167e2cb712107c27",
+    "data/flop-three-v1/134.bin.gz": "af009a135f60152c4ac9bd1fc07141f0defc8e6c803c657d6bd9c1ebea4ba57f",
+    "data/flop-four-v1/134.bin.gz": "3b860521c37e0b24957d614421ba2ec0a36020a34a670cce9e6d1c6928fe5fcc",
+    "data/flop-five-v1/134.bin.gz": "b82259423480c590c6db1f87db587ae6c04344f1fdfa926a504bf08ceb1e7a44",
+    "data/flop-six-v1/134.bin.gz": "e7f799a413ad4226b93ce328b8a8a787ccceca4d8dea851ae89db29d128144c5",
+    "data/flop-hu-v1/135.bin.gz": "50d548f7a6d48ea40842d95fc134804dbb43ea49b47378eabf3d715bce942d8f",
+    "data/flop-two-v1/135.bin.gz": "c1f2f4be3fb7dcd53c7493f64ce94d2fb71384e2ff024bbfe3f522e391a54574",
+    "data/flop-three-v1/135.bin.gz": "c9d8176f65e4d9c56f5f8c79293811a8fcb221a73b7ccc5b00ba150156270973",
+    "data/flop-four-v1/135.bin.gz": "f32317593a38731e50b8e7779b24bb1ac4fff7162c8cdf5da68187ebf2ac4c86",
+    "data/flop-five-v1/135.bin.gz": "bbe6c486881e588a33cdbf33bbb6589d9fdbbc236c9c2adb9555d4df568e5181",
+    "data/flop-six-v1/135.bin.gz": "30e3bcab9b82e66af6246bf1886e186b62630a70eace94aedd31bf5db0f7e0c3",
+    "data/flop-hu-v1/136.bin.gz": "f7036cc05550f6f448fc04f08b8ffef05274d1f519e7c10a749a9d274b7162ff",
+    "data/flop-two-v1/136.bin.gz": "c449b9ba95b11bf0866035bec91aa6f5956acd187323b0f053455993d481778a",
+    "data/flop-three-v1/136.bin.gz": "26857d6ab93f13630385be8376e9989dd4c8c5d7b4c7d3d47186ed8afce081ae",
+    "data/flop-four-v1/136.bin.gz": "3cc8ba74cbfc384ff24ede684961f926902f9f9f31a47fd18ed63a1e10070b4a",
+    "data/flop-five-v1/136.bin.gz": "7f94b2bf03f57e0a809882965ba84ce5f11892985d068c2068771b6b6e9ea995",
+    "data/flop-six-v1/136.bin.gz": "7ec15ebf58273ac0479df9531d3ad1c1513c86067df9a44ac5ab4300f44708dd",
+    "data/flop-hu-v1/137.bin.gz": "97ba9976e0a25b3777da948104715686aa45b6f36c3fdc5912b64bfdbe552d05",
+    "data/flop-two-v1/137.bin.gz": "0944f78b9fd6497800fb44456945382ef485b2b30fd9c51ab27f16ae2e6e3b16",
+    "data/flop-three-v1/137.bin.gz": "d79d4a8da5af0cf3953869327721f395a3833caaed491ef5463d9ac83a7fa272",
+    "data/flop-four-v1/137.bin.gz": "5e5f3a9eae26ecbb57c40e319d91340764173c60a346e393110fde2f4c5dfe5f",
+    "data/flop-five-v1/137.bin.gz": "b33bf8b39a3fa6c4731f1f7ba0c8d2ca23253bb6c637a8af450d31391c06f179",
+    "data/flop-six-v1/137.bin.gz": "00e159d0c2660e3c11eb2eec997ff6eb78d304153cd0404ef793a519daeed959",
+    "data/flop-hu-v1/138.bin.gz": "ff738cbc847af12f7d9f20479f0c64d2fdb9c950dac997c3f1a8022fd475986a",
+    "data/flop-two-v1/138.bin.gz": "ad6bfc42bb65731a131591a854e6fb3f0fc710e3653f9bc685cbb73c8752fe06",
+    "data/flop-three-v1/138.bin.gz": "1530abd78e549a1558d38871ffdf43c41d789bc4adc23f9aa9b5b30389e5aa29",
+    "data/flop-four-v1/138.bin.gz": "de38c0fe1ada05ac1fec157eab459c621d9308076064dc89231d2986e78f0575",
+    "data/flop-five-v1/138.bin.gz": "cefe557322925d44f42bc7b89daa5662d012de5e4fe5f5862cb42593fdde7856",
+    "data/flop-six-v1/138.bin.gz": "ba6a128d5d827973e1e110952f320961e83de38429d317077aff908090f80bf1",
+    "data/flop-hu-v1/139.bin.gz": "bf169d1995dd38e052e6d78f530e6b238c80e3b8eb9b6ed91caa5099e89a8290",
+    "data/flop-two-v1/139.bin.gz": "bd0e594f9fedcfe714ce19817b44d5fb68a7d3cceac2ad9f5d232859b5084c6c",
+    "data/flop-three-v1/139.bin.gz": "4cb9ece71595570f06e6a419eece04f008eb0bef9efc368c0a952e7ee32b0b71",
+    "data/flop-four-v1/139.bin.gz": "8998d22455ae4f5c43bbc518e302456ca72c5f2fd623f066d80bd451a32124ad",
+    "data/flop-five-v1/139.bin.gz": "961ae4655b1ed784f989f2c2d023870a5b95100f9fe107daab2769fdcc40df8d",
+    "data/flop-six-v1/139.bin.gz": "6d803eedcfe6b6addc6ea95817d2f5134dbaf9a773cd8e6c4634a7f05ee2bcd1",
+    "data/flop-hu-v1/140.bin.gz": "d8839b8a8c4eef54e1f83244ed7ae3789770835519192ed4b481ef6cb234b7fe",
+    "data/flop-two-v1/140.bin.gz": "d726e90a95e3be01b9826374af16eb088c7f625a1f5ead60818b1427c318023a",
+    "data/flop-three-v1/140.bin.gz": "2088c866b5efe3b61cf1c75244f6f82c9be3f4b4ca8d1209bece25357b855bc3",
+    "data/flop-four-v1/140.bin.gz": "55e7320374a3f210cdeee6fd7205b2e1f937e91015b0dcefcd512242ce288ea4",
+    "data/flop-five-v1/140.bin.gz": "070285e7bf7595d5ff11f66417603882db9553d3f2db12546216448c5863dcf6",
+    "data/flop-six-v1/140.bin.gz": "3c8120f2f8372bd95dcdbb89b22bee3bfe3ec0e2babd9a5b2e83e5e0f2ace06a",
+    "data/flop-hu-v1/143.bin.gz": "b30061878405091d57bb4075175526f8aed362c023e9f4de54ede2c3ee1478ea",
+    "data/flop-two-v1/143.bin.gz": "faf2d262594c1253c6566cf197742a797ba613c1923a2995c9c4ced749493e98",
+    "data/flop-three-v1/143.bin.gz": "a7874449a053d4a93294e1ab217f500767e723cda10bb1f6a76bd07167a6c183",
+    "data/flop-four-v1/143.bin.gz": "b74aff1aaf5382379db95f143d78d7d3519df31802d6d9679955bdecc2d80867",
+    "data/flop-five-v1/143.bin.gz": "95da4e91a1f66b6f24ae070943bab76654860dbbd85761f906ffeaea2ff48f12",
+    "data/flop-six-v1/143.bin.gz": "65eb08c3602f8a78ecdc6d7bbc064ac97d79273a4fdc1e2078d9b8f2ca2606b9",
+    "data/flop-hu-v1/144.bin.gz": "49d5bb083cdef2fdec009063f532c5300f24bf83311619764b0ca9a3c44936ff",
+    "data/flop-two-v1/144.bin.gz": "0642cdb439e313add4eedc524435e38c55ed3aa3c519113b35809a3df93746ce",
+    "data/flop-three-v1/144.bin.gz": "496cd8e16eafbd5e488da72da5f9db94a7dc96e258f307ac71de7ed88da065d2",
+    "data/flop-four-v1/144.bin.gz": "5a85e699fc855eab084a81467c0cd58bbc93c506e4fbd8008fd2e8cac7a83814",
+    "data/flop-five-v1/144.bin.gz": "d87f615cc1d36477fb6d314a5d6df7d4eef2299504423ac297fa33c4ba358072",
+    "data/flop-six-v1/144.bin.gz": "1c84432e17b116d0edf4a3fd24166975bae313458d747186886b1a2846726883",
+    "data/flop-hu-v1/145.bin.gz": "2b4b724f7fe129b9c19366ab61b52e68b266c83f480c62e900512ce3016dbe9b",
+    "data/flop-two-v1/145.bin.gz": "52c6e995e564257da4255b6c21a815e2f2105b5bc1f4fcd7363bd97eee69800e",
+    "data/flop-three-v1/145.bin.gz": "37424aac4ea7d9f5e1b88a79b5f7f39e63ee47d2293a19f9b4b42a37068a2dc6",
+    "data/flop-four-v1/145.bin.gz": "41f0b37e0a08318eb28aa65adebb17a3bedfd33e577d96c9a9f2a1fd440d21f9",
+    "data/flop-five-v1/145.bin.gz": "93cd8c32ede3f14afcef877480fcd8378a33cc68c7b7bbf118ba2fb44066a228",
+    "data/flop-six-v1/145.bin.gz": "04316994f189616b9b0dd217d1aebef40d5da041fc1d3b6379345af593039ffa",
+    "data/flop-hu-v1/146.bin.gz": "d0fd4e12e43bbe2f633f78ac1ade71c57ff85c97921760fc2c7884786beb50a3",
+    "data/flop-two-v1/146.bin.gz": "24ccf3386907a6be575eec8e99039d5961c3882ece7c1f9abe990e14349af3f7",
+    "data/flop-three-v1/146.bin.gz": "ede9937db1373150830e8be7716d07b2295b7c6299eb172f66615d83d88b7f4a",
+    "data/flop-four-v1/146.bin.gz": "48810b79d0a5bfefacb9a780f3e4bf36e76cb91a19c0e7e5dbd770f9d2db6b0b",
+    "data/flop-five-v1/146.bin.gz": "0249cccfc660f119ae982a32d95b4dc79937c0e74ed188d74fea4185db70ee18",
+    "data/flop-six-v1/146.bin.gz": "e0b9695437eb749d3f57e8ec346c68ab3f3987544e670363a81d6ffcbccee745",
+    "data/flop-hu-v1/147.bin.gz": "b2dc7d50556af7fe664721ba68769523d4a8f2818ef036a2648546cbb4d2b8cb",
+    "data/flop-two-v1/147.bin.gz": "67303727b06e818d5820b8cb3aa998a635699e78ef7205aed7c73c967c10e0be",
+    "data/flop-three-v1/147.bin.gz": "411c573cdcf752ac95f1968a618b2f100ff8d2688ff11f7914975cbe46cb0959",
+    "data/flop-four-v1/147.bin.gz": "671959a791f43d9f699c39599cc25cd7ac6f57fae9e89d1d92e2a187b357ef14",
+    "data/flop-five-v1/147.bin.gz": "0a3656ff1a9c434c3ff5094c51ea41171123ff2e80ff00e2d2974f9e5727d89b",
+    "data/flop-six-v1/147.bin.gz": "265dbd0a51687e531677e50b49bf4b7cd7af7ca04b1f66c0363771efe3faa4cb",
+    "data/flop-hu-v1/148.bin.gz": "5f058d821c6e65b3aefca429cb3c0e82d5a78e89c1e3e9dbe46aee9acc09cd8b",
+    "data/flop-two-v1/148.bin.gz": "03a006d17c72e44e84012263ef7a1c5ba726bcf7cce3a1ad0a4326f6e21d4572",
+    "data/flop-three-v1/148.bin.gz": "d51ead3d2b64d0c67f0fe197c8cd5cb24084f554cd3aa471a6cf5f80962c3f2b",
+    "data/flop-four-v1/148.bin.gz": "1eedc179ff95165821dd3895d5b0f69840052b0a5df985f933d5fa3a42b78bec",
+    "data/flop-five-v1/148.bin.gz": "2933eb02b9dcd03bef4695b7ced6b4835322b37a12b2670ffe3a07fa8cfc70dd",
+    "data/flop-six-v1/148.bin.gz": "3868313721968827520967433dc926c8669d2fa626993889a347826e845bf547",
+    "data/flop-hu-v1/149.bin.gz": "3e2dd40a474a6d85c63a295532c978fbeb240f8b9504372070bd4eb814e3f1b5",
+    "data/flop-two-v1/149.bin.gz": "6f0285a457cefdb1512c8890d0c5d1d930039f675d61311730a1d5851fbad5e1",
+    "data/flop-three-v1/149.bin.gz": "376ef663bbb2013c0e9b800327a714b3403fb1a3bafd58612dc63309f7a78ad7",
+    "data/flop-four-v1/149.bin.gz": "220e8ca63401abeb19e776f489053abcd5eaa60f00791a35a538a6038c3e817f",
+    "data/flop-five-v1/149.bin.gz": "8deeec539601045ba91f490e4acf4df8f9ab714ca8a1abbcf796715fab017473",
+    "data/flop-six-v1/149.bin.gz": "c4557bafec72e507e62a7dc1af2c550cddffc583994ee8e126c65773942dd4a9",
+    "data/flop-hu-v1/150.bin.gz": "cc7019dcc06fce7ee3b81742f45e952f18fdb95992a21ac13b4aae1552b0aac8",
+    "data/flop-two-v1/150.bin.gz": "4a71121f3e7fe1734db94abefba16459e70f0b947acd98ae739cc98deb48c6ff",
+    "data/flop-three-v1/150.bin.gz": "30aa33101e758b3ab91ec309177c7f1397a917e6c68f348c5286f5ff194132c0",
+    "data/flop-four-v1/150.bin.gz": "108220726f797236cdbcefb90fd223f46ffee34d493277071ba2bbfd474ffba9",
+    "data/flop-five-v1/150.bin.gz": "9374343d013931be1377ebcaf3e8458958bf5c9ea20a1fbd3f21a860fcc3b9dc",
+    "data/flop-six-v1/150.bin.gz": "db1a3432b536e0c17dc763b5b9bc881b3f09183ff465238de5a9aae38b31dbeb",
+    "data/flop-hu-v1/151.bin.gz": "f102df6693a9d86756f3c4279f6807992554562d0b926a34eb371aa1068c6227",
+    "data/flop-two-v1/151.bin.gz": "32405c7d76b15f7bd74a498525f270307f2d344289c2cd52a204d1cdd8151d31",
+    "data/flop-three-v1/151.bin.gz": "7082566b40b1e28e6eadf4a5e184cdcc1132cac2c5b9c99937710680f6ec4e76",
+    "data/flop-four-v1/151.bin.gz": "ca863ab674f83d0304c4285792fbf8f1b3accb96f6d8036917b286feca4f8ec6",
+    "data/flop-five-v1/151.bin.gz": "9e2c814e888db7cf991906cdaf298b7756a4763b397d7d975e9d2f29262fa9fd",
+    "data/flop-six-v1/151.bin.gz": "cc1a47798621b15073a5273fb9f0aec59e9df5d846a633b1e68a50f93ef315f7",
+    "data/flop-hu-v1/152.bin.gz": "f4133086468e5a1c31aca4c4ac4c63228ec74b265f7fca0863a60083a2bbf826",
+    "data/flop-two-v1/152.bin.gz": "8cfba2435dc32204c96f6db2a905cf10cee2adb53aaa1eb87f74638aea0ee490",
+    "data/flop-three-v1/152.bin.gz": "ae2832bc7acadd9c9243630fdb535b96157437237b66f52fa4b1b4d14b9b749b",
+    "data/flop-four-v1/152.bin.gz": "fdf08331d99b4d1a923274f2fc55d085b6343a08a81f36f08a6f46e50b2df41e",
+    "data/flop-five-v1/152.bin.gz": "7920a42bfae524f2b69523ec866b69763bbe25d7f4215590a82b731f79f3f0a3",
+    "data/flop-six-v1/152.bin.gz": "0961da474f583ec062f2b7a3db764d8fd452bf2fa96a91fd6177f488d6b8f6c9",
+    "data/flop-hu-v1/153.bin.gz": "2bf7c6dd8bee6748518e3d1aa9a76a43183d83900fc2ccc8ad1f659f75ae3150",
+    "data/flop-two-v1/153.bin.gz": "6f45c7bb0cb33d321fef0811511465e3054cbd932dd57d0380d01c82d199e68c",
+    "data/flop-three-v1/153.bin.gz": "e9c186035fea1e998e6083c9015fbbbdc900904769296e0fa9338a20e7ba2772",
+    "data/flop-four-v1/153.bin.gz": "90dd28cbdd12bad954fce975eb0bd741ba791d368b90235e67b9bfa2f94b7e71",
+    "data/flop-five-v1/153.bin.gz": "7947537d7ccf1404c1aa58d7b79f924feb4519854f99c42ff8451b9b02e5b780",
+    "data/flop-six-v1/153.bin.gz": "c9f4d7d4bfb1991f8ca2bbca0e8d5b06e41af5bbf16d4281d9671d8435acc7df",
+    "data/flop-hu-v1/196.bin.gz": "3b36ba9852f92740cfa3799ca6db3663e64688f4b00a20a77885e05128c457b3",
+    "data/flop-two-v1/196.bin.gz": "0e521736cdcfe3c5a705b82d71ff9d246dfa91fbfa5177ea789a72ab72f61f4a",
+    "data/flop-three-v1/196.bin.gz": "1431d3e6d661ee56430d712d33bf3829e3907f9cd1eb399e53f89c583799e76c",
+    "data/flop-four-v1/196.bin.gz": "583e18b401bb7bf67593815b0efa74f53cd3c9a379a96fa7e1b2370c18a49157",
+    "data/flop-five-v1/196.bin.gz": "7ad26494e16e7cde49c1e19c729e074165b63914f524f813b0a819421ca32a06",
+    "data/flop-six-v1/196.bin.gz": "f5e6119aaad329ce8bf94f30b9c8cd1cf980ee6356763c8a85f304f9e2185eca",
+    "data/flop-hu-v1/197.bin.gz": "e70b2122a147e81de849ac06adc096929e12d51c0c1203dcb905f0e1ada333c8",
+    "data/flop-two-v1/197.bin.gz": "3c0e6e92eca365832693672fa571a5ff279a79643a47106997c9c9ebf8a55fca",
+    "data/flop-three-v1/197.bin.gz": "22edf83660dbdd30e90d119fa340ae74f17e279c661c87a4ec8989867169a8a0",
+    "data/flop-four-v1/197.bin.gz": "63d67a0ea8dc7fbcc504947449e9c592e35f18bd210e8a071c1363e9204f536c",
+    "data/flop-five-v1/197.bin.gz": "0808e85879b40cef46716f58f2150cf822b00e0773524d2eee130c0d4f29f9eb",
+    "data/flop-six-v1/197.bin.gz": "6181130b001312181c6c5db5f345ac7017cbf4558357523e74debf5efa2cc3cb",
+    "data/flop-hu-v1/198.bin.gz": "020fb831f0d34a11147edee2650692838dd0fe3c21ab626a61986bb0d5fdc388",
+    "data/flop-two-v1/198.bin.gz": "27e5c674e4191ef61c2bc307ebe23fc5904f049048e839812cd0357ecea2070a",
+    "data/flop-three-v1/198.bin.gz": "cbe764028b1bb465736a8ba42225211510d8de4e256b1184d45508a15b74617b",
+    "data/flop-four-v1/198.bin.gz": "9711aaabd594569761a888d345ade5191d0417cd098a3c79bb248f7f935a8e79",
+    "data/flop-five-v1/198.bin.gz": "e4edb1cf8a3ed37ff1e83618c4416b2256f034c0a5c276a85bb325800761a9c4",
+    "data/flop-six-v1/198.bin.gz": "aa8f624e285adba6203934d1528ab568199e552b175c990650079c91857a943b",
+    "data/flop-hu-v1/199.bin.gz": "f9710f272aa69e05e316fceb6a1e0b7b62b97b0b297f1212edf3942838988a14",
+    "data/flop-two-v1/199.bin.gz": "33bcce91aaffccf81ce6038b8a78ad613478138b540ddc825a9fd9463baaaf91",
+    "data/flop-three-v1/199.bin.gz": "2ab3d802952f308c7ce5bfe72d80ff4e0b174aca15ef1058a67e34a3a4399f51",
+    "data/flop-four-v1/199.bin.gz": "45facc5b69eb96718f669ba250088e95c8d0f923ccdeda7a07630d7fe64e177f",
+    "data/flop-five-v1/199.bin.gz": "78b9d20f8fc2a8af12e3f2c875b8cd481ce9bf43800ef5f9861e5696322abb75",
+    "data/flop-six-v1/199.bin.gz": "8abfa86d2e0bf7a71ebee3773c38ab569b9f67bad3425f97e006d828013dc338",
+    "data/flop-hu-v1/200.bin.gz": "58dbc84966f068bf5b83c4a47eaa689e0283060bd5c9704e2bb9e58de1d49e0f",
+    "data/flop-two-v1/200.bin.gz": "c60464bb4274243035855e7058e0c8fc4a7d2420c4a583a0dba5a56eaa539877",
+    "data/flop-three-v1/200.bin.gz": "bfcd7914f148ae4ddbdc762ea7b043781014ca5d5a943e0ab3ed09adc6500f72",
+    "data/flop-four-v1/200.bin.gz": "7c166f7ec144d5ec8e4dd9fd6d83462740c6c3c3e244e334acc30a577325789c",
+    "data/flop-five-v1/200.bin.gz": "d7438421fe08f80b66823c2b420da30eb1c57652970db54a674f1174c112c3c3",
+    "data/flop-six-v1/200.bin.gz": "eebcfa1b598bcff7e6918578f250df448e5de6326f5bc30b7fe5ee58d8bf2682",
+    "data/flop-hu-v1/201.bin.gz": "4add2151854a7c17989c5a3d7b9d9b089ac68fa783974c9d57fb34d77652ef0b",
+    "data/flop-two-v1/201.bin.gz": "be6d06df75b0c09f1106c2797edb08e9d630775e93025c6ca0a3411f70c4a6cf",
+    "data/flop-three-v1/201.bin.gz": "ff113154a8c11c3cbcdeda2c66629c686fc4d502994c47eb424ac11bd7acc2f4",
+    "data/flop-four-v1/201.bin.gz": "b8f142d7684634a46a53fe6771b7ddc910b09c4f4a230227901b8f87c5ed2532",
+    "data/flop-five-v1/201.bin.gz": "d6a6daf83db62b3c29ed95f41c2b0df46b619604499bbd958d815bd34b32d81f",
+    "data/flop-six-v1/201.bin.gz": "aca64406560ec5a006513da3afbd4e898fa5ef992d7af515f344605d840c28b8",
+    "data/flop-hu-v1/202.bin.gz": "14037253e313f3da3476c2bf69f925f89376228618f1c91e02b08c659d9ba034",
+    "data/flop-two-v1/202.bin.gz": "28ab23b5189a2f8a4a860b28694fc0c21e1dd0f73087048f1adc11770ada88f4",
+    "data/flop-three-v1/202.bin.gz": "20bdee085240c1f2d8a9649d3829b40b4dea5419b6fb160e241bdc335e25366a",
+    "data/flop-four-v1/202.bin.gz": "4ba7c032fb0ddc5b35acf1f6e74f620218d0f237c9838f146b793bf0cec12f31",
+    "data/flop-five-v1/202.bin.gz": "cdc36e2601f6243d6cca58d4e1e2b0d80ed63ca34dba1a0d20713a2c940848d2",
+    "data/flop-six-v1/202.bin.gz": "6d21a1ca60bf2f0b9f33b12d076959f7dfc3d1549f31e14f22e7ace7d55548b4",
+    "data/flop-hu-v1/203.bin.gz": "2a9beadd6fbb192abeb9a62e7c4784f1e4ed5cb44d2ba848f6c9aaf11f3055f3",
+    "data/flop-two-v1/203.bin.gz": "a2a5ec7f99f359ed8df2b965f6d3125bcffca6e9b01b3ac4777ab5ea3a825cb1",
+    "data/flop-three-v1/203.bin.gz": "e0b6d68be90df5da317e1643c87f4ffa58067c8dbbb864bd752e6556d90304c5",
+    "data/flop-four-v1/203.bin.gz": "41a2e261f814356d6701fd296d8e3d926a2bbf736bfcf79ad77f5fd20319ec97",
+    "data/flop-five-v1/203.bin.gz": "0c4d1d3cfff5a3dfb989e048309cf517991b52055515b21623c2a74d271514d7",
+    "data/flop-six-v1/203.bin.gz": "cf9c5e9244d6193af5f6a20d94b53e57014f470a543da6553b176dc47b83ea4c",
+    "data/flop-hu-v1/204.bin.gz": "a22330818cb1baa0c4e26658ff7534ec9ac19c6eb704c2f4f9b8301088a8e53a",
+    "data/flop-two-v1/204.bin.gz": "54a3eb89c0a5615dde7e96c19ba49635a14263c3438db6d0be3e0633e032fc5f",
+    "data/flop-three-v1/204.bin.gz": "16628c3cfda46d4c5dd2f96a793a9e8e3f034285c29a8ac08b96fc2b6a9de8f1",
+    "data/flop-four-v1/204.bin.gz": "c115aa9e8a00c218c047c3935368c634681cb66eccb38f7c339b024758c0881a",
+    "data/flop-five-v1/204.bin.gz": "f5f3bb4929b533f662732fdb457c9a8f4c8caf225a77eb357d67ca8fa8b9e297",
+    "data/flop-six-v1/204.bin.gz": "4d7898bff90503f16fde1425c894f318447ece819bf1b71d6975a5a39846d0a5",
+    "data/flop-hu-v1/208.bin.gz": "8a7593292643e2d2884f5ccaffc402760dfc688076109e097dc90e81f7e86a98",
+    "data/flop-two-v1/208.bin.gz": "ed2794dd072865c94e7caf151a4cd6d084a7512e8c62c07d6ad5c54ee377ddd8",
+    "data/flop-three-v1/208.bin.gz": "2efac15a90cc82e1184317dd0604d4e4891c0fbe29f1055dbd69739c605ee8d8",
+    "data/flop-four-v1/208.bin.gz": "ca64519d7c071772415693576daf5e670391f8f04dbf4156f0d7660ad0d27692",
+    "data/flop-five-v1/208.bin.gz": "6cf705228dadb5c3011adee8a5e254144f22ff44db5e7debe63898e263f3a00a",
+    "data/flop-six-v1/208.bin.gz": "43d5055e520b1f0f409dde75947251720028b14c80e54b49621eeb5f1f797d43",
+    "data/flop-hu-v1/209.bin.gz": "4b81eb9b9808a34906fb695d8b31bb10ded682c43c4349af0e880e3edf02a2bb",
+    "data/flop-two-v1/209.bin.gz": "b1ea77b04a81f805e0b04f303b91e8655793408144bc2089ce0dd0b470266707",
+    "data/flop-three-v1/209.bin.gz": "cbe89960751b6e8f854379595ba0ae73a48c6ad69af72f888b4b80856c31cb17",
+    "data/flop-four-v1/209.bin.gz": "3e49150c2cb3afa70e82a7fb52574253531a2177cbc48c1c7e9a1064c903e405",
+    "data/flop-five-v1/209.bin.gz": "8b0598fcad73c9903b9270e906a8cef790f31b42c267a7e4d9d3b3f2d81cf39e",
+    "data/flop-six-v1/209.bin.gz": "2e95a0f2b77104e4e082ca22e564570958d8eb9a803eb0d9663724cb57ef9a20",
+    "data/flop-hu-v1/210.bin.gz": "e92d9fa034cf41855afd4638060256051c0c537b59c63cfb3c4264dab25163d9",
+    "data/flop-two-v1/210.bin.gz": "f87ddd95a1976f8b1650ec1c7fd97f44b24aa72870ffe0b5017a7b952f57b8e7",
+    "data/flop-three-v1/210.bin.gz": "03e193f00d95550abcc7f475a359eb4281faa785c28a5b11fb013aeec465c1ce",
+    "data/flop-four-v1/210.bin.gz": "a741d8942255cf5f3678221583a81271011470388d71bb427600575cbfd0a4ed",
+    "data/flop-five-v1/210.bin.gz": "3b1838ae9dc09eb6af3e225d10d92ae636d557461c9864d6e57fd0e6a22b7fde",
+    "data/flop-six-v1/210.bin.gz": "3d7c69a58e264d26e29bc754700f4ddab209241954944e0bf7ab8bac3931bebe",
+    "data/flop-hu-v1/211.bin.gz": "3dd98d1f2e185d4cc2e8149a593c2edd4bb4eb7cb1526fe44c209b1959cc18c7",
+    "data/flop-two-v1/211.bin.gz": "ad1b613429f5aaddfe173f4329f916ecf01912f71c3e9f35d85eddc03f1f815c",
+    "data/flop-three-v1/211.bin.gz": "8d220c6798223b0eb9537fef255f4b07cc9ae1ff1554d502782e1614b59001b2",
+    "data/flop-four-v1/211.bin.gz": "3957cf59de7937c89335f8517c0e3c7ba45f8f6de53f1f37705241e1b7c0ac6f",
+    "data/flop-five-v1/211.bin.gz": "a4a280d0276beb1f13824c80122cedde41adc19863a0d716085be96b5e9957e0",
+    "data/flop-six-v1/211.bin.gz": "776797b258deee837b6c52d7ecba53375ac9307044d67f94a1ca51a6cbedad8a",
+    "data/flop-hu-v1/212.bin.gz": "f0d3c32f41504d9db95405990d5dfcdd8f05908e1bbf6bfd30546f105fc55959",
+    "data/flop-two-v1/212.bin.gz": "fad7116605dffc003d654b2826df9a505b30948239786b890d353228a972cc21",
+    "data/flop-three-v1/212.bin.gz": "eda64da869a29805b016853947f261dd8918681609f8e6ce48494c9f04cdd94d",
+    "data/flop-four-v1/212.bin.gz": "3c23efc7025e79c6e10a702f3178550893e40d0ff0aff7b45452b6262a75b7b5",
+    "data/flop-five-v1/212.bin.gz": "1d7aa9285d7fa57443a2b642f8b1a240e3e9d47a320c23be2db669ecd591755e",
+    "data/flop-six-v1/212.bin.gz": "8ec7b6a6f4d4572c5275806ba513d054d362916ba8c8b3954fd31afc04735ecd",
+    "data/flop-hu-v1/213.bin.gz": "53cb9e3ef54341d61529f078f0cbe54784181921435018b20a2b3025362737cd",
+    "data/flop-two-v1/213.bin.gz": "27985e65f42abc479f839f3a812ae90c3da39170b9709d94cb075c48b7fa13e9",
+    "data/flop-three-v1/213.bin.gz": "bf54b1059cb2a428a1a8c33ebfef9bbb970f70b511fa51f67087f785ee2f7b69",
+    "data/flop-four-v1/213.bin.gz": "18bf64caa16e20ab67d352711621dbe5a895ceba6cfe57f2a3a3967b8ecbbed9",
+    "data/flop-five-v1/213.bin.gz": "6c9de7e5a2c52c8af301bcd4e9e6494f17b48a74ac3f872d32b4f0941cb4496c",
+    "data/flop-six-v1/213.bin.gz": "4b19f672dd37f4f507ccea9ad834d77506b16ba24642f3fbc21890e22ea0ac22",
+    "data/flop-hu-v1/214.bin.gz": "3daefa7fcf388dacdc63949394e25321e3bc50d89a32fe122add25520cf4c4c0",
+    "data/flop-two-v1/214.bin.gz": "d0a70b797b18f7481006aab2da99827cfa092ee20dab0d37df14eba8b4540488",
+    "data/flop-three-v1/214.bin.gz": "9ab66d1685d7d1fb11fccfdb363de4fa825dc8f40e49d42a982d278c68fa7e5e",
+    "data/flop-four-v1/214.bin.gz": "519dd3b45e888e895cd9d1e6e5601a77b2494912b5e32e6f9121d9160a9b04b3",
+    "data/flop-five-v1/214.bin.gz": "86fdb8a4b241e5eaf68d4e58bf94dda0e28572cad7fc9c2f3cd7132e28fef896",
+    "data/flop-six-v1/214.bin.gz": "c8a4b51699665000ee57579fc57bb97c37ea4d43e755690e2eae01c7f47ec01b",
+    "data/flop-hu-v1/215.bin.gz": "fcdf671921c8a1cfe9d18246d95efbb9f7ac14890d3f45595e91d5f2c81b67bf",
+    "data/flop-two-v1/215.bin.gz": "e4fdcc59bc7e90711d7a8464566f5f6792d7088017df539e263356783e2ce25d",
+    "data/flop-three-v1/215.bin.gz": "a1aeedd893c6b483bfcd387ffe5425f813634cba5e43f1b71090572367d2c7d1",
+    "data/flop-four-v1/215.bin.gz": "cc4c54a2f3fe19aea3a5d4283dbcf64d3774e4bc8ff272b3e688ba94afa286f6",
+    "data/flop-five-v1/215.bin.gz": "9a49318cc3b152e78ba5ed325b0a3668bf5e91e687b9f773728f7e03920a3453",
+    "data/flop-six-v1/215.bin.gz": "87a155e77411d75ce292e0dfbd567aefe835f01d3b14d8b1344a6d8cc205d765",
+    "data/flop-hu-v1/216.bin.gz": "2487b15802b5cddd1bbe4a4fe7249700c545015d5defccb25cf6fcdbce214c7e",
+    "data/flop-two-v1/216.bin.gz": "edefcee6a4c73936d97cca25abbea928b83c6b38c13cbeb4e4bb9a5ea16c1c11",
+    "data/flop-three-v1/216.bin.gz": "c7b73016b4b2140ea6ff007fe65cffa1948a41eff7fde8e537655f04b286862c",
+    "data/flop-four-v1/216.bin.gz": "35abc059c16bd874e6623314d24df00328f3ca090fade091c4acf749ef639da4",
+    "data/flop-five-v1/216.bin.gz": "236129ac52c19157b7f6f2e4f6cac9444a7ba68d4fa344ebe554ed4b6dbfe4ba",
+    "data/flop-six-v1/216.bin.gz": "991a2c9db257d93fe0a8543af6c4ed965b94280ef62243ccb8ad6f3c149b0ad8",
+    "data/flop-hu-v1/217.bin.gz": "50eb200fd32d51df8007b57dd2a2a61753f3188ff81dd1061c3b4dd3b6960366",
+    "data/flop-two-v1/217.bin.gz": "bd48e9de9bed048a6b9b8e065182ce654ae559e2576897ea7a70952378679649",
+    "data/flop-three-v1/217.bin.gz": "c817f1a6c6f1e94f8e8948125323cef051c96ddf83904cfe7ce3c901dee40a3f",
+    "data/flop-four-v1/217.bin.gz": "b1c7832d7ac967b68697ec5302f3e10636440a842b75c9dfd197fe197b1476fe",
+    "data/flop-five-v1/217.bin.gz": "fb74c827ba719528dddf386aa4b5c5a79b972e01d940785a473a0fb0bcd59257",
+    "data/flop-six-v1/217.bin.gz": "0bd5662bc841669ac313b82e9a6bc4475952b0cae376190f3b8bdfb7d1314edc",
+    "data/flop-hu-v1/261.bin.gz": "879e6dac5f49ce00606980ae5f358f0008cc0f1c2c3f969fc81ab5433950e122",
+    "data/flop-two-v1/261.bin.gz": "385ecb42a2ac5664bd35cd2f95eb23da805bba828e6008e4f50bd4cd9ede45e4",
+    "data/flop-three-v1/261.bin.gz": "3a6ae41585586a41eed5982f48c3fcedd8458b7b7c781b0be2b0295bf956e29b",
+    "data/flop-four-v1/261.bin.gz": "092f587529c07225cb077a271c0d700edae88fa4d8cf16f75fc3f7ee830bcbea",
+    "data/flop-five-v1/261.bin.gz": "51ba7ffef600ef180fd26bcfc9749c0cd1142f1a62c16b1cd44e325720c86a1b",
+    "data/flop-six-v1/261.bin.gz": "fc5babb42bcd3a49dc0edb39f17ace4124e8b4c19841d619530a7f5ad20f31ab",
+    "data/flop-hu-v1/262.bin.gz": "5c3bfe55ed8d776c224ab16da1bbbd8f91b6b6dab078b71c75c788f2a9c5ee1a",
+    "data/flop-two-v1/262.bin.gz": "7c4b1b51db26038c49b7d68a957154eb66cbf2d82440ae19c85cbfb8d10e5291",
+    "data/flop-three-v1/262.bin.gz": "b595a1f3147751853b07a55ce0f61e867def03eb47b62cba521e35b2519c7bbc",
+    "data/flop-four-v1/262.bin.gz": "9bdf58556aa7c1785889d976410085cd9e12f75dd62810a7f5dba378de0230b2",
+    "data/flop-five-v1/262.bin.gz": "11aaca2e8dbd022566a9c441c948a93cf0ba8f5eea3a3660ef2bd34600bc4f80",
+    "data/flop-six-v1/262.bin.gz": "40b25052d6d59260769777a2350ceccf556a06606bb833e2d5475b0437985ab3",
+    "data/flop-hu-v1/263.bin.gz": "083bb31c9cb67a3d44b8f2dddcaf613bda8322e29259a0a6bda2798ba32de4e0",
+    "data/flop-two-v1/263.bin.gz": "51d866b2d26cb71a77e75b044b5a4e373f2c3d74256b2c0d3073ff17ddef3d48",
+    "data/flop-three-v1/263.bin.gz": "6dae86cfe79c36cc657fc0d1cfc123939d4130463e6a4cd089303962b3b45ae7",
+    "data/flop-four-v1/263.bin.gz": "797c2466a5a0f1586b9f1cdd89fadbf6f4b7dadc726c14e29d9a2a516c2e01f8",
+    "data/flop-five-v1/263.bin.gz": "bce878c0fd3c2a93068203e563911bb89545584a78c6ae4d46eccb48aee4f09c",
+    "data/flop-six-v1/263.bin.gz": "730daff50e14ca9b41ce5f8b33c86065ccbb6a831b77faf5752936146e909961",
+    "data/flop-hu-v1/264.bin.gz": "105419703aa1faf4c5d8aa92b37d1ce602b82050bc93899924813522e542106c",
+    "data/flop-two-v1/264.bin.gz": "37564de5d7f43df76885331bacc69eb00fddad22d8ebf32df878ca3880846399",
+    "data/flop-three-v1/264.bin.gz": "01acdcea4d1317c410d75f8cb4ad0598cc3cfd8f67bffed398da4f5c7df600f2",
+    "data/flop-four-v1/264.bin.gz": "a082c635e100f24d9be2769f5aff494a338810e9c214cd872a91cf0c6141e393",
+    "data/flop-five-v1/264.bin.gz": "766c601ee11850cdd38f89ba59349a0f2402f22cbc4910fcd72b60706923cee3",
+    "data/flop-six-v1/264.bin.gz": "6d10401a9f27bd4fa8296d7aadcea0c2e9907e4433b77f4869091261a8b97622",
+    "data/flop-hu-v1/265.bin.gz": "f83c6168a42ca2516607cfd290250603abdff10c8d727e7b285ebc9372726df9",
+    "data/flop-two-v1/265.bin.gz": "2500a2a5491ad80bee1ec857692aa67f9fcb8b39d0c19b21ce9a26d2008f9181",
+    "data/flop-three-v1/265.bin.gz": "87e73c6846ccb83c4d93dade2b4ae130bfb28037379261227b72f862a5c146ca",
+    "data/flop-four-v1/265.bin.gz": "3c85fd5df19eea0566fd4959556cd99232e506f3d359234663f8893453216228",
+    "data/flop-five-v1/265.bin.gz": "44ad4c1d5a1bbd3b06e81dafea25817d1706d35db5a7e7b139fcdfc59a9486a4",
+    "data/flop-six-v1/265.bin.gz": "85f8719bf283b93967db8ca18df0c59e43cf6193a7d357f017e9ec5ff5f0ea93",
+    "data/flop-hu-v1/266.bin.gz": "69b33185003a24b3334aab7a23a67fabfdcb4883146926476a04f94a2d321982",
+    "data/flop-two-v1/266.bin.gz": "f275cb2fd43588d3a44adb3c52f7d08c0ffaa13f9ffbd7948b873d20a42b2981",
+    "data/flop-three-v1/266.bin.gz": "9b7741d816250862048993b65ce355b8584d5ad2fcffeec36b471eb8681b2c7e",
+    "data/flop-four-v1/266.bin.gz": "828779e5409e7ebc0606d9e1897d864b45d73dc4094cc6b1871a4f77c1b21b50",
+    "data/flop-five-v1/266.bin.gz": "978333844dea69774eb7ba766432df01fd9625888625e961fb33e9fbb8a24037",
+    "data/flop-six-v1/266.bin.gz": "b53540b969d4c9b05f5acc1316b566419d798e76718a4057e08517a8d50a20d6",
+    "data/flop-hu-v1/267.bin.gz": "150f4c34fd3b003bc06014fd94ceeda7e94efbbfc8305405273fbfb849005e15",
+    "data/flop-two-v1/267.bin.gz": "4c75f106e718d7dfdf0ac2ee0a818d0e3f77b069c4526e7651fd1a632f41c181",
+    "data/flop-three-v1/267.bin.gz": "601890444f2039b0f0e793d4533c2ffba3234bc0f5327db915de7029afb71929",
+    "data/flop-four-v1/267.bin.gz": "096e9db8bb8b5b383c083c38eb355e3aa0c922199894219f27a45e63b27d40c4",
+    "data/flop-five-v1/267.bin.gz": "cebf5a26f1dc837ab19202c53af4c77024c3352cb6fa049dbe473e6c6d6f2a26",
+    "data/flop-six-v1/267.bin.gz": "d5b3976127939bdecd28e25d94234bd660697771f7150a077d743e2dc2336433",
+    "data/flop-hu-v1/268.bin.gz": "2dcba72483dfa8bdcc0f6a6cf77792cf4f254dd1e9df8c98445adcc316c96f65",
+    "data/flop-two-v1/268.bin.gz": "3adef6228f098f41147fec70f6436187a41758cdc43ae9f33f0484defa32ea86",
+    "data/flop-three-v1/268.bin.gz": "c04eb9716e897e543045491e8ea26f19030827cf29f66311610fee8afc46195c",
+    "data/flop-four-v1/268.bin.gz": "712f28c3b17989c2edd50b29db6de67982a86983912942d5fa557a16d1c847aa",
+    "data/flop-five-v1/268.bin.gz": "8951ea7b7945f71cdba5bf0efc9d745833db36ddcc9b5170383c57e7d78abfb2",
+    "data/flop-six-v1/268.bin.gz": "a867c289e37db338780e3a324e80403a11816b43e6cddb2c7f00a5c21b2e0bc1",
+    "data/flop-hu-v1/273.bin.gz": "e9d9177a6bf496cfdd3aa4b2b1057e9a5e05cddd466928a6965bae8158dc2534",
+    "data/flop-two-v1/273.bin.gz": "5b6a1d4eaf25c0685bc789744a1d2f47f6ea7bb5a6cc96d9d9a6c9af47b48815",
+    "data/flop-three-v1/273.bin.gz": "5c70c57fbcd13072894e224c0e405c6260b7374d1deec066fcc71445788801a9",
+    "data/flop-four-v1/273.bin.gz": "37a2ae7f529479ca47adb844423178b9e51f47329f0baa9d1e3c1179605b37a0",
+    "data/flop-five-v1/273.bin.gz": "538f397de2877bd11fc30688ff3ed4b4693a636a04f93616d93fbd79fd59135f",
+    "data/flop-six-v1/273.bin.gz": "6acdf067bdf053e904ea1e8f72ba034a622e0ed3934da90cf03bf80fd07c05c5",
+    "data/flop-hu-v1/274.bin.gz": "c6d7536e7aee709f173953cd3eb2f836eae6ee53b6e68ad7b7b3f590ed7973e3",
+    "data/flop-two-v1/274.bin.gz": "25a1fc808f7d3f50d590a29afc154bfceb2e783376ff66160663699ff1245384",
+    "data/flop-three-v1/274.bin.gz": "6ce6f59ecabf1c99188a3541d403051f66f4e7e5e6cabd8786888ae278eb5e82",
+    "data/flop-four-v1/274.bin.gz": "63eaaf42a32771b80cc0dcfea0b0613432bbc6ab1933d5fe6f762935603daed1",
+    "data/flop-five-v1/274.bin.gz": "e111a8094224c4b6e657beb1fe741e0719afc311376ee1413f62f7e1ea2268a0",
+    "data/flop-six-v1/274.bin.gz": "66a76a45cb333090da29b29b99a39a8c0db775ffc2e460edca67302d72f5771b",
+    "data/flop-hu-v1/275.bin.gz": "d4673fa8b02b0887d1956337c1d299870cf1ed1368eb953e656c8d733d0ac0f5",
+    "data/flop-two-v1/275.bin.gz": "708b883d1805518100afee3658f4273cee569f2c40b0e2b6e445175fa874748c",
+    "data/flop-three-v1/275.bin.gz": "68fcf49e2440deca7040a1748d294cbaa9ff807246ebfb67711fc9e11e2e74bb",
+    "data/flop-four-v1/275.bin.gz": "98a0e3c6dadfe70d984a3e700d6642c0588f1ca35eab43e1baa0474854ac9b8b",
+    "data/flop-five-v1/275.bin.gz": "a63e0665b1e58fd315ab85fcfb9c44dccd57d2b4e5f36c4531fb7292d7410476",
+    "data/flop-six-v1/275.bin.gz": "37cdc392746cb2603d134ea8943559797baa121c46b0c29b0d29b23a0e1c99f9",
+    "data/flop-hu-v1/276.bin.gz": "666b6b81e7ce94739f4f05fd404d7b6a106d8024f3560524cc544e6b6038101f",
+    "data/flop-two-v1/276.bin.gz": "1d1a1774acaaa94bf82d09bcf1837453ceb59dcc6c1d95187e03dbcddd9a21a2",
+    "data/flop-three-v1/276.bin.gz": "2812c48337002e0d215993e7d44d5879388a333017012fae0955622885b95c34",
+    "data/flop-four-v1/276.bin.gz": "42f8d54dafbc37db00433b8926c614d660bca53753267265705e762e86c72529",
+    "data/flop-five-v1/276.bin.gz": "6a738bb9519fcc2a8b2d056665cf07a27ca49cbb58e1f14773f5929cb3cc9306",
+    "data/flop-six-v1/276.bin.gz": "694951b1645e21bfe11369404f0db43bce046ae563baf8a77a481414be0ae19b",
+    "data/flop-hu-v1/277.bin.gz": "0f0289892fb5a46b39177c6bcd0a1f4cec9aeb17adff109b53e1fc80af5a7199",
+    "data/flop-two-v1/277.bin.gz": "7ac065fdb42081cf45975d4900d304fb45d95b26a25c90639465c52a9148b78c",
+    "data/flop-three-v1/277.bin.gz": "71e3e7ad308db86a2b53bcbab7af70874fdf580a21672e1fb814fcb4b6fbaedc",
+    "data/flop-four-v1/277.bin.gz": "652caedfe6ee0998239fca4428f73f89aa387e6031f70add8b81698cc53e5595",
+    "data/flop-five-v1/277.bin.gz": "455b39a85ce3df88430dbd026f8bc14127e145782138ac28ba36702cf3f214ca",
+    "data/flop-six-v1/277.bin.gz": "11e509acde5ce5967354dda43933370012564dc5232de5942905bf4ece53987b",
+    "data/flop-hu-v1/278.bin.gz": "69279fcb3d54d1ffd2d26dea4d9bd8458dfaa3492dce8df096d6a150d9eee883",
+    "data/flop-two-v1/278.bin.gz": "73cca1c7cf7b207448bfcbf842acb721c2f36e165ea203c5d892ba08659820e3",
+    "data/flop-three-v1/278.bin.gz": "ffa50c629f8ba0246a7ac3e30ed487610aaba5d8ae742f4b2dff53a2380608b9",
+    "data/flop-four-v1/278.bin.gz": "b78c7589e22a2bdd4e897c2ee1e5dccbff174f6a5751ac394896ef694220c68c",
+    "data/flop-five-v1/278.bin.gz": "f9d60146973d66b7ad455c70bc45b3bfbc77679d35037cac38d51c8fa73b1f36",
+    "data/flop-six-v1/278.bin.gz": "2831dec0784f752726e394afedea83b57ddd501323aeef8b90f0bf809bcd7cab",
+    "data/flop-hu-v1/279.bin.gz": "2ebfb14eda596f97d94c484cead16c1d62ebe5c0924a7366f3e270a1ae2dfebd",
+    "data/flop-two-v1/279.bin.gz": "964060312175c658285608ebd0dc366976ef293fbc3df3453cdb5e95f1070726",
+    "data/flop-three-v1/279.bin.gz": "65413e3855e409588a41021179b9ecf077abe30238b9f949e6af5be3f0597d24",
+    "data/flop-four-v1/279.bin.gz": "a8a779811e2b3ed125969314f433cb3f544725d7d46fb409705d63ceda36da8c",
+    "data/flop-five-v1/279.bin.gz": "249cbdcc0f58e83a7a94582e6d4b0c69b7343f2fc74e9b7a4929f7c17f1f531a",
+    "data/flop-six-v1/279.bin.gz": "fb44d6aa68a3728911a44b25bda800fa80419c0419b4f18eb8fbe28b55077e2c",
+    "data/flop-hu-v1/280.bin.gz": "b9208fe76c62626ec69ad18ed23f5f5ab2f696d4eab35671defbe65fa205bb47",
+    "data/flop-two-v1/280.bin.gz": "2c72b08996513a5496ed7dd91bda4877ffb2a6ef2a8617f7c2bab9fee4d17be4",
+    "data/flop-three-v1/280.bin.gz": "00fe0c3356dfc57799acafba947aed9fa413c0a4c108e8f7956d2446db30e7aa",
+    "data/flop-four-v1/280.bin.gz": "44460239fc72dec4b950b00afe5d69077cbf62bbe6181cb17661bd5ca4cbda8b",
+    "data/flop-five-v1/280.bin.gz": "1a7a6c0935d14a3fafefa634917ab310f96f2ff691752b4e9cf9a2cdf513f2c1",
+    "data/flop-six-v1/280.bin.gz": "ee65670a227d3a34ebd9a2d78fed3311f8c9c9f08ad1915689c6f746dee19296",
+    "data/flop-hu-v1/281.bin.gz": "d7570dd9f9ed0cd2d4b8107706fb41314a33218541dbfa6230ff1919e31dfc07",
+    "data/flop-two-v1/281.bin.gz": "0bbe40e3abdb56cc2178d46148d2cccd93f0646a20c554e0d123b3ded433d538",
+    "data/flop-three-v1/281.bin.gz": "60b6a5252dc4db41d33e8ee8f7a97e268d26d5d1531cdef1e740ee97bea8c0ee",
+    "data/flop-four-v1/281.bin.gz": "692ea6bb3ec7e1d1c5d6b2bfe8beb932afd38e54a87fa6ccd92d5462cfec2a66",
+    "data/flop-five-v1/281.bin.gz": "ad383d116a38f580ea74a5a2ad2adf24bb8181138f0c86bfbf44e4076cd92da3",
+    "data/flop-six-v1/281.bin.gz": "3cde82387c112e1565dd9fb5d4af1556d57c7fa2c7d0f8e82c7b6c5e2029e5fa",
+    "data/flop-hu-v1/326.bin.gz": "eec735c0c35b923a6739e90b3518d95731f58ce5ccb4bc3d46650c9be52ac470",
+    "data/flop-two-v1/326.bin.gz": "4a7b9e1bbd9e6a7f8110ff22eb90d9db22ddbf15b230056d811823473f4bcdd0",
+    "data/flop-three-v1/326.bin.gz": "7211cd406e5a830655d2d6880ce5d30feafb23cbd5e540a0329c92ea8e59a9cc",
+    "data/flop-four-v1/326.bin.gz": "9d1f0e159290fc2fba0f10ca142ff7c2f2e73b318b6daf2d53d236b43fefa784",
+    "data/flop-five-v1/326.bin.gz": "91463dab970fca28ad908f5d3d8f0e66d83260274e00d7713434cdf12d3d282d",
+    "data/flop-six-v1/326.bin.gz": "a773293eb1be7c2550d448d9f1df527498e6eb15c396f59f89587954586f1fbc",
+    "data/flop-hu-v1/327.bin.gz": "a47c8dd7314d060aaed004092939518bde7e9d4ad6421faa026d09ad50815eed",
+    "data/flop-two-v1/327.bin.gz": "e08b705ae7c7c3dbc651a7b1b3c37d2c885755689ada12187342f59e2c260663",
+    "data/flop-three-v1/327.bin.gz": "1c53fcd2b441e71432301a5bd89bde873b11d8d77153d5a721766e9b6e050276",
+    "data/flop-four-v1/327.bin.gz": "ee302930d55d73da51b59abb06e461f3f9ddf8d9e87e59c580bb72676614ab1e",
+    "data/flop-five-v1/327.bin.gz": "528a5f574061aee6703a1805e26d55fc04b309ddf98982afdc336e1ad7b81630",
+    "data/flop-six-v1/327.bin.gz": "0f3e3d5dbba60c7f71a4fbb4d1f07cf9d6807fd40b9cb2c84f8c88496035b9ec",
+    "data/flop-hu-v1/328.bin.gz": "7ba09b27e4eacfe034f0adabf6c7a04f4bd3ac5275cd93891743d5eb00a9044b",
+    "data/flop-two-v1/328.bin.gz": "f211099de075b770d3a54e3ce555354ea5baa000e6ba17d64635aacced145c1d",
+    "data/flop-three-v1/328.bin.gz": "1a8bdc1361ece950f9e78a4ae1a3c4ee45689db49bdcebc1decca025ffb359ca",
+    "data/flop-four-v1/328.bin.gz": "a56be6219ded7ded197c6969fdec3a6bd4993ee8152bd86d9142b0b1d81886f8",
+    "data/flop-five-v1/328.bin.gz": "a74371becc3a54d3ce20934dd7dfeb0844454f13978a0dd77397bfd64c42376a",
+    "data/flop-six-v1/328.bin.gz": "466158807ad94f2393c6e31fcb41ec6f9d5a2e3773f0363131138915e89a0260",
+    "data/flop-hu-v1/329.bin.gz": "dc29b843a8f264a550b648cc06160050f7b67536a3de43d79063274c3a0acea6",
+    "data/flop-two-v1/329.bin.gz": "5fc45f7f8b2d55d905e091968391f4105dab2446ffc44cca3748c8d5ad14469d",
+    "data/flop-three-v1/329.bin.gz": "162ddaac028c60724526e0b6b8e54fabd822e735ae43ff1161348f6c25f76fe2",
+    "data/flop-four-v1/329.bin.gz": "eef790d7b9d98625e307c230ffc74dbb6496b56c5e4ad49508b122867ee97e9a",
+    "data/flop-five-v1/329.bin.gz": "fb25001821d49cfde582d9acbb1a67b81b226b3df0e178ab567cf3f6354682e9",
+    "data/flop-six-v1/329.bin.gz": "25c3dc735ae440e35441d6dc8f831280f72471fbf1cb0ed3f4ed33675dc98de7",
+    "data/flop-hu-v1/330.bin.gz": "390852c96575b6c8eb20322938248a563ae70990d5a0bf89435762988c5b420a",
+    "data/flop-two-v1/330.bin.gz": "5a9e918a84d68f4108c958d23a7627c26b588e3ed77c6db5f75cf4040af80f02",
+    "data/flop-three-v1/330.bin.gz": "45d46fd1c0268aa9b80b5b8ef614bd6cec25ebd32eada82d3cbcf06f2ae06b16",
+    "data/flop-four-v1/330.bin.gz": "1024efc483be71ad50765053a0abe06d296e7278681a8576050588c30e3f83ac",
+    "data/flop-five-v1/330.bin.gz": "0efdc60c0fc3c16d05e466a53c53682c289e5f230f4caac98836f4217b556f84",
+    "data/flop-six-v1/330.bin.gz": "a4f2a9862587a4f94d5119b6081e65645b5523f0b1baa0fbea4afef3682117a4",
+    "data/flop-hu-v1/331.bin.gz": "35b8d7134865a1d03f73b1f4f09854f9ff948c47e200afbcf6da7c8911165e43",
+    "data/flop-two-v1/331.bin.gz": "7978660019b56c415261452d8b8a63f2338d35b2872d6f331c71751bba3d256e",
+    "data/flop-three-v1/331.bin.gz": "fff0181fe2e3b98f1c73e0a3bbab3eb22e8708e16d66733c07070d9f1d33757b",
+    "data/flop-four-v1/331.bin.gz": "fa3bac4adaa9ee5ce2a6b13e10ea048897d25d573e50e7c392a348776c42f54f",
+    "data/flop-five-v1/331.bin.gz": "d9db03024346049a7cfc4618e46044d961c6ef7b4d7c8ea825f410db6a34309f",
+    "data/flop-six-v1/331.bin.gz": "fca474ac31680428bc663cb03904ca4b6b5d7d07d7cdccdaa869a1b19a1f02ca",
+    "data/flop-hu-v1/332.bin.gz": "be5921cd3b64eabd4a68f7fd958bb24a069964501a3b1632750e8003cdab64d3",
+    "data/flop-two-v1/332.bin.gz": "9e1554ee70dffdbda6ad57e203ecd92dcea2f53468484c42eb727afacb3b6c7d",
+    "data/flop-three-v1/332.bin.gz": "ee5f1774751d5df3b744be0d93981f82f46f8e49f80ab53b032f91baf17d567b",
+    "data/flop-four-v1/332.bin.gz": "bb8b1d2192640970c9016f4b65b417860ddf1624a5a0c90c840efdfce8791879",
+    "data/flop-five-v1/332.bin.gz": "53684ffc728128c8dc39ed15c1ca454a5cf562786b614ee315aa148437bfa1df",
+    "data/flop-six-v1/332.bin.gz": "0665ce2657eba54b18beb9b97df40e195c366506ded35911acd4518286f8275a",
+    "data/flop-hu-v1/338.bin.gz": "e38b59d45dff3767b0a4cf3c6fc364b5c4ed041605e5aa61b3ddb25bf5c01587",
+    "data/flop-two-v1/338.bin.gz": "cd7ab8cc3aff7a89854b3394dc06ff09a9cb60c595a38305a54b401484583e82",
+    "data/flop-three-v1/338.bin.gz": "66d93d747345b417eca424a51808051a74c0d078fdfcde4bef5a4b8fe1df19e0",
+    "data/flop-four-v1/338.bin.gz": "8f3f3cef18bb0793355402af91ecdc7ca1bf4c621a4982023fe2605c108541b9",
+    "data/flop-five-v1/338.bin.gz": "9a67a0ed7e15a83ae12d7aae76b3c27561331e6af96011f1c1c2e28ba8358205",
+    "data/flop-six-v1/338.bin.gz": "70739f849b407d804e7955f2e71328582208ea485cee0120f208ba4d6a718ac6",
+    "data/flop-hu-v1/339.bin.gz": "44ddc121e0b0969944cff248459caeb4c15092ca5a8fd663c91a10958f94d033",
+    "data/flop-two-v1/339.bin.gz": "8ae03d58d27fc3988712ae69a5230bebee81c1ee151983fbf899e3b92446e923",
+    "data/flop-three-v1/339.bin.gz": "2337c87b9a408a9fcb1e91730a38325534fca4e25cf2d09deddc29e1ed6c2e58",
+    "data/flop-four-v1/339.bin.gz": "75ef04ae23398bfbf586362c68a2fa9d534c505a4584f4feeeba8a635f69fb2a",
+    "data/flop-five-v1/339.bin.gz": "ffd35838de45dcd84b88d98861aa14d14abf69dec1c72a35e18b5fd4a4b20abb",
+    "data/flop-six-v1/339.bin.gz": "bfc53d618c2dc6b06b4dc9994d9498cf79b2b3f4e3089b4eb8235281974facae",
+    "data/flop-hu-v1/340.bin.gz": "356b1784d39740a2726cb861a26a67eb96fdf7f42ad75f4b065456500bc98dc5",
+    "data/flop-two-v1/340.bin.gz": "e932e33dd8a6984532582c9d218d8f8803de2fe0ee52585da6487af66768a431",
+    "data/flop-three-v1/340.bin.gz": "b9cda5a2a0cdd834f16f50de8c1efaa62b9667cd4159a56c34acf59f66747f6f",
+    "data/flop-four-v1/340.bin.gz": "e26b017584a621268eb52630192f810738171bd8cc5d842c786c97d4f15ab35d",
+    "data/flop-five-v1/340.bin.gz": "8ec5d2052c9dea0683ab824d43f332666540e207a2a641e61d849171aca899d1",
+    "data/flop-six-v1/340.bin.gz": "626c2afc400d6720ddbe376354593b2a3c22af25ef9f5b0685506a0c2082a9e3",
+    "data/flop-hu-v1/341.bin.gz": "aaee546dc6b224c5e19ae9ef32e8d679feb36ad544213d08a7e6af3298b1d27b",
+    "data/flop-two-v1/341.bin.gz": "47b78539099c496caeb319c20a969475f97d9cd548c2446895121f3c5fbb39b4",
+    "data/flop-three-v1/341.bin.gz": "188bad1257c6eb44bc22d5bce9249966c031089affe40e3b4963a7c7e9233aa4",
+    "data/flop-four-v1/341.bin.gz": "0f1838aaacfc5394383aced83e03653ddba03c7ec36a81a00a1b40bd209b95a7",
+    "data/flop-five-v1/341.bin.gz": "3915634fdc436091e275707ca3d44a00a2b57d9460c1f5f2dfe1d79abf60b5e1",
+    "data/flop-six-v1/341.bin.gz": "6e3ef558bcc001abf94a21d0b023c1d25e0e7c3524600df226c0f585de8cf52b",
+    "data/flop-hu-v1/342.bin.gz": "43f88b8fbeed4f26bd779298bfcb453a4eb9687bfbb36e883213653793f7fa82",
+    "data/flop-two-v1/342.bin.gz": "9fc7426e9b29c9ab3cb90188493f8512ec989a8180385f5cfd60074d7ce485af",
+    "data/flop-three-v1/342.bin.gz": "225d17c3b391eaa73bbfa64893b146e175630fe8659b981718fe34c2d59ed175",
+    "data/flop-four-v1/342.bin.gz": "90509be30066d4802fc60cc80a294e9e2dacedb8cc2c6530ee90eba10a1976ab",
+    "data/flop-five-v1/342.bin.gz": "e83bb71bc38614d52f353a1c21c5c2a9f543f8ee3fc894d57dcd9547cc4bcc4a",
+    "data/flop-six-v1/342.bin.gz": "8d30ef0a2aff5c6e5c33a111f0cc2b01b66e00f87009ba5fa87da96b5ff7d946",
+    "data/flop-hu-v1/343.bin.gz": "1e38f0dede7ea2e82c23cd9bc141bff326080039a1b2de81fee3ffec37b8c384",
+    "data/flop-two-v1/343.bin.gz": "42d47000b50ef146d6af889b8e1a12132057405a73ae528c0daf0226e0d97302",
+    "data/flop-three-v1/343.bin.gz": "7a45b4d139d2470cca7c1f6be42b4f65981255afe9117718ee560d2d7e51162d",
+    "data/flop-four-v1/343.bin.gz": "02458f98407d43db2125bbd7a0b69dddc20b3c7590bcc848781cead8d265be62",
+    "data/flop-five-v1/343.bin.gz": "f9258a6aa577f9db96db7aa85f9ee5eea6a6ecfa7177afcdde3ac7575c27a2a4",
+    "data/flop-six-v1/343.bin.gz": "946b75826986fac98e3272f299cb19b3f9d43d01a6142d859948f63871b6edef",
+    "data/flop-hu-v1/344.bin.gz": "c016ac2a793b973542c56521291d2cb9b53d16268c150a7c218b31d33aa12942",
+    "data/flop-two-v1/344.bin.gz": "575747bffc8eff32fcbf5fba83ab8ea3f67f2a6d98bb4ec325551479fdd2a4e7",
+    "data/flop-three-v1/344.bin.gz": "af3ddd6a91854f9151b858fa4bc9fd96bb586fd3d6de5d26f71260ff62a132c6",
+    "data/flop-four-v1/344.bin.gz": "a40fb4b20fc4c4507acb700e9082c8811fe968605a75915a91876d052a955455",
+    "data/flop-five-v1/344.bin.gz": "53411e10024934eb88c4b7e2e7d53bd48a071aa86e736970b015142c4244aca8",
+    "data/flop-six-v1/344.bin.gz": "1b1ed8371c77a3568fd54f91d78da6342195493c544ed553d0b6c1b31800d62d",
+    "data/flop-hu-v1/345.bin.gz": "e9a0e1682a7d8033bd8d647b03d7945eb7539c79162bf071dbabeb4e1edaf1c6",
+    "data/flop-two-v1/345.bin.gz": "217861d759de7fc4aeec22669ba55e291697fe2f3412a6126e0d71dc71176cdd",
+    "data/flop-three-v1/345.bin.gz": "e04c216c035c44a4aaa259df1361a8d75f8ad4835d79f23f8466cd96114a34f0",
+    "data/flop-four-v1/345.bin.gz": "3ff361d40a3596cca454c93874b5d3626a268a217f37a87737d19f62dce9fb36",
+    "data/flop-five-v1/345.bin.gz": "1d160360a381c00d289cb01d8bd318406d2ab41aae5513b7c36939a971335fd2",
+    "data/flop-six-v1/345.bin.gz": "d51e9a89bf9aeb52e9658805b035159ad4b44bdc48afc31ee0f92990e8dce314",
+    "data/flop-hu-v1/391.bin.gz": "cb1725f1d9dd4f9676c8752e8a7fc4b71d29e8245378a4b1e6d19fa3ea064646",
+    "data/flop-two-v1/391.bin.gz": "e4986057701e4be481052c338d07291b7e381cd68456fafce55af8213725e0c9",
+    "data/flop-three-v1/391.bin.gz": "3a5278ded5342c687fc9b6e8211873394d89bda758e0efde4cd7ea76434b869b",
+    "data/flop-four-v1/391.bin.gz": "b3a873c3b6a61856c80e03ff4b8a35fe380baf3e06a23223590f6e581b94b2ce",
+    "data/flop-five-v1/391.bin.gz": "8e45bdaea58f77c99b54ca37976a07f13e63c5c7b62995f3b379180b5431cfbc",
+    "data/flop-six-v1/391.bin.gz": "09d324c3a69a2ea4d235589d83d64571fdda8711957f71a97a00b96e1214dcec",
+    "data/flop-hu-v1/392.bin.gz": "78d825e67c779256ade2916d5e08053b8188e1647d7f3bdffcc565bbee2cf803",
+    "data/flop-two-v1/392.bin.gz": "e8b298eabdb31d8a5371c76bbd1eefdad6c57ff4e6ca5bff38995a5cf25e45aa",
+    "data/flop-three-v1/392.bin.gz": "51c5e8868810eceded62ae5c4dc62366da6e3ca768aaf292d952d38b4539ceb4",
+    "data/flop-four-v1/392.bin.gz": "540e9e6fd07e5c550b486db7d3734407ebb70bef7b3398bcd8650497fd6e0351",
+    "data/flop-five-v1/392.bin.gz": "06c49c961a174e2016f499d6be5cad5953dac0e8b1d6f8bc3df5ca7015cf59a4",
+    "data/flop-six-v1/392.bin.gz": "59e707b9c1b5c13f4f624c0e240ff36e9ab0103ca941d6be909faf1f29862ddf",
+    "data/flop-hu-v1/393.bin.gz": "a10113130d0790ffd96bfbffb552a2ef20f2b0227f175fce9d7297e2434e618b",
+    "data/flop-two-v1/393.bin.gz": "ed9bcf573463e28308ae2caa0d4393829a6744cc1d9a98f099b9b780f0dec221",
+    "data/flop-three-v1/393.bin.gz": "25bfd18e93d06f69d5493c95c96d93dc7b0079f6165bb3637837f5fb559cd900",
+    "data/flop-four-v1/393.bin.gz": "d2220d2669c9015d5eb33bd5e39b3ec8ef6726e181ee1cb185d707f4752cc3e7",
+    "data/flop-five-v1/393.bin.gz": "018e95ac7f811dc72e0ee343b6be9e9016aee69d9e19950ae2556f5701d9b146",
+    "data/flop-six-v1/393.bin.gz": "5ec3bdc8ef4a07118d9e12080b1b4a57073f6aa81c0532760edbbcd539c7370f",
+    "data/flop-hu-v1/394.bin.gz": "4aa315ff78ac69b0489a9d14c590247820a6aa1774e34789f17fb044c514edb1",
+    "data/flop-two-v1/394.bin.gz": "3f60ae38301795ae8daa88cbcc15468eca6101df3042eb18a6025fc9cd9bf05a",
+    "data/flop-three-v1/394.bin.gz": "c6137210d83b32868513f917f0ee661e58d1a81c5e64b7daeae446864ebe4601",
+    "data/flop-four-v1/394.bin.gz": "662b26bdc4ca2cb326545fbab0df74ee8b4ebe7e08ee6ba354bfaa950b4956ab",
+    "data/flop-five-v1/394.bin.gz": "af8a5520daa0b15123b0cbbf77177014751ac2c71910404c202c511fb99339f1",
+    "data/flop-six-v1/394.bin.gz": "54b486a093a2079691141ae94cc8ba64cd9ff120f132f63c3a132a56c5f49f3e",
+    "data/flop-hu-v1/395.bin.gz": "6f64c2857f33defc53da10064a8950724516065f23c5b6c32944b31153b74c49",
+    "data/flop-two-v1/395.bin.gz": "e6ced17443c0f23a835be42616f36d43fd9a2661893b570c9c01afd44b76496f",
+    "data/flop-three-v1/395.bin.gz": "805ded89cb4e85c42a77721f6f5c929f1e2689933c989705f02e87153ad78d3f",
+    "data/flop-four-v1/395.bin.gz": "28c66b732a3fcf3b4c2d8ae6c122961adf00d17b9ac2473f7e3798e4028dbdbd",
+    "data/flop-five-v1/395.bin.gz": "97ee953e52da6d721be82b9afb8156036c51755dc90364a6594e7ab39292033a",
+    "data/flop-six-v1/395.bin.gz": "26532e5a0c59622a1811311220895d53c7a149f73fe00fedd0ca4ccddfd6249e",
+    "data/flop-hu-v1/396.bin.gz": "61388592e25000c7b7bc06baf064d38ca55c7e146781577b3ffd41c1503e8704",
+    "data/flop-two-v1/396.bin.gz": "cdf228759cac0e1a4b99dbfd42fe66b045e66f5770cd3677549cafe41207a809",
+    "data/flop-three-v1/396.bin.gz": "6c271b7c405f48afa81a65d140b5b0a499eeb305c9154f3ae83d07ad67a02378",
+    "data/flop-four-v1/396.bin.gz": "9e74dfc487560d071e694e6da977137aae6e937af9aac73c42a3ba66ee61a197",
+    "data/flop-five-v1/396.bin.gz": "310b69a150ecd06e4922a20a98e10e8ad0ea1fc9c5bb756b8d161e3aa2103510",
+    "data/flop-six-v1/396.bin.gz": "26d9c9836ba7978e6efdd4bc0133fe39ee912da555205e1624313ae4580680ad",
+    "data/flop-hu-v1/403.bin.gz": "b42a09c795dbc897d87e4b45cd51edf55436d4b88a796e510207f8dec9300d32",
+    "data/flop-two-v1/403.bin.gz": "158680053e6c01f3398c04cfc8ab82fb7ddf9d540e137075a60ad194cfdae943",
+    "data/flop-three-v1/403.bin.gz": "fa13ed83d5bb32648b95c363fa0810477960fc9000a2c703131a066058692564",
+    "data/flop-four-v1/403.bin.gz": "ff9299390c326faa2ed86f32ef88f78749c1191011fd195eafeeb3de2d962c1c",
+    "data/flop-five-v1/403.bin.gz": "ea311f9d6b0d391800ed15bc115c32bb8863aaa7d383776c05951d651149499e",
+    "data/flop-six-v1/403.bin.gz": "c848c66c7ffc666cb87cf6ea157d60afdf24e114b60dcb81df656f5ccfdec14e",
+    "data/flop-hu-v1/404.bin.gz": "f246bd9238143c9171d93df4d91a9a24c8e5813e266c5dd9fb89131b62ff8112",
+    "data/flop-two-v1/404.bin.gz": "7642705384c92489d627038c8d34efe85186ef4b3381e95373fc16ef6fc0435d",
+    "data/flop-three-v1/404.bin.gz": "cb25326cde43d4c7d289d53fce254534bf7a9305b90e337393bd10ef83243400",
+    "data/flop-four-v1/404.bin.gz": "a553ed515b540036fcdcd9d771a54295dec253709546d28ceda3d3e0661e673c",
+    "data/flop-five-v1/404.bin.gz": "f1578e0922e81e8464588feb8c9b266e329f2fd1fdcd782e84515774df24a091",
+    "data/flop-six-v1/404.bin.gz": "c681528b64140a5d81b2bad9c4b82d8899acef6288f77520afc38ac20836ad92",
+    "data/flop-hu-v1/405.bin.gz": "07e4531478f88617478b174d03f4cfb14e5639b13d5fe663b3394119b89abe2b",
+    "data/flop-two-v1/405.bin.gz": "e590adbfef6445f462a529fd083b18bf4602e28e52d41c0164f2d24f00d2a4d6",
+    "data/flop-three-v1/405.bin.gz": "7a87882de0e238c021908781cea64933f4596d83ff7a4032e37854aa9d22656a",
+    "data/flop-four-v1/405.bin.gz": "0b5ec052f73ac8a38f924e6f2d217f9fd9d20eac5e14eed8bdac9c59663afbae",
+    "data/flop-five-v1/405.bin.gz": "92f81df70af9651fc131927ea6eed276243b7896610cb55bd26bf9d090099934",
+    "data/flop-six-v1/405.bin.gz": "02b5935b6e79e310f561c03ad0ff5786a3c83e8ce5a85dc28a67290b948a8abd",
+    "data/flop-hu-v1/406.bin.gz": "622295260bf92fce3f9ab728aafa0780c0e853e098c21fda8ba4b98e9f72111e",
+    "data/flop-two-v1/406.bin.gz": "4b4005001be9da9abb43028008017c76552d551b34c94025a406a0c2156e35bd",
+    "data/flop-three-v1/406.bin.gz": "ba6c10f958dba7c01da1e357bbb6a2507dce41fa9694211e428df8a6d26feba3",
+    "data/flop-four-v1/406.bin.gz": "6e8c99b567f4c0f27d6943e2f67cfd7c21871593ec84cc64e199ca0918ab614c",
+    "data/flop-five-v1/406.bin.gz": "aa825effdfac464298a23a05acac885091496e4c375c08e7364882c67d9c86f8",
+    "data/flop-six-v1/406.bin.gz": "dde2b25fb9ac1e993649284811115fc8fb8fdf767fd321d300f5961cf2ab2f68",
+    "data/flop-hu-v1/407.bin.gz": "c9a90d730940c18453f7ac5e10ef17d18783af7224aa92fc9ed31da8f943e434",
+    "data/flop-two-v1/407.bin.gz": "3d65d0d7bd087b9a923d13a30e94db35202fd21036ca90b9f7a2650018994772",
+    "data/flop-three-v1/407.bin.gz": "2d7b510b6f403900878d5405da7d4ff2e314d60d545d76df00f79bce00f231ac",
+    "data/flop-four-v1/407.bin.gz": "2140ba91ee8f6917dcbabb684cebb6af3f35d6e39742a4cdf78994f64b140103",
+    "data/flop-five-v1/407.bin.gz": "d8ac7647c3b75e9cc67d630d304032d29a83806b1234383df29236627aae03c9",
+    "data/flop-six-v1/407.bin.gz": "17903bf02f69e781ea5fc6fd732432425aebad292de199b5ce483536e39f5401",
+    "data/flop-hu-v1/408.bin.gz": "0e69dd93affa4f893408b9f0c0917351a4645b325408781e91852668dad362cb",
+    "data/flop-two-v1/408.bin.gz": "c0b2e6eec9bbb34c4509ebde26479301b4d390a37af6bd8f9c04dc37908dfa60",
+    "data/flop-three-v1/408.bin.gz": "9f93574c067a9a45a1f0c1317cde7abb990546e097fcced5192c3c91ce275d29",
+    "data/flop-four-v1/408.bin.gz": "23d0bf8f5196860c8cc8e3e1bc05f8aceb7c9890dc7c7c24c8f907e43d13d38f",
+    "data/flop-five-v1/408.bin.gz": "356c2bb4bd215a43e62b61aa732ab62c3e225d5febdac16fe88aba1dd569b2e4",
+    "data/flop-six-v1/408.bin.gz": "e5b9b1570f6d4ff891c013f635aff2cdd7a848b58b3614d0f00183da0b81e321",
+    "data/flop-hu-v1/409.bin.gz": "935cf935f8a1667ba0f7c5eb06d8cae6c0c0cbe8ac3899c493ebe2bd3234c148",
+    "data/flop-two-v1/409.bin.gz": "924547653302cf4fc279d659a26287dfd70c56fa4dc1ef9c10a0b4654353b4d2",
+    "data/flop-three-v1/409.bin.gz": "7b8bee216f3f6373e270bfbfc63342054d634047c1396e07fdb0925c0c8fff35",
+    "data/flop-four-v1/409.bin.gz": "0588d7387fadb99fbf4d2853b0df6f2665cd0b9925a498e1cea55262b7fbbe75",
+    "data/flop-five-v1/409.bin.gz": "ab3a962f2955fbe267c3d7e6d571cff7e408f16888ec73af61c9aa83b4661d73",
+    "data/flop-six-v1/409.bin.gz": "3719ce0cc98369e4e70cdaa1f747fedcb65ec1fa1f348def192c8a0e1fa54926",
+    "data/flop-hu-v1/456.bin.gz": "1729f9b6d05454abadfcad3020e8b63db30dc4153e7f72f0729641fb79d24e5a",
+    "data/flop-two-v1/456.bin.gz": "61d143a7d6774a88d60fd16e3f8b75a60ac92175b40e87b83f0aa80d0fcc8ab8",
+    "data/flop-three-v1/456.bin.gz": "7a6df1c92ca78f74cec797abe9f6f6cd4f589505f8a68bc11880993a9cfd2fe1",
+    "data/flop-four-v1/456.bin.gz": "320e1ed2770e78c78af0e5b04154636a2114fb18510c698e4580f8077978f353",
+    "data/flop-five-v1/456.bin.gz": "49f76c7383bf0856e8db06ca5033e4f90fa5cc889026581f245a1e972a832f2d",
+    "data/flop-six-v1/456.bin.gz": "7f42ea383b4b616f0559d2ac6914d8a59194ccdc547c7b1e06ff19563abc72fc",
+    "data/flop-hu-v1/457.bin.gz": "f37daa2797a37cdc8e49a5d6cdfb337de0b37c3a14f24ed2fe42bd2a69371966",
+    "data/flop-two-v1/457.bin.gz": "47ae52fc3d98d7106b729f1e2a1232f0619f3761c65ae4bd6b20698fe7a7aa22",
+    "data/flop-three-v1/457.bin.gz": "c69b695f8eaf7c95ac15d0c326f1ce55017eda5b2c3ace6598a92a9491cecaee",
+    "data/flop-four-v1/457.bin.gz": "3d58447b88269ec1432325fbfc12b4673ef1e88c715975221476dfcd9dcd0eb1",
+    "data/flop-five-v1/457.bin.gz": "c3e057fe201b398a62053d17d0d9d0e4c34e6491c308350f824700cced54b5d1",
+    "data/flop-six-v1/457.bin.gz": "33d7d5711b1312fada0d40eb688b379396d7e5a4a44c969676c64352b76d7763",
+    "data/flop-hu-v1/458.bin.gz": "d6bd448a67235f962356859923a1ca54dad96527883edc16f36ef5b95ebfc7e1",
+    "data/flop-two-v1/458.bin.gz": "fea530d5200b15fcced056f4804741a826573328fdaac9d0fb6539a55317e707",
+    "data/flop-three-v1/458.bin.gz": "151eae1e8360ac795895392bce4df3dd992112c6e7b5ffbf3d552e1058ae38c8",
+    "data/flop-four-v1/458.bin.gz": "c09acfd938b5d1fc283375c73431e13b269e9ea739079151eb9f8f3c089afa6e",
+    "data/flop-five-v1/458.bin.gz": "b49f01b9e6ad1132800f09c45be7f7f31f0eacea18a273ea1d6ea21ae266a5de",
+    "data/flop-six-v1/458.bin.gz": "dcf88fb1f9ff4b9d78a76650f35a56353168a4325a133712e11790d63eaa910e",
+    "data/flop-hu-v1/459.bin.gz": "d17449ad6e49478894eb2d258a68958d5c6e699006a959dd8390914d3e1e8fea",
+    "data/flop-two-v1/459.bin.gz": "1aa0e365e8154d8b5485d818db2f0a0c3687a05ef75caf1f2f5d3e45b336f528",
+    "data/flop-three-v1/459.bin.gz": "dc350cdfca93fda5ea811b34d29d0a82f4d6c7a0723786b414ea2f45b4150fe3",
+    "data/flop-four-v1/459.bin.gz": "aa4fc4cc1c8b42e1c1b7b870eb26fae67fe5867743aeefa7f1af97deb96fd718",
+    "data/flop-five-v1/459.bin.gz": "d63d30e6978e263437e1ceec84ae3b0f0e3d4b58f60d180d3ebf9287bae9a4dd",
+    "data/flop-six-v1/459.bin.gz": "fbc3268436a7080d320f2213738e6fc177433f9372fc6df75367eeca5a623334",
+    "data/flop-hu-v1/460.bin.gz": "442e25f0bb29b189b6cc0d7995505fe64e1add6a8388b9a08593d9dcaa085efd",
+    "data/flop-two-v1/460.bin.gz": "e0f8a4c5f55a09a1d69adb13de2a944e558b9a8107cd8bd8d5d697fc44828106",
+    "data/flop-three-v1/460.bin.gz": "c2e7cc45fafa998421def27ced3a14f67e90938f48408d88e5af380575e2bfcb",
+    "data/flop-four-v1/460.bin.gz": "ae4cbd3e12caece0c0685347a8de99c1f7f27d98d75a0ad1769becbb705addeb",
+    "data/flop-five-v1/460.bin.gz": "9e92c60f095a66945da667caf1249c71cfb365d1a27e4d0d97efb8c314ed39b5",
+    "data/flop-six-v1/460.bin.gz": "6a3c39c381bdfcfa2db062a7226b8887aba834f339587d93c0e8e447dff35929",
+    "data/flop-hu-v1/468.bin.gz": "a60241c53ea54ecadf705cefbbb75b6eabfc52d14f998b8bc7e49a64cf24c5c9",
+    "data/flop-two-v1/468.bin.gz": "b873099876ed5c78a00e5e28623815d306b021af23aa761410ba071508c0f6bf",
+    "data/flop-three-v1/468.bin.gz": "b69465d024928bf061bce985a56e523b3e0eabf1ee4118db64b37fbe770bc966",
+    "data/flop-four-v1/468.bin.gz": "91b9ac94d67420986c8369cef5339b6ed90a6335377c6a7d3f7175b9a5c8c6bd",
+    "data/flop-five-v1/468.bin.gz": "ba760178d5efd521779c9f0de060af24d9fc39cf1e8e7fb0c074b873654dd7e9",
+    "data/flop-six-v1/468.bin.gz": "d0c6902c10e8a6b3906f2f4d910d857ca8da444a5d9187f2077a5d5107b169d7",
+    "data/flop-hu-v1/469.bin.gz": "a01ac3b620650acffa7837f53f7752a2af02f03fa1d413858681591f24b38d59",
+    "data/flop-two-v1/469.bin.gz": "64cca9e49a06703e75e19df34d775392d45e785a3fae256bbe9cc98932c48402",
+    "data/flop-three-v1/469.bin.gz": "4af7c087972f312b9e8db5357f7a0ed1eec77da334268a478297f8287a1ca02d",
+    "data/flop-four-v1/469.bin.gz": "c2053214a80b5b762b92cf0c9cf81fbf671ba05acad21f8bef64c082427bc20d",
+    "data/flop-five-v1/469.bin.gz": "1655ff96e94c83c3454a4fad978ba7601ef5ec9644ef6113586500622065c63a",
+    "data/flop-six-v1/469.bin.gz": "36a0846aad4d868a438f4958183ed893af32932ee88d7a366e5767c85ba4cf8d",
+    "data/flop-hu-v1/470.bin.gz": "d5e6087a1669779938676965baaf613540f80137195bf395f13a0f12fdd159c6",
+    "data/flop-two-v1/470.bin.gz": "64a5416fd228e6fc6c708c741f1f9252fefdd2de545d8745e7f4b5cf05ece857",
+    "data/flop-three-v1/470.bin.gz": "94e6029f30a798f5be2a2c415b3eed9cf11ea391496ced2d1fa046e3d1f8b259",
+    "data/flop-four-v1/470.bin.gz": "8b8a94bb8dc44545220c5b2a0d8f2ed296d0856266533b49fd234aea1067aa47",
+    "data/flop-five-v1/470.bin.gz": "02e6f3ed291778bda660730d140d810858906edc418c620b17a653042f6561ff",
+    "data/flop-six-v1/470.bin.gz": "9b8a99c458e02c643732bfa1ee2c29d8f34e39efde5f7e53d901981ad84dec4b",
+    "data/flop-hu-v1/471.bin.gz": "10bd0d9397ce67a4acfc6b4ac70caf1c45dabf5561d9861388b38613dbb8b61a",
+    "data/flop-two-v1/471.bin.gz": "f21f6eaa31f0ecbc3421d95a0c89535903eb47c2144e466b0942fa6bfc8c060c",
+    "data/flop-three-v1/471.bin.gz": "d525adc6fd5137308386005eb00ff76ff4f0586e3f13d8e5c31dfdafc633df89",
+    "data/flop-four-v1/471.bin.gz": "b833f7007b72a6cc9dc67a7ba30dbb4d568b64898287275ca1696266d6ac25bf",
+    "data/flop-five-v1/471.bin.gz": "844afc2b6913d7491135a51c0f9c4d7dc5be09023f86fde45d30e77327753280",
+    "data/flop-six-v1/471.bin.gz": "fd6ffa4f6293838345a6ff502286e92a33f06e0d98553ac35ef4e73aeacbf1e4",
+    "data/flop-hu-v1/472.bin.gz": "a8f2dd541f35a2a3de5b610b02954fe70f081d268f32ae32cd18dd3b15eb338d",
+    "data/flop-two-v1/472.bin.gz": "a8a26902f02ac604a58865d7573c029d0089dd9b4cb14e9e9e5c2cf085d0acea",
+    "data/flop-three-v1/472.bin.gz": "ba6f8e70cd8876289d15c6d2281c97e709c10e75430c25fc0cd3fa30521f1bb1",
+    "data/flop-four-v1/472.bin.gz": "a9ca106e6bc08a45605f2a3186636e803de6cb3381e826963017d7ed594a2b1a",
+    "data/flop-five-v1/472.bin.gz": "b2b744a6435d515525ebfa82fc2ef6db398f67350e803297c8de360f7a2449ef",
+    "data/flop-six-v1/472.bin.gz": "28ba8a6448b2d527510d42cc825888077c72cdb11e2877f2ba4e53d759b53b63",
+    "data/flop-hu-v1/473.bin.gz": "ce10d341869ca00c0093bfc3627f3a079e82e0774bde5c3e0a3fad2ad182d8be",
+    "data/flop-two-v1/473.bin.gz": "92e4c2f4162d090a9e678fa688416884937da012a911b6e825f0f7d016f15742",
+    "data/flop-three-v1/473.bin.gz": "8017970dc2e38b137baad5f841c690b956aa8e3b96a617445ef0517aa26cd65a",
+    "data/flop-four-v1/473.bin.gz": "04818dc8d82fbf268be2d0d2016bc26705f09c78ffa9fe9418b6c2e923c15a5f",
+    "data/flop-five-v1/473.bin.gz": "3ab8fcc7b43147e55b5e4c086321c002e9f7eeae8f640a67921b3b264f05cb2d",
+    "data/flop-six-v1/473.bin.gz": "e2642457be23926210bce740f02e46f8d56a74c063a81721c39a2032e098dacb",
+    "data/flop-hu-v1/521.bin.gz": "e053b59339f8b78d2da5a3301f455bfe5b4c6bacb5458462786c80b43305248d",
+    "data/flop-two-v1/521.bin.gz": "51f9ad6680f218ee3e9786783869443cea9b9a52696a304f37ec37446452d90b",
+    "data/flop-three-v1/521.bin.gz": "fee6d550b162659dda5cab1899c4bebc36f22bdc0aadf08c8ad19c7338a5faec",
+    "data/flop-four-v1/521.bin.gz": "230d683e024061895b72749bddb68d6872ac312da4a3259ce82861c6b7df459e",
+    "data/flop-five-v1/521.bin.gz": "6ce9c3ef8c30528c060484a10258b1f8b9fa1c8dcf955061395b1ab6898451f3",
+    "data/flop-six-v1/521.bin.gz": "9f15c57e1698134b2d828805e739e709faac926e8d70ab31bb4b333f4a76a7f3",
+    "data/flop-hu-v1/522.bin.gz": "310e0666389f349cc0fb4a1fafcac06b65592cfdc0d261c57188a3e23a7e0c6e",
+    "data/flop-two-v1/522.bin.gz": "3959055bb89c63f54f1f8e27a1ec0921c55cc093b65d7eab3d542cd363d4cc84",
+    "data/flop-three-v1/522.bin.gz": "5f7fc13a69022a5ecdb1f2bb71fc44276dd6530c6740389c4a3f50dd43b5ddcf",
+    "data/flop-four-v1/522.bin.gz": "e593bd6ebfb13cec46b3488206a47638deec56db9807d3b6ff0b2a31e6d5527d",
+    "data/flop-five-v1/522.bin.gz": "935aa6f43176decb4a53d4155d72f569876fec3ee032aa694883e479c2a00379",
+    "data/flop-six-v1/522.bin.gz": "5554947c6751668b450b7a6875cf08fd4908086a28663a65d9588c94c0722d0b",
+    "data/flop-hu-v1/523.bin.gz": "c352ab0eb529dfc9553dec837970d12b0225f53a40ad7e96086fe696d99e5ff2",
+    "data/flop-two-v1/523.bin.gz": "28dcc2fe9a97e1eb5b9c678bb0bed92da9e827782423695f9429c12cfee07c40",
+    "data/flop-three-v1/523.bin.gz": "595982e53ccb47a27a3cb80481032471f04ab457edf2cb4d7006be71bad14daa",
+    "data/flop-four-v1/523.bin.gz": "b1359e2c952adbb550fa402e3810fa006dbeff499f41eac261a24fefe955cdc3",
+    "data/flop-five-v1/523.bin.gz": "8ae89efc0296ee1f23c3ca402ad8165c49d75947546fa0a3bec7ed7e909773b2",
+    "data/flop-six-v1/523.bin.gz": "2ef0172ed624cd9354dc6d8fafc26342171f1df0d8eb4497054f57e534508026",
+    "data/flop-hu-v1/524.bin.gz": "e6b01c588677d65f349a8857bc669f3fc32f71d612b359b0b7e530d61d3c8a3e",
+    "data/flop-two-v1/524.bin.gz": "38c5d15ceffdbbf32949ccb146d9182b88383f2bb96a1bd1f53681e268aba62d",
+    "data/flop-three-v1/524.bin.gz": "d5c43ce83a97c0159e3915e439136a9607e08fdc4d0a39c6e902f49f1c5fe083",
+    "data/flop-four-v1/524.bin.gz": "48046113acbd905d42623179af7b92abb69476171e5e774d3778c71c11eceb25",
+    "data/flop-five-v1/524.bin.gz": "6f5730a411d74c711a08b96f0892ff78b7a263285c2db28affa496a15b65062d",
+    "data/flop-six-v1/524.bin.gz": "e3c1e8eb8323d8bada5785d398527f585e12355375b94fc5af3b37ffd4bec847",
+    "data/flop-hu-v1/533.bin.gz": "88e769bf80b207f4bb253d6032d9ecb0deaf5e7292c88756f141d757115d5ccf",
+    "data/flop-two-v1/533.bin.gz": "e58e6535e88182ac9c35fc41bf1d6769869ba28d33270230f441d5e16d1bb9fd",
+    "data/flop-three-v1/533.bin.gz": "0839062b2c66e904f82d638e17d403afb98f18de7b51d2b806ca5c2169f62263",
+    "data/flop-four-v1/533.bin.gz": "94ad3746028be0ad10e0761e26f16807c2f8d6eaf6b2f719493a42ab754e1168",
+    "data/flop-five-v1/533.bin.gz": "2bea7e9cc2c09c6ad37a0ab05b25fb964e615432d69e2dc90a9e76a9cf6965a6",
+    "data/flop-six-v1/533.bin.gz": "4b149403b791a02dd647313fb4eb438edc2513dc95e372578e1cb9304d4c29de",
+    "data/flop-hu-v1/534.bin.gz": "ed096c76a83ef560d4b7db55bdf354b76bc89d2c76d1b47d178d5401f385316b",
+    "data/flop-two-v1/534.bin.gz": "2c7530abbc0c521831b5891a0fa71cce8b1c65802f512d95af41719cc4a43eaa",
+    "data/flop-three-v1/534.bin.gz": "0a5471e16c1ea90639dea813a88f7366ef327b93d5b90d2bc0073e010b0b9ede",
+    "data/flop-four-v1/534.bin.gz": "68c397b5e7eac857aad1dfe5dcada7f2f3779170dfce7dee21367813f8024dd1",
+    "data/flop-five-v1/534.bin.gz": "874d3d80744e96da2caf2680f359e34b24c11d05b7ba19ec7856bc041c84fbba",
+    "data/flop-six-v1/534.bin.gz": "139c2b43c83237a92a3a6b01bf4de1e6efbfdd4402753e55a094d0da2efb7d5e",
+    "data/flop-hu-v1/535.bin.gz": "661290f79448b4a63a4184af48207c5189cd264ebc6d43fc3e4816eff5307331",
+    "data/flop-two-v1/535.bin.gz": "075d56808b48929c31e13aae1df9257638584652e35bb58597c77bf913de79a1",
+    "data/flop-three-v1/535.bin.gz": "6705a09a6d23a711a9ccf3598d18e921de19d249a39ae5c6f1bfe1b2376f71ac",
+    "data/flop-four-v1/535.bin.gz": "4e7b517e2dad275c209eef95e11c592a2258bd939e766c63de4bb71b1143547b",
+    "data/flop-five-v1/535.bin.gz": "d1e8cb6d234ee29382e893d3766e45602f5a90c787a3448c12b0c59e40970253",
+    "data/flop-six-v1/535.bin.gz": "6da27ea1546a2b098574fc4320a85b4c0473e89bbed1dd018deecd9593b78ddc",
+    "data/flop-hu-v1/536.bin.gz": "9a86c89dda68821d590e2140b373bfd1181a06e334f124cdef1a294b6ef5a2cb",
+    "data/flop-two-v1/536.bin.gz": "8520fd743aae23f9ae355843db8789aaa87bd906088ac02dbef1889ab472596e",
+    "data/flop-three-v1/536.bin.gz": "eac674ccc1abe3d01791f3458f11bd8362b6326685cce25f16f806634176697b",
+    "data/flop-four-v1/536.bin.gz": "7dca09a63c6a28242bde2e0009e013f2525f455091974d551030f796ec412fad",
+    "data/flop-five-v1/536.bin.gz": "d90305663ab482ae0ab910cf31b86d4c463bd5f2d956985bbacf8f9cba3d5f97",
+    "data/flop-six-v1/536.bin.gz": "83a49b316dfc25bb6fe8a340b41192d9e31e4031e47a7df975025096aaa426da",
+    "data/flop-hu-v1/537.bin.gz": "c0681eeb38a3b4829948bded019c5ca9cd47ae59ef981f3b8b1d611dc1952f57",
+    "data/flop-two-v1/537.bin.gz": "03b8bdbebbbdad072e8d82d0bd8ad6a1956f30ffad60a7f2410db93e916cd62d",
+    "data/flop-three-v1/537.bin.gz": "825117538e0814985573c59a73c7e4a152c3a9ff70186b48878e0d962b6344ed",
+    "data/flop-four-v1/537.bin.gz": "6a02c94ff52ff89b492e0704a94f3197a61cb208018cb78d86e43d403df1a604",
+    "data/flop-five-v1/537.bin.gz": "840cc3edc6c07abd779989c200fe7d81c5b77882ca46cdcc27ade9fc27674308",
+    "data/flop-six-v1/537.bin.gz": "ad22e10e589870f10a17ee80887cf05fb6a93c2d9b6aed1af326c5730302bf73",
+    "data/flop-hu-v1/586.bin.gz": "07de2e5c0569dd0f36a0911cca61da500a8c7c4ff72c5977dfe9fe6a8858ed13",
+    "data/flop-two-v1/586.bin.gz": "d5da7ce74c2f5bfcf49a742061281f07408b4a16fc5d7a2dd03099030c628b3f",
+    "data/flop-three-v1/586.bin.gz": "550a0ded7671b70e10a455107896956267d05749a3b43b3afbeb44ed0103a00a",
+    "data/flop-four-v1/586.bin.gz": "7e773bcfaf8186afbb30464699097638cbb170e611751f348c60fbf373be09ba",
+    "data/flop-five-v1/586.bin.gz": "9b5ad077fc00fe378a9f9ef3195e7af9a8a2de11e214d24e20d5215649c657ce",
+    "data/flop-six-v1/586.bin.gz": "4889c3d438a97bf7e7b89ea85504c70f03e42cad813b8789227611bd9e4c003b",
+    "data/flop-hu-v1/587.bin.gz": "ab80c312eadb06fa3439d011afdc6f76a5fe6f9902d5576bc83f6fc8e7c0f7cd",
+    "data/flop-two-v1/587.bin.gz": "63cf87e7c7c64fdd4474a42eac043c41bf4d8951c46ca1a9661346db9dd3067a",
+    "data/flop-three-v1/587.bin.gz": "fdadacb53130643593edef85a0895a5401fc756a983ad6138ee09e3a7240a7e8",
+    "data/flop-four-v1/587.bin.gz": "9d19516482a78571c11761c3a7b13df921b3f7a692c9d64043693bc81a87b7dd",
+    "data/flop-five-v1/587.bin.gz": "54116dbb60d0dca1c13ee7bb7f7033becab8f4b044ffb9f8d183ac1cb2a67489",
+    "data/flop-six-v1/587.bin.gz": "e99ada4b88bf8340ec9c739015e970a0445d2c493c527238e70696a01dc27f6a",
+    "data/flop-hu-v1/588.bin.gz": "5584151b7f99bac6bdf22e0ad031b431fba54d1c09c03db0487abecbe0a60ac9",
+    "data/flop-two-v1/588.bin.gz": "e1f65db7fce181dc71d8a05b76b8a2595fb56a074f38117413671d954cd9d234",
+    "data/flop-three-v1/588.bin.gz": "c605fe5abaf41c8364bb87bf6a678559c54ed7a62f37d4939499eb4932c8ac71",
+    "data/flop-four-v1/588.bin.gz": "f5bfa5e31c92f6dd4930bf9f552ffae83ecfff2bdcf570db3215e3d674525c69",
+    "data/flop-five-v1/588.bin.gz": "45a83c10452ec6512cebc02e1f322b9b6c64e88e86f77fb2a4f4409059f75d4e",
+    "data/flop-six-v1/588.bin.gz": "1e7b21cb3a723dcf1a03f8043c6d12aa76879210fe74d7880e2de79f5ad4a711",
+    "data/flop-hu-v1/598.bin.gz": "87ed01a1fdd7a62a6f46f03adf0593119c5175eed85e5352b8c94b6a7bc7cd53",
+    "data/flop-two-v1/598.bin.gz": "b92938aa4b554a2a1a73191fdea4364294377e06ee4a23ffd2aa5a74eb1de052",
+    "data/flop-three-v1/598.bin.gz": "7cb57a9525d598f6e1706e1765ae05e373a15bd74b432cab0a81d3e551987555",
+    "data/flop-four-v1/598.bin.gz": "410e8f71e9e50a6ff270460d76d2dd8d60a374853caf09571f9b832aa2db1272",
+    "data/flop-five-v1/598.bin.gz": "5e015bc91ccc0d58605f83df53d43b65ee28e37c192049fed6c5ba826e54ae6c",
+    "data/flop-six-v1/598.bin.gz": "7e6e5b8b253d1e67673c016a613a5c50ac2e5567f938e0e5224b1dc2da017e53",
+    "data/flop-hu-v1/599.bin.gz": "4a31fd9915b0b9d2b227c01b5e078bf20aae76ab0377c820eb6a3e90fa83cfea",
+    "data/flop-two-v1/599.bin.gz": "a89d5c74b2d2c33f6b97836c95f9aa7205b64f74cd361a6f5b76b121697813d5",
+    "data/flop-three-v1/599.bin.gz": "039553d2953f11ef8c6a423fc2ed8542c2cde02629f921f4962ea41f485ca334",
+    "data/flop-four-v1/599.bin.gz": "866f9786066bf8a254a9c7a41dc5fed3b787befe912e33bf5ed3862fa8a988ce",
+    "data/flop-five-v1/599.bin.gz": "26d9c5611e89df835fe2e3df4f74b73a020548a3a442c071d5fc4832f15e6a98",
+    "data/flop-six-v1/599.bin.gz": "a5dadd473117ebab65a99d618c4191f5c6ffed09e9331ef9c68471b08c106e47",
+    "data/flop-hu-v1/600.bin.gz": "6c6fd85eb39301eaee63e8faababaab054b7c04b77a8f58a32a8f673bf9cd9dc",
+    "data/flop-two-v1/600.bin.gz": "a4c7999e0134bb736bc2ac58f66ab72c17d8000a020e00d3a989d34d8148d7cb",
+    "data/flop-three-v1/600.bin.gz": "f98fd9e089b4a2fcf1a348cac51ee8af790e59483540fffa8c406fa36b6d07fd",
+    "data/flop-four-v1/600.bin.gz": "44362b8b20fec75abddbfc5c733682dcf65d7cdd708023c979b520f80c7666d5",
+    "data/flop-five-v1/600.bin.gz": "a133f92fbc8de9b693d8e5a806f5bc75f0ae582cf63ca29595663defb3504e39",
+    "data/flop-six-v1/600.bin.gz": "b4685149292d4de7d72a88eebf78a844cd86853bc5732e4ab4397cac8083f5cd",
+    "data/flop-hu-v1/601.bin.gz": "e3cf70fed653b83d999766882f8bdf9bf33cb26f8d3670631fff7528f5cb6c23",
+    "data/flop-two-v1/601.bin.gz": "2e8a84d4cd2a61f9a06d4763ebedb2a1da8ef166dad914a8e3d9644ccb8dfa2e",
+    "data/flop-three-v1/601.bin.gz": "1da5248db203368d6edc6a125f52a52fbca362419da86d3f183ee7443232cf0c",
+    "data/flop-four-v1/601.bin.gz": "9d3b297cbfd5de588c98757e8b19b29f26ab947b599bbd75e70121eaa0d9055d",
+    "data/flop-five-v1/601.bin.gz": "880b3b13a5c6ca4e9e75f873c9b833f47e4472a5656695b72e0fb0e60c6f5fa0",
+    "data/flop-six-v1/601.bin.gz": "1ec67ee6e498281ff0877dd8b3c840a9ab2260068d6eed60a00eb5253211d750",
+    "data/flop-hu-v1/651.bin.gz": "4711b15da9150fe9a0e9627882fd80c6ae5cb4ed835fc7ef7360d82c59430992",
+    "data/flop-two-v1/651.bin.gz": "bd1ee53bbd4df702f373c6d7df09d14c5bedad2f4ecd17f214bef1492aba8ea3",
+    "data/flop-three-v1/651.bin.gz": "512f7d2d58614eb77b756be220269f2737be9ccf1978c5946ee36350e1c8f3ef",
+    "data/flop-four-v1/651.bin.gz": "e4d52c008f272cbcaa021d2926dc6fdc56cdfe33f296b0547551371c383d7ed3",
+    "data/flop-five-v1/651.bin.gz": "11be93b568e85d6788feebb8f9b52b001156c0e27f0e377632757e870ba12e98",
+    "data/flop-six-v1/651.bin.gz": "d9cbdfcfb6c01742fef3f8603692057cd45c88d8b4c60fc55db3cc62402e2518",
+    "data/flop-hu-v1/652.bin.gz": "7a31518fd0fe2ad07d33ae0afa3bd84cebe25b8e198d0cc077177fa4ce1ba10d",
+    "data/flop-two-v1/652.bin.gz": "78f5fb82414485849f69041c3ca0a06c1359563a9d742ee348d46b094f213260",
+    "data/flop-three-v1/652.bin.gz": "2934e6754a1e5973cf88f84a9fdb09245576f3d1887fb2c279c85cc62c3c1cbc",
+    "data/flop-four-v1/652.bin.gz": "257f630421f0f396f3b46890fc9ae81d6a8533cc9b330813bb0daf5e8e2d3abd",
+    "data/flop-five-v1/652.bin.gz": "935edd54d1db0d207aad226810822b10626189cde4618f2db506a3db56182afb",
+    "data/flop-six-v1/652.bin.gz": "593b71c448de3ef524d46ad90f34c77157f9b4100e08be50544d94cede2bf734",
+    "data/flop-hu-v1/663.bin.gz": "faed0b5d09de586b9ab72e119d0274c425f2e870bcccd50260148f68c4eef528",
+    "data/flop-two-v1/663.bin.gz": "93b233c4670b478c7da967d0c1cddc3b34fc14b9f34610285108ef261be3120d",
+    "data/flop-three-v1/663.bin.gz": "783973e82a3d70c8bac3640a6cb0df00d3586555f458002510f4ba3a5a8bf87e",
+    "data/flop-four-v1/663.bin.gz": "0a2de72d91e2341e51fa625c03790255af86ff259d412d0a50bf01eeaed758c6",
+    "data/flop-five-v1/663.bin.gz": "86e381ee2b3cd171db4e1d122e5067f6e88f297c77451776bd88db6d669a4bc4",
+    "data/flop-six-v1/663.bin.gz": "6949cc2347258565c4511f83a76e4eab356d16434351c9e8dd9c539f5e3d4b62",
+    "data/flop-hu-v1/664.bin.gz": "a9da122115fe4e9c70d2d086e6e9f0f4327c2db3edd6d2bf969809b49bccf284",
+    "data/flop-two-v1/664.bin.gz": "63b7bcfc1eafc64d7b64bb0369caae39964f1a811fe0ec9b234719e6f55ef324",
+    "data/flop-three-v1/664.bin.gz": "909c5ef22cf8969a5252879f9296eca0ba93d948bb9528d0aa70f3464878091a",
+    "data/flop-four-v1/664.bin.gz": "b2e0f78ceae1d5282edfc322cc513ec591f570072a6e67eaa9ca4e4c157689fd",
+    "data/flop-five-v1/664.bin.gz": "aaf8843124b76e6b75684b1a620551b8144bc8a718283563744fd0924b6eb66b",
+    "data/flop-six-v1/664.bin.gz": "06dcece365f4be298ef2177c4f3d9cfec10f6fd6a554fa6f956a5560aae3b754",
+    "data/flop-hu-v1/665.bin.gz": "a18b9f54374807cea5295ba57ef3db625466c20f67c6c34cf7bda04bc59edc93",
+    "data/flop-two-v1/665.bin.gz": "dc541f1c40b21193a388a622cee150c8ef0f729a88450ff7b994f7c30f2ff1ec",
+    "data/flop-three-v1/665.bin.gz": "ff926a1df4b89d1e09850514223ccb6696e17ccc65a8b5ecf3580f9f3b95d031",
+    "data/flop-four-v1/665.bin.gz": "0ce2189f6b93b3d730ff136b41fd022429a82a9a5d9a699ecf59b0e7a7ec8af4",
+    "data/flop-five-v1/665.bin.gz": "f00ed610552135b54133a2ef66aeca31c873ff520b8de8c75ca4a73f39bfa78a",
+    "data/flop-six-v1/665.bin.gz": "bba4c7a50ef768369194513badb90005eac7a1cfe3649e2ed9f72a5ddd75d208",
+    "data/flop-hu-v1/716.bin.gz": "3645d454117b770066a45a45b1066e5660dfcca9ae8f453896dbee259dc874a4",
+    "data/flop-two-v1/716.bin.gz": "1460c9a17e6f7ec0b86ff6d067aae0dd4bb407d97955120ccdf43dfbd38086bd",
+    "data/flop-three-v1/716.bin.gz": "9efe87790f127e697fa51e37293ded05f77a7a9f7e09f12344defd3ae8fea6c9",
+    "data/flop-four-v1/716.bin.gz": "185d852fecf933423ebc49f1014103b89ea7d7c605961e53383e62b2a039db86",
+    "data/flop-five-v1/716.bin.gz": "cf39a09bebec57b247d7f6a98fd492fb07f939e836ec48ec5d846fdefb78e0d3",
+    "data/flop-six-v1/716.bin.gz": "005b2c6f1afa46a66ae8193f3a43b02faf5e3199a852daa3331be59dd3cbba55",
+    "data/flop-hu-v1/728.bin.gz": "6fa35e8819788fca794f0bfcc2e51ab24a8e17af0ee2795898546833d1d5be51",
+    "data/flop-two-v1/728.bin.gz": "46053fbb15822bfe7f6a0244d1906d220a9e24109b2337b4c26ea4529bcf3fef",
+    "data/flop-three-v1/728.bin.gz": "b1624bc588e8ce22fadd7fa45aaa0153e2f77b55710dd52d682b687e7e4de5ac",
+    "data/flop-four-v1/728.bin.gz": "b8c64a7c9aa9e1475ac74da340e3ee1c3f5a24ad7ade27c35181c8e870346cb5",
+    "data/flop-five-v1/728.bin.gz": "52d0a91c6d90821a00332c831e16e18c6e903a2b87dbf32d0f65bdacabb01ce3",
+    "data/flop-six-v1/728.bin.gz": "70548df6586cb3cdde971c4c1ee94df7318dda45bcbc80d0d8ddc0b002234b8e",
+    "data/flop-hu-v1/729.bin.gz": "d34e13d2e758f52fa6800015fa8d52dda3ca2db5ec5307b2efe09bf276e78718",
+    "data/flop-two-v1/729.bin.gz": "62a2e4e059fbfc205ea678abb81b09198b64277d8c637b752a12eaaa8146b932",
+    "data/flop-three-v1/729.bin.gz": "63219c19fbc8b5bf1d4dfceee7a5ed067b7055477ae2ae46513ac4dfbb29b229",
+    "data/flop-four-v1/729.bin.gz": "b3f9a4ef3dff563dc879743548baedf0df4823419932096c76ccf63d7d637022",
+    "data/flop-five-v1/729.bin.gz": "dd177e56e0c2b098ac4d49f2c02b25044e9c19e039a4a59b2a143e7bc233f848",
+    "data/flop-six-v1/729.bin.gz": "64eed86f923cf2721a96f0d97e341703895a68ceaaab8c97388441f1fd6dbfc8",
+    "data/flop-hu-v1/793.bin.gz": "f324352653b12697ac87096b5e58e07e64f6968709245a5480f92cb272829c3c",
+    "data/flop-two-v1/793.bin.gz": "5cee6dd3740994e20b1e93a6a83b1093bbb5e785b142265ad8a4774a80207229",
+    "data/flop-three-v1/793.bin.gz": "0015de8702d457c5fa84e72cc6fe8b85a14c33dc6e13b6cf81a745523bb841bd",
+    "data/flop-four-v1/793.bin.gz": "273dfaead0ea7bff2bdccfac9fcaa7c8b11d44c7538d30fba1639512054bf4e8",
+    "data/flop-five-v1/793.bin.gz": "856c6c7d9d3fba6b402c56fb700c18e848e949300e76248f4888a3c7d52a7308",
+    "data/flop-six-v1/793.bin.gz": "294b9fd3f204c59f5aa8e64f4c50f5b1ee552fe05e840bfb7e9a5e5f3cfd11e8"
+  }
+}

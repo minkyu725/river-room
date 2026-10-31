@@ -21,11 +21,13 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
+      - run: python3 scripts/verify-offline-flop.py
+      - run: git diff --exit-code -- data/offline-v1/verification.json
       - run: npm test
       - name: Prepare static site
         run: |
           mkdir _site
-          cp six-opponent-probabilities.js preflop-six-counts.js five-opponent-probabilities.js preflop-five-counts.js table-source.js compressed-table.js exact-probability.js four-opponent-probabilities.js preflop-four-counts.js multiway-probabilities.js three-opponent-probabilities.js preflop-three-counts.js two-opponent-probabilities.js preflop-two-counts.js index.html style.css mobile.css app.js flop-probabilities.js headsup-probabilities.js river-probabilities.js preflop-headsup-counts.js engine.js sw.js manifest.webmanifest icon.svg icon-192.png icon-512.png _site/
+          cp app.js card-canonical.js engine.js exact-probability.js icon-192.png icon-512.png icon.svg index.html manifest.webmanifest mobile.css offline-flop.js offline-graph.js offline-manifest.js offline-probabilities.js offline-river.js offline-supports.js offline-worker.js preflop-five-counts.js preflop-four-counts.js preflop-headsup-counts.js preflop-six-counts.js preflop-three-counts.js preflop-two-counts.js style.css sw.js _site/
           python3 scripts/copy-pages-data.py
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3

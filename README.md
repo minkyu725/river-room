@@ -1,5 +1,7 @@
 # River Room
 
+Current delivery: [offline model and error bounds](./OFFLINE-MODEL.md). Exact originals remain in the repository. The app installs about 8.58 MB once, then calculates probabilities without per-state network requests. Flop is bounded 8-bit approximation; preflop, turn and river remain exact.
+
 한국어 싱글플레이 텍사스 홀덤 연습 PWA. 의존성/빌드 없이 GitHub Pages에서 실행됩니다.
 
 - 앱: https://minkyu725.github.io/river-room/
@@ -19,7 +21,7 @@ npm test
 
 홀 카드는 딜러 왼쪽부터 한 장씩 두 바퀴 배분하고 플롭·턴·리버와 종료 후 공개도 순서대로 진행합니다. 공개가 끝나면 행동과 칩 정산이 이어집니다. 소리 버튼 옆 **애니메이션 켜짐/꺼짐** 설정은 기기에 저장됩니다. 기본은 켜짐이며 기기의 동작 줄이기 설정에서는 대기와 모션을 생략합니다. 진행 중 끄면 남은 공개를 즉시 마칩니다.
 
-상단 **최강 패 확률**은 내 패보다 강한 상대가 없는 확률이며 공동 1등을 포함합니다. 상대 1~6명일 때 프리플롭·플롭·턴·리버의 모든 가능한 패를 전수 계산한 자체 정적 표를 조회합니다. 단독 승리와 동률 확률도 별도로 표시합니다. 표 조회 실패 시에는 안내를 표시하며 추정값으로 대체하지 않습니다. 데이터 형식·생성·검증은 [EQUITY.md](./EQUITY.md)와 [data/HEADSUP.md](./data/HEADSUP.md), [data/MULTIWAY.md](./data/MULTIWAY.md)를 참고하세요.
+The active app uses an embedded offline model: exact preflop/turn/river and bounded approximate flop. See [OFFLINE-MODEL.md](./OFFLINE-MODEL.md) for error bounds and original-data preservation.
 
 AI는 자기 패/보드로 110회 샘플링한 에퀴티, 팟 오즈, 성향, 확률적 블러프, 현재 핸드의 내 공격성과 이전 공개 패에 따른 블러프 의심을 이용합니다. 상대의 실제 비공개 카드를 읽지 않습니다. 전문 포커 솔버가 아닌 연습용 휴리스틱입니다. 과거 약한 패의 레이즈를 블러프 신호로 쓰므로 실패한 드로 등과 엄밀히 구분하지 않습니다.
 
@@ -35,7 +37,7 @@ iPhone: 배포 URL을 Safari에서 열기 → 공유 → 홈 화면에 추가. �
 
 ## 족보 완성 확률
 
-최강 패 확률 아래의 **족보 완성 확률 보기**를 펼치면 프리플롭·플롭 9개 최종 족보의 완성 확률을 확인할 수 있습니다. 상대 인원과 무관한 내 패 완성 확률이며 승률과 다릅니다. 리버는 확정된 족보를 표시하며, 턴의 족보 분포는 미제공입니다. 앱의 승률 경로는 Worker나 몬테카를로를 실행하지 않습니다.
+최강 패 확률 아래의 **족보 완성 확률 보기**를 펼치면 프리플롭·플롭 9개 최종 족보의 완성 확률을 확인할 수 있습니다. 상대 인원과 무관한 내 패 완성 확률이며 승률과 다릅니다. 리버는 확정된 족보를 표시하며, 턴의 족보 분포는 미제공입니다. Probability work runs in a Worker without Monte Carlo.
 
 참가 인원을 바꾸면 칩 초기화 안내 후 해당 인원의 새 테이블을 시작합니다. 취소하면 현재 인원과 게임을 유지합니다. 손상된 저장 기록은 건너뛰고 정상 기록만 복원합니다. PR에서는 별도 테스트 워크플로를 실행하며 main 병합 후 Pages를 배포합니다.
 

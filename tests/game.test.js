@@ -103,7 +103,7 @@ test('postflop has no live calculation and stale replies cannot replace its empt
 const fixedDeck=()=>Array.from({length:52},(_,i)=>i);
 const callingBot=()=>({type:'call',reason:''});
 function finishDeal(h){let steps=0;while(h.game().busy){assert.ok(steps++<40,'sequence must complete');assert.ok(h.tick());}}
-function assertLocked(h){for(const id of ['fold','call','raise','raise-size','half-pot','full-pot','all-in'])assert.equal(h.nodes.get('#'+id).disabled,true,id+' must be locked');}
+function assertLocked(h){for(const id of ['fold','call','raise','raise-size','half-pot','full-pot','all-in','bb-2','bb-2-5','bb-3'])assert.equal(h.nodes.get('#'+id).disabled,true,id+' must be locked');}
 function beforeSettlement(h){const g=h.game();assert.equal(g.done,false);assert.equal(h.nodes.get('#round-result').hidden,true);assert.equal(h.nodes.get('#results').hidden,true);assert.equal(h.nodes.get('#next').hidden,true);assert.equal(h.storage.get('river-history'),null);assertLocked(h);}
 
 test('hole deal is two clockwise passes from dealer left; no hidden ranks, equity, actions or bots leak',()=>{
@@ -337,4 +337,21 @@ test('touch blur with no related target does not reopen a picker on the second t
  assert.equal(h.game(),game);assert.equal(h.nodes.get('#players').value,'4');assert.equal(focused,3);
  toggle.onclick();picker.onfocusout({relatedTarget:option});assert.equal(menu.hidden,false);picker.onfocusout({relatedTarget:{}});assert.equal(menu.hidden,true);
  toggle.onclick();picker.onkeydown({key:'Tab'});assert.equal(menu.hidden,true);
+});
+
+test('raise total resets for the next hero decision, but survives renders during that decision',()=>{
+ const h=harness({players:2,botDecision:()=>({type:'raise',target:100,reason:'레이즈'})}),g=h.game(),slider=h.nodes.get('#raise-size');assert.equal(Number(slider.value),40);
+ h.nodes.get('#all-in').onclick();h.context.render();assert.equal(Number(slider.value),1000);h.nodes.get('#call').onclick();let steps=0;while(h.nodes.get('#call').disabled){assert.ok(steps++<30);assert.ok(h.tick());}
+ assert.equal(g.street,0);assert.equal(g.current,100);assert.equal(Number(slider.value),180);assert.equal(h.nodes.get('#raise-bb').textContent,'· 9 BB');slider.value='240';slider.oninput();h.context.render();assert.equal(Number(slider.value),240);
+ h.context.restart(true);assert.equal(Number(slider.value),40);
+});
+test('new street resets the raise total to the minimum legal bet',()=>{
+ const h=harness({players:2,botDecision:()=>({type:'call',reason:'체크'})}),g=h.game();h.nodes.get('#bb-3').onclick();assert.equal(Number(h.nodes.get('#raise-size').value),60);h.nodes.get('#call').onclick();let steps=0;while(g.street===0||h.nodes.get('#call').disabled){assert.ok(steps++<60);assert.ok(h.tick());}assert.equal(Number(h.nodes.get('#raise-size').value),20);assert.equal(h.nodes.get('#raise-bb').textContent,'· 1 BB');
+});
+test('BB presets select total chips without betting and respect minimum, cap and turn',()=>{
+ const h=harness({players:2}),g=h.game(),p=g.players[0],slider=h.nodes.get('#raise-size'),stack=p.stack;
+ for(const [id,total]of [['bb-2',40],['bb-2-5',50],['bb-3',60]]){h.nodes.get('#'+id).onclick();assert.equal(Number(slider.value),total);assert.equal(p.stack,stack);assert.equal(g.current,20);assert.match(h.nodes.get('#raise-bb').textContent,/BB/);}
+ p.stack=35;h.context.render();assert.equal(slider.max,45);assert.equal(h.nodes.get('#bb-2').disabled,false);assert.equal(h.nodes.get('#bb-2-5').disabled,true);const before=slider.value;h.nodes.get('#bb-2-5').onclick();assert.equal(slider.value,before);
+ p.stack=990;g.current=100;g.minRaise=80;h.context.render();assert.equal(h.nodes.get('#bb-3').disabled,true);const legal=slider.value;h.nodes.get('#bb-3').onclick();assert.equal(slider.value,legal);
+ g.turn=1;h.context.render();assert.equal(h.nodes.get('#bb-2').disabled,true);h.nodes.get('#bb-2').onclick();assert.equal(slider.value,legal);
 });

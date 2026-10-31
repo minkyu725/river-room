@@ -118,9 +118,9 @@ h2 { font-size: 13px; margin: 0; font-weight: 650; }
 .note { width: 100%; margin: -4px 0 0 59px; font-size: 10px; color: var(--muted); }
 .status { min-height: 42px; padding: 12px 2px 7px; color: var(--ink); line-height: 1.6; font-size: 13px; }
 .actions { display: grid; grid-template-columns: .8fr 1fr 1.2fr; gap: 8px; padding-bottom: 5px; }
-.bet-presets { grid-column: 1/-1; display: flex; gap: 7px; justify-content: flex-end; }
+.bet-presets { grid-column: 1/-1; display: flex; flex-wrap: wrap; gap: 7px; justify-content: flex-end; }
 .bet-chip { min-height: 32px; min-width: 57px; padding: 4px 13px; border: 1px solid var(--line); border-radius: 6px; background: var(--surface); color: var(--ink); font-size: 11px; box-shadow: none; }
-.bet-chip:last-child { border-color: var(--line); color: var(--red); background: var(--surface); box-shadow: none; }
+.bet-chip#all-in { border-color: var(--line); color: var(--red); background: var(--surface); box-shadow: none; }
 .bet-chip:hover:not(:disabled) { background: var(--soft); }
 .raise-control { grid-column: 1 / -1; display: flex; align-items: center; gap: 20px; padding: 4px 2px 9px; }
 .raise-control label { font-size: 12px; color: var(--muted); white-space: nowrap; }
@@ -267,3 +267,6 @@ dialog p { color: var(--muted); font-size: 13px; line-height: 1.9; }
 }
 /* Lower seats open into the table, clear of the hero/result strip. */
 .felt[data-players="7"] :is(#opponent-5,#opponent-6) .hand-popover { top: auto; bottom: calc(100% + 8px); }
+
+.preset-group { display: flex; gap: 7px; }
+.raise-bb { color: var(--muted); font-size: .9em; font-weight: 400; }

@@ -11,12 +11,12 @@
 }
 @media(max-width: 720px) {
   main { padding: 0 16px; }
-  header { height: 72px; }
-  .brand { gap: 9px; }
+  header { height: auto; min-height: 72px; padding: 12px 0; gap: 12px; flex-wrap: wrap; }
+  .brand { gap: 9px; flex-shrink: 0; white-space: nowrap; }
   .brand-icon { width: 22px; height: 32px; font-size: 26px; }
   .brand>span:last-child { font-size: 21px; }
   .brand small { font-size: 10px; margin-top: 5px; }
-  .header-controls { gap: 6px; flex-wrap: wrap; justify-content: flex-end; max-width: 180px; }
+  .header-controls { gap: 6px; flex-wrap: wrap; justify-content: flex-end; max-width: none; margin-left: auto; }
   .setup { padding: 11px 0 13px; margin-bottom: 8px; gap: 5px; }
   .setup-title { font-size: 11px; gap: 6px; }
   .blinds { display: none; }
@@ -73,7 +73,7 @@
   .bet-presets { margin-top: 2px; }
   .bet-chip { min-height: 27px; min-width: 53px; font-size: 9px; }
   .actions>button, .next { min-height: 47px; font-size: 12px; }
-  aside { margin-top: 31px; display: grid; grid-template-columns: 1fr 1fr; gap: 20px; border-top: 1px solid var(--line); padding-top: 22px; }
+  aside { margin-top: 31px; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; border-top: 1px solid var(--line); padding-top: 22px; }
   .opponent-notes { padding-bottom: 0; }
   aside h2 { font-size: 12px; }
   .opponent-notes h2 { border: none; padding-bottom: 0; }
@@ -117,4 +117,11 @@
  .felt[data-players="7"] #opponent-5 { left: 82%; top: 67%; }
  .felt[data-players="7"] #opponent-6 { left: 18%; top: 67%; }
  .felt[data-players="7"] .opponent .hand-popover { width: min(340px, calc(100vw - 48px)); }
+}
+/* Keep a usable table width before introducing the desktop side rail. */
+@media(min-width:721px) and (max-width:800px) {
+ .game-layout { grid-template-columns: minmax(0, 1fr); }
+ aside { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; margin-top: 24px; border-top: 1px solid var(--line); padding-top: 24px; }
+ .history-panel { min-width: 0; border: 0; padding-top: 0; }
+ .install-button { grid-column: 1 / -1; margin-top: 0; }
 }

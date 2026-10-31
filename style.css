@@ -217,7 +217,7 @@ dialog p { color: var(--muted); font-size: 13px; line-height: 1.9; }
 .hand-name { display: block; font-size: 12px; font-weight: 650; line-height: 1.4; }
 .hand-line { display: flex; align-items: baseline; gap: 8px; font-size: 12px; line-height: 1.5; }
 .hand-line-label { flex: 0 0 26px; font-size: 10px; color: var(--muted); font-weight: 500; }
-.hand-card-run { display: flex; flex-wrap: wrap; gap: 3px 8px; }
+.hand-card-run { min-width: 0; display: flex; flex-wrap: wrap; gap: 3px 8px; }
 .hand-card { white-space: nowrap; font-weight: 600; font-variant-numeric: tabular-nums; }
 .hand-card.red { color: var(--red); }
 .hand-kickers .hand-card { font-weight: 400; }
@@ -238,7 +238,7 @@ dialog p { color: var(--muted); font-size: 13px; line-height: 1.9; }
 
 /* Each player's own seven-card view has exactly five selected cards. */
 .card.unused { opacity: .32; filter: blur(.65px) saturate(.35); }
-.seven-cards { display: flex; align-items: start; gap: 10px; }
+.seven-cards { display: flex; flex-wrap: wrap; align-items: start; gap: 10px; }
 .seven-group { display: grid; gap: 4px; }
 .seven-group>small { display: block; margin: 0; font-size: 9px; font-weight: 400; color: var(--muted); }
 .seven-cards .cards { gap: 3px; }

@@ -1,6 +1,6 @@
-import {evaluate,names} from './engine.js?v=32';
-import {prepareHost,fastHomomorphisms} from './offline-graph.js?v=32';
-import {coefficients as source,compiled} from './offline-supports.js?v=32';
+import {evaluate,names} from './engine.js?v=33';
+import {prepareHost,fastHomomorphisms} from './offline-graph.js?v=33';
+import {coefficients as source,compiled} from './offline-supports.js?v=33';
 const coefficients=source.map(r=>r.map(BigInt)),factor=[1n,1n,2n,6n,24n,120n,720n];
 export function denominator(opponents){let d=1n;for(let i=0;i<opponents;i++){const n=BigInt(45-2*i);d*=n*(n-1n)/2n;}return d;}
 function validate(hole,board,opponents){const cards=[...hole,...board];if(hole.length!==2||![3,4,5].includes(board.length)||!Number.isInteger(opponents)||opponents<1||opponents>6||new Set(cards).size!==cards.length||cards.some(c=>!Number.isInteger(c)||c<0||c>51))throw Error('Invalid probability state');}

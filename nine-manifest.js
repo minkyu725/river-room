@@ -1,0 +1,1 @@
+export const nineModel={"bytes": 1883546, "sha256": "5510878f6f671203ad30e8cd2d7cdfb05672c1c53e4d95c964eea6c60d0a6c1d", "states": 1286792, "asset": "./data/nine-v1/flop.bin?sha=5510878f6f671203ad30e8cd2d7cdfb05672c1c53e4d95c964eea6c60d0a6c1d"};

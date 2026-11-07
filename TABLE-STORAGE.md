@@ -4,11 +4,11 @@ Measured file bodies (decimal MB), excluding HTTP headers, browser overhead and 
 
 | Item | Bytes | MB |
 |---|---:|---:|
-| Initial cached app and model | 8,583,834 | 8.58 |
-| Embedded gzip-block flop model | 8,397,454 | 8.40 |
-| Entire Pages build including verification metadata | 8,718,882 | 8.72 |
+| Initial cached app and both models | 10,574,448 | 10.57 |
+| Preserved base flop model | 8,397,454 | 8.40 |
+| Added 8-9-player flop model | 1,883,546 | 1.88 |
 
-The model is stored once on initial installation. Later probability queries do not fetch tables. A UI update reuses an unchanged SHA-addressed model. Cache deletion or a changed model requires installation again. The exact source files are retained in Git, not published into the app package. See [accuracy and CPU tradeoff](./OFFLINE-MODEL.md).
+The model is stored once on initial installation. Later probability queries do not fetch tables. A UI update reuses an unchanged SHA-addressed model. Cache deletion or a changed model requires installation again. The exact source files are retained in Git, not published into the app package. See [new modes and 8-9-player bounds](./NINE-PLAYERS.md) and [base model accuracy](./OFFLINE-MODEL.md).
 
 ## Archived previous exact-table delivery sizes
 

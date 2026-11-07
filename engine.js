@@ -1,10 +1,11 @@
-import {preflopSix} from './preflop-six-counts.js?v=32';
-import {preflopFive} from './preflop-five-counts.js?v=32';
-import {bigProbability} from './exact-probability.js?v=32';
-import {preflopFour} from './preflop-four-counts.js?v=32';
-import {preflopThree} from './preflop-three-counts.js?v=32';
-import {preflopTwo} from './preflop-two-counts.js?v=32';
-import {preflopHeadsUp} from './preflop-headsup-counts.js?v=32';
+import {preflopNine} from './preflop-nine.js?v=33';
+import {preflopSix} from './preflop-six-counts.js?v=33';
+import {preflopFive} from './preflop-five-counts.js?v=33';
+import {bigProbability} from './exact-probability.js?v=33';
+import {preflopFour} from './preflop-four-counts.js?v=33';
+import {preflopThree} from './preflop-three-counts.js?v=33';
+import {preflopTwo} from './preflop-two-counts.js?v=33';
+import {preflopHeadsUp} from './preflop-headsup-counts.js?v=33';
 export const suits=['♣','♦','♥','♠'];
 export const rank=c=>c%13+2;
 export const suit=c=>Math.floor(c/13);
@@ -50,6 +51,7 @@ export function calculateEquity(hole,board,opponents){
  if(board.length===5){const category=evaluate([...hole,...board]).category;return {method:'static-river',equity:opponents===0?1:null,win:opponents===0?1:null,tie:opponents===0?0:null,strongest:opponents===0?1:null,denominator:1,categories:names.map((name,i)=>({name,category:i,probability:i===category?1:0,equity:null}))};}
  if(board.length)return {method:'unavailable',win:opponents===0?1:null,tie:opponents===0?0:null,strongest:opponents===0?1:null,denominator:1};
  const ranks=hole.map(rank).sort((a,b)=>b-a),low=ranks[1]-2,high=ranks[0]-2,suited=suit(hole[0])===suit(hole[1]),key=low*64+(low===high||!suited?high+13:high),row=preflopHeadsUp[key];
+ if(opponents===7||opponents===8)return {...preflopNine[key][opponents-7],categories:names.map((name,category)=>({name,category,count:row[3+category],probability:row[3+category]/2118760,equity:null}))};
  if(opponents===4||opponents===5||opponents===6)return {method:'static',...bigProbability(...(opponents===6?preflopSix[key]:opponents===5?preflopFive[key]:preflopFour[key])),categories:names.map((name,category)=>({name,category,count:row[3+category],probability:row[3+category]/2118760,equity:null,samples:null}))};
  const counts=opponents===3?preflopThree[key]:opponents===2?preflopTwo[key]:row;
  const win=opponents===0?1:opponents<=3?counts[0]/counts[2]:null,tie=opponents===0?0:opponents<=3?counts[1]/counts[2]:null;

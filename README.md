@@ -1,6 +1,6 @@
 # River Room
 
-Current delivery: [offline model and error bounds](./OFFLINE-MODEL.md). Exact originals remain in the repository. The app installs about 8.58 MB once, then calculates probabilities without per-state network requests. Flop is bounded 8-bit approximation; preflop, turn and river remain exact.
+Current delivery: Play / Quiz / In-game offline modes, 2-9 total players. [New modes and 8-9-player accuracy](./NINE-PLAYERS.md). Exact originals remain preserved. Initial app cache is about 10.6 MB. No per-query probability downloads. Existing 2-7-player accuracy is unchanged; 8-9-player probabilities are bounded approximations (strongest display +/-0.4 percentage points).
 
 한국어 싱글플레이 텍사스 홀덤 연습 PWA. 의존성/빌드 없이 GitHub Pages에서 실행됩니다.
 
@@ -17,11 +17,11 @@ npm run dev
 npm test
 ```
 
-2~7인, 새 테이블 시작 시 1,000칩, 10/20 블라인드. 다음 핸드에도 보유 칩을 유지하며 칩이 소진된 상대는 쉬고, 내 칩이 소진되거나 한 명만 남으면 테이블을 종료합니다. 딜러 순환, 체크/콜/폴드/노리밋 레이즈/올인, 사이드 팟을 지원합니다. 매 핸드 종료 시 폴드한 플레이어까지 패를 공개하며 남은 보드를 옅게 공개하고 모든 참가자가 폴드하지 않았을 때의 가상 승자도 표시합니다. 카드·칩·액션 효과음과 음소거를 지원하며 최근 30개 기록을 기기에 저장합니다 (최근 10개를 UI에서 조회).
+2~9인, 새 테이블 시작 시 1,000칩, 10/20 블라인드. 다음 핸드에도 보유 칩을 유지하며 칩이 소진된 상대는 쉬고, 내 칩이 소진되거나 한 명만 남으면 테이블을 종료합니다. 딜러 순환, 체크/콜/폴드/노리밋 레이즈/올인, 사이드 팟을 지원합니다. 매 핸드 종료 시 폴드한 플레이어까지 패를 공개하며 남은 보드를 옅게 공개하고 모든 참가자가 폴드하지 않았을 때의 가상 승자도 표시합니다. 카드·칩·액션 효과음과 음소거를 지원하며 최근 30개 기록을 기기에 저장합니다 (최근 10개를 UI에서 조회).
 
 홀 카드는 딜러 왼쪽부터 한 장씩 두 바퀴 배분하고 플롭·턴·리버와 종료 후 공개도 순서대로 진행합니다. 공개가 끝나면 행동과 칩 정산이 이어집니다. 소리 버튼 옆 **애니메이션 켜짐/꺼짐** 설정은 기기에 저장됩니다. 기본은 켜짐이며 기기의 동작 줄이기 설정에서는 대기와 모션을 생략합니다. 진행 중 끄면 남은 공개를 즉시 마칩니다.
 
-The active app uses an embedded offline model: exact preflop/turn/river and bounded approximate flop. See [OFFLINE-MODEL.md](./OFFLINE-MODEL.md) for error bounds and original-data preservation.
+The active app uses an embedded offline model. With 1-6 opponents, preflop/turn/river are exact and flop is bounded approximate. With 7-8 opponents all streets are bounded approximate. See [OFFLINE-MODEL.md](./OFFLINE-MODEL.md) for error bounds and original-data preservation.
 
 AI는 자기 패/보드로 110회 샘플링한 에퀴티, 팟 오즈, 성향, 확률적 블러프, 현재 핸드의 내 공격성과 이전 공개 패에 따른 블러프 의심을 이용합니다. 상대의 실제 비공개 카드를 읽지 않습니다. 전문 포커 솔버가 아닌 연습용 휴리스틱입니다. 과거 약한 패의 레이즈를 블러프 신호로 쓰므로 실패한 드로 등과 엄밀히 구분하지 않습니다.
 

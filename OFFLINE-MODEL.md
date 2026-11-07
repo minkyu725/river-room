@@ -1,3 +1,5 @@
+> Updated for 2-9-player three-mode release: see [NINE-PLAYERS.md](./NINE-PLAYERS.md). Figures and exact/approximate street descriptions below refer to the preserved 1-6 opponent base model. New 7-8-opponent probabilities are bounded approximations on all streets.
+
 # Self-contained offline probabilities
 
 ## Current delivery

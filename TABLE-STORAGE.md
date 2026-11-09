@@ -4,7 +4,7 @@ Measured file bodies (decimal MB), excluding HTTP headers, browser overhead and 
 
 | Item | Bytes | MB |
 |---|---:|---:|
-| Initial cached app and both models | 10,574,448 | 10.57 |
+| Initial cached app and both models | 10,578,147 | 10.58 |
 | Preserved base flop model | 8,397,454 | 8.40 |
 | Added 8-9-player flop model | 1,883,546 | 1.88 |
 

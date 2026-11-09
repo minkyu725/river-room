@@ -1,11 +1,16 @@
-import {loadOfflineProbabilities,loadFlopProbabilities,offlineReady} from './offline-probabilities.js?v=33';
-import {exactPercent} from './exact-probability.js?v=33';
-import {suits,rank,suit,shuffled,evaluate,describeHand,settle,botDecision,calculateEquity} from './engine.js?v=33';
+import {createRoundPreview} from './round-preview.js?v=34';
+import {loadOfflineProbabilities,loadFlopProbabilities,offlineReady} from './offline-probabilities.js?v=34';
+import {exactPercent} from './exact-probability.js?v=34';
+import {suits,rank,suit,shuffled,evaluate,describeHand,settle,botDecision,calculateEquity} from './engine.js?v=34';
 const $=s=>document.querySelector(s);
 const profiles=[{name:'민',style:'균형형',aggression:.58,bluffRate:.12},{name:'루나',style:'공격형',aggression:.85,bluffRate:.28},{name:'제이',style:'신중형',aggression:.34,bluffRate:.07},{name:'노아',style:'변칙형',aggression:.73,bluffRate:.32},{name:'유진',style:'분석형',aggression:.5,bluffRate:.16},{name:'하늘',style:'수비형',aggression:.38,bluffRate:.08},{name:'지우',style:'균형형',aggression:.54,bluffRate:.13},{name:'이든',style:'공격형',aggression:.78,bluffRate:.22}];
 let saved=[];try{saved=JSON.parse(localStorage.getItem('river-history')||'[]');if(!Array.isArray(saved))saved=[];}catch{}
 let history=saved.filter(validRecord).slice(0,30),hand=0,dealer=-1,game,timer,token=0,calcId=0;
-let equityRequest,sequence,raiseTurnState,modePaused=false;
+let equityRequest,sequence,raiseTurnState,modePaused=false,actionEpoch=0;
+const roundPreview=createRoundPreview({schedule:setTimeout,cancel:clearTimeout,onChange:()=>{render();if(roundPreview.active)message('액션 시작 대기 · 카드와 확률을 확인하세요.');},onRelease:()=>advance()});
+function cancelBot(){clearTimeout(timer);timer=null;actionEpoch++;}
+function beginRound(){cancelBot();roundPreview.start(calculate);}
+
 const BB=20,bbPresets=[['bb-2',2],['bb-2-5',2.5],['bb-3',3]];
 const actionEffects=new Set();
 const CARD_MS=200; // Leave a frame after the 180ms CSS motion before continuing.
@@ -85,7 +90,7 @@ globalThis.document.addEventListener?.('pointerdown',unlockAudio,{passive:true})
 globalThis.document.addEventListener?.('keydown',unlockAudio);
 const streets=['프리플롭','플롭','턴','리버'];
 // Seats follow the table perimeter. Leave the center clear for the board.
-const seats={1:[[50,3]],2:[[22,12],[78,12]],3:[[15,23],[50,3],[85,23]],4:[[12,34],[33,5],[67,5],[88,34]],5:[[10,38],[25,9],[50,2],[75,9],[90,38]],6:[[10,32],[32,5],[68,5],[90,32],[86,75],[14,75]],7:[[22,3],[50,3],[78,3],[10,30],[90,30],[85,66],[15,66]],8:[[10,25],[30,3],[70,3],[90,25],[90,58],[70,81],[30,81],[10,58]]};
+const seats={"1":[[50,3]],"2":[[22,12],[78,12]],"3":[[15,23],[50,3],[85,23]],"4":[[12,34],[33,5],[67,5],[88,34]],"5":[[10,38],[25,9],[50,2],[75,9],[90,38]],"6":[[14,75],[10,32],[32,5],[68,5],[90,32],[86,75]],"7":[[15,66],[10,30],[22,3],[50,3],[78,3],[90,30],[85,66]],"8":[[30,81],[10,58],[10,25],[30,3],[70,3],[90,25],[90,58],[70,81]]};
 const portraitColors=['#d3ad72','#bb817c','#8faba2','#a19ebc','#7ca4b8','#9cae97'];
 function portrait(i){i%=6;
  const hair=['M10 23Q5 5 23 7Q39 5 37 24L32 16 24 19 18 15Z','M7 35V19Q8 4 24 5Q41 5 41 23V36L33 31V18L17 16V32Z','M10 19Q10 4 24 6Q38 6 38 21L31 14 20 17Z','M8 22L9 12 18 10 22 4 28 10 37 10 40 24 32 17 25 21 15 16Z','M9 23Q4 8 19 6Q32 0 39 14L36 24 31 17 14 18Z','M8 24Q6 7 18 6Q27 1 35 9Q41 13 38 26L32 18 24 14 17 18Z'][i];
@@ -114,16 +119,16 @@ function nextSeat(i){do{i=(i+1)%game.players.length;}while(game.players[i].sitti
 function pay(i,amount){const p=game.players[i],n=Math.min(p.stack,Math.max(0,amount));p.stack-=n;p.bet+=n;p.total+=n;return n;}
 function start(reset=false){
  const previous=!reset&&game?game.players:null,n=previous?previous.length:Number($('#players').value);if(previous&&(previous[0].stack===0||previous.filter(p=>p.stack>0).length<2))return;
- clearTimeout(timer);cancelSequence();token++;if(reset){dealer=-1;hand=0;}do{dealer=(dealer+1)%n;}while(previous&&previous[dealer].stack===0);hand++;$('#players').value=String(n);syncPlayerPicker();
+ cancelBot();roundPreview.reset();cancelSequence();token++;if(reset){dealer=-1;hand=0;}do{dealer=(dealer+1)%n;}while(previous&&previous[dealer].stack===0);hand++;$('#players').value=String(n);syncPlayerPicker();
  const deck=shuffled();game={players:Array.from({length:n},(_,i)=>({name:i?profiles[i-1].name:'나',hole:[deck.pop(),deck.pop()],dealt:0,revealed:false,stack:previous?previous[i].stack:1000,sittingOut:!!previous&&previous[i].stack===0,bet:0,total:0,folded:!!previous&&previous[i].stack===0,last:'',actedAt:null})),deck,board:[],runoutShown:0,street:0,current:20,minRaise:20,done:false,finishing:false,busy:false,pending:new Set(),turn:0,log:[],heroRaises:0};
  const sb=game.players.filter(p=>!p.sittingOut).length===2?dealer:nextSeat(dealer),bb=nextSeat(sb);pay(sb,10);pay(bb,20);game.players[sb].last='SB 10';game.players[bb].last='BB 20';game.pending=new Set(game.players.flatMap((p,i)=>ready(p)?[i]:[]));game.turn=nextSeat(bb);game.log.push('블라인드 10 / 20');mountSeats();
  const order=Array.from({length:n},(_,j)=>(dealer+j+1)%n).filter(i=>!game.players[i].sittingOut);
- message('홀 카드를 한 장씩 배분합니다.');runSequence([...order,...order].map(i=>()=>game.players[i].dealt++),()=>{calculate();advance();});
+ message('홀 카드를 한 장씩 배분합니다.');runSequence([...order,...order].map(i=>()=>game.players[i].dealt++),()=>beginRound());
 }
 function canRaise(i){const p=game.players[i];return p.stack>game.current-p.bet&&(p.actedAt===null||game.current-p.actedAt>=game.minRaise)&&game.players.some((q,j)=>j!==i&&ready(q));}
 function act(i,type,target){
- if(game.done||game.busy||game.finishing)return;
- const p=game.players[i],before=p.stack,call=game.current-p.bet;let kind=type==='fold'?'fold':'check';sound(type==='fold'?'fold':type==='raise'||call?'chips':'check');
+ if(modePaused||roundPreview.active||game.done||game.busy||game.finishing||i!==game.turn||!game.pending.has(i)||!ready(game.players[i]))return;
+ cancelBot();const p=game.players[i],before=p.stack,call=game.current-p.bet;let kind=type==='fold'?'fold':'check';sound(type==='fold'?'fold':type==='raise'||call?'chips':'check');
  if(type==='fold'){p.folded=true;p.last='폴드';}
  else if(type==='raise'&&canRaise(i)){
   const old=game.current,cap=p.bet+p.stack;target=Math.min(cap,Math.max(old+game.minRaise,target));pay(i,target-p.bet);game.current=p.bet;if(game.current-old>=game.minRaise)game.minRaise=game.current-old;
@@ -133,7 +138,7 @@ function act(i,type,target){
  if(!p.stack)p.last+=' · 올인';p.actedAt=game.current;game.pending.delete(i);game.log.push(`${p.name}: ${p.last}`);game.turn=nextSeat(i);render();animateAction(i,kind,before-p.stack);
 }
 function advance(){
- if(modePaused)return;
+ cancelBot();if(modePaused||roundPreview.active)return;
  if(game.done||game.busy||game.finishing)return;
  render();if(active().length===1){finish();return;}
  for(const i of game.pending)if(!ready(game.players[i]))game.pending.delete(i);
@@ -142,9 +147,9 @@ function advance(){
  if(!game.pending.size){if(game.street===3){finish();return;}newStreet();return;}
  while(!game.pending.has(game.turn))game.turn=nextSeat(game.turn);render();
  if(game.turn===0){const call=Math.min(game.players[0].stack,game.current-game.players[0].bet);message(call?`내 차례 · 계속하려면 ${call}칩 콜`:'내 차례 · 체크하거나 베팅할 수 있습니다.');return;}
- const id=token,i=game.turn;message(`${game.players[i].name}님이 생각 중입니다…`);
+ const id=token,i=game.turn,epoch=actionEpoch,street=game.street,owner=game;message(`${game.players[i].name}님이 생각 중입니다…`);
  timer=setTimeout(()=>{
-  if(id!==token||game.done||game.busy||game.finishing||game.turn!==i||!game.pending.has(i))return;const p=game.players[i],profile=profiles[i-1],past=history.slice(0,12),bluffs=past.length?past.filter(h=>h.heroBluff).length/past.length:0;
+  if(epoch!==actionEpoch||owner!==game||street!==game.street||modePaused||roundPreview.active||id!==token||game.done||game.busy||game.finishing||game.turn!==i||!game.pending.has(i))return;const p=game.players[i],profile=profiles[i-1],past=history.slice(0,12),bluffs=past.length?past.filter(h=>h.heroBluff).length/past.length:0;
   const decision=botDecision({hole:p.hole,board:game.board,opponents:active().length-1,call:game.current-p.bet,stack:p.stack,pot:game.players.reduce((s,p)=>s+p.total,0),current:game.current,bet:p.bet,minRaise:game.minRaise,...profile,heroAggression:Math.min(1,game.heroRaises/3),heroBluffs:bluffs,canRaise:canRaise(i)});
   const count=active().length;act(i,decision.type,decision.target);if(decision.reason.includes('의심')){game.players[i].last+=' · 블러프 의심';game.log.push(`${p.name}: 블러프를 의심해 콜`);}if(count!==active().length)calculate();advance();
  },550+Math.random()*450);
@@ -152,11 +157,11 @@ function advance(){
 function newStreet(){
  if(game.done||game.busy||game.finishing)return;
  game.street++;const cards=game.deck.splice(-[3,1,1][game.street-1]);game.current=0;game.minRaise=20;for(const p of game.players){p.bet=0;p.actedAt=null;if(!p.folded)p.last=p.stack?'':'올인';}game.pending=new Set(game.players.map((p,i)=>ready(p)?i:-1).filter(i=>i>=0));game.turn=nextSeat(dealer);game.log.push(streets[game.street]);
- message(`${streets[game.street]} 카드를 공개합니다.`);runSequence(cards.map(c=>()=>game.board.push(c)),()=>{calculate();advance();});
+ message(`${streets[game.street]} 카드를 공개합니다.`);runSequence(cards.map(c=>()=>game.board.push(c)),()=>beginRound());
 }
 function finish(){
  if(game.done||game.busy||game.finishing)return;
- clearTimeout(timer);game.finishing=true;const remaining=[...game.deck];game.fullBoard=[...game.board];for(let street=game.street;street<3;street++)game.fullBoard.push(...remaining.splice(-[3,1,1][street]));game.runoutShown=game.board.length;
+ cancelBot();roundPreview.reset();game.finishing=true;const remaining=[...game.deck];game.fullBoard=[...game.board];for(let street=game.street;street<3;street++)game.fullBoard.push(...remaining.splice(-[3,1,1][street]));game.runoutShown=game.board.length;
  const opponents=Array.from({length:game.players.length},(_,j)=>(dealer+j+1)%game.players.length).filter(i=>i!==0&&!game.players[i].sittingOut);
  const steps=game.fullBoard.slice(game.board.length).map(()=>()=>{game.runoutShown++;});
  for(const i of [...opponents.filter(i=>!game.players[i].folded),...opponents.filter(i=>game.players[i].folded)])steps.push(()=>{game.players[i].revealed=true;});
@@ -195,9 +200,10 @@ function render(){
  const g=game;$('#hand-no').textContent=`핸드 ${hand}`;$('#street').textContent=g.done?'종료':streets[g.street];$('#pot').textContent=g.players.reduce((s,p)=>s+p.total,0).toLocaleString();
  markup('#pot-stack',chips(g.players.reduce((s,p)=>s+p.total,0)));$('#round-result').hidden=!g.done;$('#round-result').textContent=g.resultLabel||'';$('#round-result').className=`round-result ${g.net>0?'won':''}`;
  renderBoard(g);const hero=g.players[0];renderCards($('#hero'),hero.hole.map((c,i)=>i<hero.dealt?card(c):emptyCard('미배분 카드')),'dealing');$('#hero').classList.toggle('folded',hero.folded);markUnusedHole($('#hero'),hero.hole,g.done?g.fullBoard:g.board);renderHandStatus('#hero-hand',hero.dealt<2||hero.folded&&!g.done||!g.done&&!g.board.length?null:[...hero.hole,...(g.done?g.fullBoard:g.board)],g.done?(hero.folded?'폴드 · ':''):(hero.last?hero.last+' · ':''),hero.dealt<2?'카드 배분 중':hero.folded?'폴드':`${hero.last?hero.last+' · ':''}${startingHand(hero.hole)}`);$('#stack').textContent=`${hero.stack.toLocaleString()} 칩`;$('#position').textContent=dealer===0?'딜러':'';
- g.players.slice(1).forEach((p,j)=>{const i=j+1;$('#opponent-'+i).className=`opponent ${p.folded?'folded':''} ${g.turn===i&&!g.done&&!g.busy&&!g.finishing?'thinking':''}`;renderCards($('#opponent-cards-'+i),p.hole.map((c,k)=>k<p.dealt?card(c,!p.revealed):emptyCard(p.sittingOut?'쉬는 자리':'미배분 카드')),p.revealed?'flipping':'dealing');markUnusedHole($('#opponent-cards-'+i),p.hole,p.revealed?g.fullBoard:[]);$('#opponent-stack-'+i).textContent=p.stack.toLocaleString();renderHandStatus('#opponent-last-'+i,p.revealed&&!p.sittingOut?[...p.hole,...g.fullBoard]:null,p.folded?'폴드 · ':'',p.sittingOut?'칩 소진':p.last||profiles[j].style);});
+ g.players.slice(1).forEach((p,j)=>{const i=j+1;$('#opponent-'+i).className=`opponent ${p.folded?'folded':''} ${g.turn===i&&!roundPreview.active&&!modePaused&&!g.done&&!g.busy&&!g.finishing?'thinking':''}`;renderCards($('#opponent-cards-'+i),p.hole.map((c,k)=>k<p.dealt?card(c,!p.revealed):emptyCard(p.sittingOut?'쉬는 자리':'미배분 카드')),p.revealed?'flipping':'dealing');markUnusedHole($('#opponent-cards-'+i),p.hole,p.revealed?g.fullBoard:[]);$('#opponent-stack-'+i).textContent=p.stack.toLocaleString();renderHandStatus('#opponent-last-'+i,p.revealed&&!p.sittingOut?[...p.hole,...g.fullBoard]:null,p.folded?'폴드 · ':'',p.sittingOut?'칩 소진':p.last||profiles[j].style);});
  $('#personalities').innerHTML=profiles.slice(0,g.players.length-1).map(p=>`<div class="profile"><span><i class="profile-dot"></i>${p.name}</span><small>${p.style}</small><span class="aggression">${'▰'.repeat(Math.round(p.aggression*5))}<em>${'▱'.repeat(5-Math.round(p.aggression*5))}</em></span></div>`).join('');
- const turn=g.turn===0&&!g.done&&!g.busy&&!g.finishing&&g.pending.has(0),p=g.players[0],call=Math.min(p.stack,g.current-p.bet);$('#actions').hidden=g.done;$('#next').hidden=!g.done;$('#next').disabled=g.done&&(g.players[0].stack===0||g.players.filter(p=>p.stack>0).length<2);$('#next').textContent=$('#next').disabled?'테이블 종료 · 새 테이블로 시작하세요':'다음 핸드';$('#results').hidden=!g.done;
+ $('#round-preview').hidden=!roundPreview.active||g.done||g.busy||g.finishing;$('#preview-status').textContent=roundPreview.waiting?'확률을 준비하는 중입니다. 준비 후 5초 동안 확인할 수 있어요.':`${g.players[0].folded?'보드를':'최강 패 확률을'} 확인하세요. ${roundPreview.remaining}초 후 자동으로 액션이 시작됩니다.`;
+ const turn=g.turn===0&&!roundPreview.active&&!modePaused&&!g.done&&!g.busy&&!g.finishing&&g.pending.has(0),p=g.players[0],call=Math.min(p.stack,g.current-p.bet);$('#actions').hidden=g.done;$('#next').hidden=!g.done;$('#next').disabled=g.done&&(g.players[0].stack===0||g.players.filter(p=>p.stack>0).length<2);$('#next').textContent=$('#next').disabled?'테이블 종료 · 새 테이블로 시작하세요':'다음 핸드';$('#results').hidden=!g.done;
  for(const id of ['fold','call','raise'])$('#'+id).disabled=!turn;$('#raise').disabled=!turn||!canRaise(0);$('#call').textContent=call?`콜 ${call}`:'체크';
  for(const id of ['half-pot','full-pot','all-in'])$('#'+id).disabled=!turn||!canRaise(0);
  const min=Math.min(p.bet+p.stack,g.current+g.minRaise),max=p.bet+p.stack,slider=$('#raise-size');slider.min=min;slider.max=Math.max(min,max);
@@ -281,14 +287,15 @@ $('#player-picker').onkeydown=e=>{
 // pointerdown and Tab already dismiss the menu; do not close then reopen it.
 $('#player-picker').onfocusout=e=>{if(e.relatedTarget&&!$('#player-picker').contains?.(e.relatedTarget))closePlayerPicker();};
 document.addEventListener?.('pointerdown',e=>{if(!$('#player-picker').contains(e.target))closePlayerPicker();});
+$('#proceed-action').onclick=()=>roundPreview.proceed();
 $('#next').onclick=()=>{if(!game.done)return;unlockAudio();start();};
-function heroAction(type){if(game.done||game.busy||game.finishing||game.turn!==0||!game.pending.has(0))return;act(0,type,Number($('#raise-size').value));if(type==='fold')calculate();advance();}
+function heroAction(type){if(modePaused||roundPreview.active||game.done||game.busy||game.finishing||game.turn!==0||!game.pending.has(0))return;act(0,type,Number($('#raise-size').value));if(type==='fold')calculate();advance();}
 $('#fold').onclick=()=>heroAction('fold');$('#call').onclick=()=>heroAction('call');$('#raise').onclick=()=>heroAction('raise');
 function showRaiseTarget(){const slider=$('#raise-size'),n=Number(slider.value),bb=`${Number((n/BB).toFixed(2))} BB`;$('#raise-value').textContent=n;$('#raise-bb').textContent=`· ${bb}`;slider.setAttribute('aria-valuetext',`${n}칩, ${bb}`);$('#raise').textContent=n===game.players[0].bet+game.players[0].stack?'올인':`레이즈 ${n}`;}
 $('#raise-size').oninput=showRaiseTarget;
-function presetBB(bb){if(game.done||game.busy||game.finishing||game.turn!==0||!game.pending.has(0)||!canRaise(0))return;const slider=$('#raise-size'),target=bb*BB;if(target<Number(slider.min)||target>Number(slider.max))return;slider.value=target;showRaiseTarget();}
+function presetBB(bb){if(modePaused||roundPreview.active||game.done||game.busy||game.finishing||game.turn!==0||!game.pending.has(0)||!canRaise(0))return;const slider=$('#raise-size'),target=bb*BB;if(target<Number(slider.min)||target>Number(slider.max))return;slider.value=target;showRaiseTarget();}
 for(const [id,bb] of bbPresets)$('#'+id).onclick=()=>presetBB(bb);
-function preset(fraction){if(game.done||game.busy||game.finishing||game.turn!==0||!game.pending.has(0)||!canRaise(0))return;const p=game.players[0],slider=$('#raise-size'),pot=game.players.reduce((s,p)=>s+p.total,0),target=fraction===Infinity?p.bet+p.stack:game.current+Math.max(game.minRaise,Math.round(pot*fraction));slider.value=Math.min(Number(slider.max),Math.max(Number(slider.min),target));slider.oninput();}
+function preset(fraction){if(modePaused||roundPreview.active||game.done||game.busy||game.finishing||game.turn!==0||!game.pending.has(0)||!canRaise(0))return;const p=game.players[0],slider=$('#raise-size'),pot=game.players.reduce((s,p)=>s+p.total,0),target=fraction===Infinity?p.bet+p.stack:game.current+Math.max(game.minRaise,Math.round(pot*fraction));slider.value=Math.min(Number(slider.max),Math.max(Number(slider.min),target));slider.oninput();}
 $('#half-pot').onclick=()=>preset(.5);$('#full-pot').onclick=()=>preset(1);$('#all-in').onclick=()=>preset(Infinity);
 $('#toggle-equity').onclick=()=>{const el=$('#equity-content');el.hidden=!el.hidden;$('#toggle-equity').textContent=el.hidden?'보기':'가리기';};
 $('#hand-odds-content').hidden=true;
@@ -298,4 +305,4 @@ $('#help').onclick=$('#install').onclick=()=>$('#help-dialog').showModal();$('#c
 
 offlineReady.then(()=>{$('#offline-status').textContent='오프라인 확률 준비 완료';},()=>{$('#offline-status').textContent='오프라인 데이터 초기 설치가 필요합니다. 인터넷에 연결해 새로고침해 주세요.';});
 
-document.addEventListener?.('river-mode',e=>{modePaused=e.detail!=='play';clearTimeout(timer);if(modePaused){closePlayerPicker();finishSequenceNow();}else if(game&&!game.busy&&!game.finishing)advance();});
+document.addEventListener?.('river-mode',e=>{modePaused=e.detail!=='play';cancelBot();if(modePaused){roundPreview.pause();closePlayerPicker();finishSequenceNow();}else{roundPreview.resume();if(game&&!game.busy&&!game.finishing)advance();}});

@@ -5,6 +5,6 @@
 @media(max-width:720px){.felt[data-players="8"],.felt[data-players="9"]{height:650px}.felt[data-players="8"] .opponent,.felt[data-players="9"] .opponent{width:76px}.felt[data-players="8"] .opponent .avatar,.felt[data-players="9"] .opponent .avatar{font-size:10px}.felt[data-players="8"] .board-area,.felt[data-players="9"] .board-area{top:35%}.felt[data-players="8"] .opponent .small .card,.felt[data-players="9"] .opponent .small .card{width:25px;height:36px}.felt[data-players="8"] .hero-area,.felt[data-players="9"] .hero-area{bottom:8px}.felt[data-players="8"] .hero-area .card,.felt[data-players="9"] .hero-area .card{width:45px;height:66px}}
 
 .study-slot{padding:5px 2px;line-height:1;flex-shrink:0}.study-slot>span{line-height:1;display:block}.study-slot>small{line-height:1.1;white-space:nowrap;font-size:10px}.study-slot:disabled{opacity:1;cursor:default}.study-slot.empty{font-family:inherit;font-size:13px}.study-slot.empty>small{margin-top:5px}
-.felt[data-players="9"] :is(#opponent-5,#opponent-8){top:50%}.felt[data-players="9"] :is(#opponent-6,#opponent-7){top:62%}
+.felt[data-players="9"] :is(#opponent-7,#opponent-2){top:50%}.felt[data-players="9"] :is(#opponent-8,#opponent-1){top:62%}
 .felt:is([data-players="8"],[data-players="9"]) .opponent .hand-popover{top:auto;bottom:calc(100% + 8px)}
-@media(max-width:720px){.felt[data-players="9"] :is(#opponent-5,#opponent-8){top:45%}.felt[data-players="9"] :is(#opponent-6,#opponent-7){top:66%}}
+@media(max-width:720px){.felt[data-players="9"] :is(#opponent-7,#opponent-2){top:45%}.felt[data-players="9"] :is(#opponent-8,#opponent-1){top:66%}}

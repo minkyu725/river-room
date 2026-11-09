@@ -47,3 +47,12 @@ A follow-up at 721px found two lower nameplates touching the board by about 2px 
 ## Offline probabilities
 
 Keep existing table/card/control design. A small installation/ready status sits below settings. Flop values are visibly approximate and carry a maximum display-error note; other streets remain exact. Full definitions stay in help. All app/model cache bodies total about8.58MB, with no per-query network calls.
+
+
+## Round-review UI improvement
+
+At 320x740 the inline review panel began at y=883, below the viewport, so it could expire unseen. Use a temporary solid bottom action bar while the five-second window is active. Show the hero cards, strongest probability with approximation/hiding/error states, short quiet countdown and a primary proceed button. Preserve the existing palette and type; no automatic scrolling or focus stealing. The timer is not a repeating live announcement; readiness and privacy changes are announced once. Respect safe-area bottom insets. Measured at 320/390/768/1440px: bar and 44px-high proceed control stay in the viewport with no horizontal overflow.
+
+At 320px the seven-column card picker had 29.71px-wide rank targets. Auto-fit columns with a 44px minimum produce 44.40x56px rank targets at 320px and keep selection, cancellation and duplicate-card disabling intact. The short-landscape dialog stays inside 844x390.
+
+Table characters are selected without replacement from a 12-character pool only on new-table creation. Stable character identity determines portrait variation and bot traits. Preserve that roster and its chip stacks across subsequent hands. Physical seat indices advance clockwise from the hero at every supported table size.

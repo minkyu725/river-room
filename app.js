@@ -1,12 +1,13 @@
+import {chooseTableOpponents} from './table-opponents.js?v=34';
 import {createRoundPreview} from './round-preview.js?v=34';
 import {loadOfflineProbabilities,loadFlopProbabilities,offlineReady} from './offline-probabilities.js?v=34';
 import {exactPercent} from './exact-probability.js?v=34';
 import {suits,rank,suit,shuffled,evaluate,describeHand,settle,botDecision,calculateEquity} from './engine.js?v=34';
 const $=s=>document.querySelector(s);
-const profiles=[{name:'민',style:'균형형',aggression:.58,bluffRate:.12},{name:'루나',style:'공격형',aggression:.85,bluffRate:.28},{name:'제이',style:'신중형',aggression:.34,bluffRate:.07},{name:'노아',style:'변칙형',aggression:.73,bluffRate:.32},{name:'유진',style:'분석형',aggression:.5,bluffRate:.16},{name:'하늘',style:'수비형',aggression:.38,bluffRate:.08},{name:'지우',style:'균형형',aggression:.54,bluffRate:.13},{name:'이든',style:'공격형',aggression:.78,bluffRate:.22}];
+let profiles=[];
 let saved=[];try{saved=JSON.parse(localStorage.getItem('river-history')||'[]');if(!Array.isArray(saved))saved=[];}catch{}
 let history=saved.filter(validRecord).slice(0,30),hand=0,dealer=-1,game,timer,token=0,calcId=0;
-let equityRequest,sequence,raiseTurnState,modePaused=false,actionEpoch=0;
+let equityRequest,sequence,raiseTurnState,modePaused=false,actionEpoch=0,previewProbability=null,previewAnnouncementKey=null;
 const roundPreview=createRoundPreview({schedule:setTimeout,cancel:clearTimeout,onChange:()=>{render();if(roundPreview.active)message('액션 시작 대기 · 카드와 확률을 확인하세요.');},onRelease:()=>advance()});
 function cancelBot(){clearTimeout(timer);timer=null;actionEpoch++;}
 function beginRound(){cancelBot();roundPreview.start(calculate);}
@@ -92,10 +93,10 @@ const streets=['프리플롭','플롭','턴','리버'];
 // Seats follow the table perimeter. Leave the center clear for the board.
 const seats={"1":[[50,3]],"2":[[22,12],[78,12]],"3":[[15,23],[50,3],[85,23]],"4":[[12,34],[33,5],[67,5],[88,34]],"5":[[10,38],[25,9],[50,2],[75,9],[90,38]],"6":[[14,75],[10,32],[32,5],[68,5],[90,32],[86,75]],"7":[[15,66],[10,30],[22,3],[50,3],[78,3],[90,30],[85,66]],"8":[[30,81],[10,58],[10,25],[30,3],[70,3],[90,25],[90,58],[70,81]]};
 const portraitColors=['#d3ad72','#bb817c','#8faba2','#a19ebc','#7ca4b8','#9cae97'];
-function portrait(i){i%=6;
+function portrait(i){const variant=Math.floor(i/6);i%=6;
  const hair=['M10 23Q5 5 23 7Q39 5 37 24L32 16 24 19 18 15Z','M7 35V19Q8 4 24 5Q41 5 41 23V36L33 31V18L17 16V32Z','M10 19Q10 4 24 6Q38 6 38 21L31 14 20 17Z','M8 22L9 12 18 10 22 4 28 10 37 10 40 24 32 17 25 21 15 16Z','M9 23Q4 8 19 6Q32 0 39 14L36 24 31 17 14 18Z','M8 24Q6 7 18 6Q27 1 35 9Q41 13 38 26L32 18 24 14 17 18Z'][i];
  const glasses=i===2?'<path d="M15 24h7v6h-7zm11 0h7v6h-7zm-4 2h4" fill="none" stroke="#30424c" stroke-width="2"/>':'';
- return `<svg viewBox="0 0 48 48" aria-hidden="true"><rect width="48" height="48" rx="24" fill="${portraitColors[i]}"/><path d="M7 48q1-14 17-14t17 14" fill="${['#395b69','#6c3e52','#416358','#594c70','#38516a','#43594c'][i]}"/><rect x="20" y="30" width="8" height="9" rx="3" fill="#dba57c"/><ellipse cx="24" cy="23" rx="13" ry="15" fill="#f2c399"/><path d="${hair}" fill="#34333a"/><path d="M17 24h2m10 0h2" stroke="#34333a" stroke-width="2.5" stroke-linecap="round"/><path d="M21 31q3 2 6-1" stroke="#a66b55" stroke-width="1.5" fill="none" stroke-linecap="round"/>${glasses}</svg>`;
+ return `<svg viewBox="0 0 48 48" aria-hidden="true"><rect width="48" height="48" rx="24" fill="${portraitColors[(i+variant*2)%6]}"/><path d="M7 48q1-14 17-14t17 14" fill="${['#395b69','#6c3e52','#416358','#594c70','#38516a','#43594c'][(i+variant*3)%6]}"/><rect x="20" y="30" width="8" height="9" rx="3" fill="#dba57c"/><ellipse cx="24" cy="23" rx="13" ry="15" fill="#f2c399"/><path d="${hair}" fill="#34333a"/><path d="M17 24h2m10 0h2" stroke="#34333a" stroke-width="2.5" stroke-linecap="round"/><path d="M21 31q3 2 6-1" stroke="#a66b55" stroke-width="1.5" fill="none" stroke-linecap="round"/>${glasses}</svg>`;
 }
 function markup(selector,html){const el=$(selector);if(el.innerHTML!==html)el.innerHTML=html;}
 function chips(amount){const count=Math.min(12,Math.max(1,Math.ceil(amount/40)));return Array.from({length:count},(_,i)=>`<i style="--tower:${i%3};--level:${Math.floor(i/3)};--chip:${['#bd9654','#a35758','#4e8799'][i%3]}"></i>`).join('');}
@@ -110,7 +111,7 @@ function renderCards(el,values,effect){
 function mountSeats(){
  $('.felt').dataset.players=String(game.players.length);
  $('#board').replaceChildren();$('#hero').replaceChildren();
- $('#opponents').innerHTML=game.players.slice(1).map((p,j)=>{const [x,y]=seats[game.players.length-1][j],i=j+1;return `<div id="opponent-${i}" style="--x:${x}%;--y:${y}%" class="opponent" data-side="${x<35?'left':x>65?'right':'center'}"><div class="avatar"><span class="portrait">${portrait(j)}</span>${p.name}${dealer===i?'<span class="dealer" aria-label="딜러">D</span>':''}</div><div id="opponent-cards-${i}" class="cards small"></div><b id="opponent-stack-${i}"></b><div class="seat-status" id="opponent-last-${i}"></div></div>`;}).join('');
+ $('#opponents').innerHTML=game.players.slice(1).map((p,j)=>{const [x,y]=seats[game.players.length-1][j],i=j+1;return `<div id="opponent-${i}" style="--x:${x}%;--y:${y}%" class="opponent" data-side="${x<35?'left':x>65?'right':'center'}"><div class="avatar"><span class="portrait">${portrait(profiles[j].avatar)}</span>${p.name}${dealer===i?'<span class="dealer" aria-label="딜러">D</span>':''}</div><div id="opponent-cards-${i}" class="cards small"></div><b id="opponent-stack-${i}"></b><div class="seat-status" id="opponent-last-${i}"></div></div>`;}).join('');
 }
 function message(s){$('#status').textContent=s;}
 function active(){return game.players.filter(p=>!p.folded);}
@@ -120,6 +121,7 @@ function pay(i,amount){const p=game.players[i],n=Math.min(p.stack,Math.max(0,amo
 function start(reset=false){
  const previous=!reset&&game?game.players:null,n=previous?previous.length:Number($('#players').value);if(previous&&(previous[0].stack===0||previous.filter(p=>p.stack>0).length<2))return;
  cancelBot();roundPreview.reset();cancelSequence();token++;if(reset){dealer=-1;hand=0;}do{dealer=(dealer+1)%n;}while(previous&&previous[dealer].stack===0);hand++;$('#players').value=String(n);syncPlayerPicker();
+ if(!previous)profiles=chooseTableOpponents(n-1);
  const deck=shuffled();game={players:Array.from({length:n},(_,i)=>({name:i?profiles[i-1].name:'나',hole:[deck.pop(),deck.pop()],dealt:0,revealed:false,stack:previous?previous[i].stack:1000,sittingOut:!!previous&&previous[i].stack===0,bet:0,total:0,folded:!!previous&&previous[i].stack===0,last:'',actedAt:null})),deck,board:[],runoutShown:0,street:0,current:20,minRaise:20,done:false,finishing:false,busy:false,pending:new Set(),turn:0,log:[],heroRaises:0};
  const sb=game.players.filter(p=>!p.sittingOut).length===2?dealer:nextSeat(dealer),bb=nextSeat(sb);pay(sb,10);pay(bb,20);game.players[sb].last='SB 10';game.players[bb].last='BB 20';game.pending=new Set(game.players.flatMap((p,i)=>ready(p)?[i]:[]));game.turn=nextSeat(bb);game.log.push('블라인드 10 / 20');mountSeats();
  const order=Array.from({length:n},(_,j)=>(dealer+j+1)%n).filter(i=>!game.players[i].sittingOut);
@@ -202,7 +204,7 @@ function render(){
  renderBoard(g);const hero=g.players[0];renderCards($('#hero'),hero.hole.map((c,i)=>i<hero.dealt?card(c):emptyCard('미배분 카드')),'dealing');$('#hero').classList.toggle('folded',hero.folded);markUnusedHole($('#hero'),hero.hole,g.done?g.fullBoard:g.board);renderHandStatus('#hero-hand',hero.dealt<2||hero.folded&&!g.done||!g.done&&!g.board.length?null:[...hero.hole,...(g.done?g.fullBoard:g.board)],g.done?(hero.folded?'폴드 · ':''):(hero.last?hero.last+' · ':''),hero.dealt<2?'카드 배분 중':hero.folded?'폴드':`${hero.last?hero.last+' · ':''}${startingHand(hero.hole)}`);$('#stack').textContent=`${hero.stack.toLocaleString()} 칩`;$('#position').textContent=dealer===0?'딜러':'';
  g.players.slice(1).forEach((p,j)=>{const i=j+1;$('#opponent-'+i).className=`opponent ${p.folded?'folded':''} ${g.turn===i&&!roundPreview.active&&!modePaused&&!g.done&&!g.busy&&!g.finishing?'thinking':''}`;renderCards($('#opponent-cards-'+i),p.hole.map((c,k)=>k<p.dealt?card(c,!p.revealed):emptyCard(p.sittingOut?'쉬는 자리':'미배분 카드')),p.revealed?'flipping':'dealing');markUnusedHole($('#opponent-cards-'+i),p.hole,p.revealed?g.fullBoard:[]);$('#opponent-stack-'+i).textContent=p.stack.toLocaleString();renderHandStatus('#opponent-last-'+i,p.revealed&&!p.sittingOut?[...p.hole,...g.fullBoard]:null,p.folded?'폴드 · ':'',p.sittingOut?'칩 소진':p.last||profiles[j].style);});
  $('#personalities').innerHTML=profiles.slice(0,g.players.length-1).map(p=>`<div class="profile"><span><i class="profile-dot"></i>${p.name}</span><small>${p.style}</small><span class="aggression">${'▰'.repeat(Math.round(p.aggression*5))}<em>${'▱'.repeat(5-Math.round(p.aggression*5))}</em></span></div>`).join('');
- $('#round-preview').hidden=!roundPreview.active||g.done||g.busy||g.finishing;$('#preview-status').textContent=roundPreview.waiting?'확률을 준비하는 중입니다. 준비 후 5초 동안 확인할 수 있어요.':`${g.players[0].folded?'보드를':'최강 패 확률을'} 확인하세요. ${roundPreview.remaining}초 후 자동으로 액션이 시작됩니다.`;
+ renderRoundPreview();
  const turn=g.turn===0&&!roundPreview.active&&!modePaused&&!g.done&&!g.busy&&!g.finishing&&g.pending.has(0),p=g.players[0],call=Math.min(p.stack,g.current-p.bet);$('#actions').hidden=g.done;$('#next').hidden=!g.done;$('#next').disabled=g.done&&(g.players[0].stack===0||g.players.filter(p=>p.stack>0).length<2);$('#next').textContent=$('#next').disabled?'테이블 종료 · 새 테이블로 시작하세요':'다음 핸드';$('#results').hidden=!g.done;
  for(const id of ['fold','call','raise'])$('#'+id).disabled=!turn;$('#raise').disabled=!turn||!canRaise(0);$('#call').textContent=call?`콜 ${call}`:'체크';
  for(const id of ['half-pot','full-pot','all-in'])$('#'+id).disabled=!turn||!canRaise(0);
@@ -212,6 +214,21 @@ function render(){
  if(Number(slider.value)<min)slider.value=min;if(Number(slider.value)>max)slider.value=max;showRaiseTarget();slider.disabled=!turn||!canRaise(0);
  for(const [id,bb] of bbPresets)$('#'+id).disabled=!turn||!canRaise(0)||bb*BB<min||bb*BB>max;
 }
+function renderRoundPreview(){
+ const visible=roundPreview.active&&!modePaused&&!game.done&&!game.busy&&!game.finishing;
+ $('#round-preview').hidden=!visible;
+ const text=(id,value)=>{if($(id).textContent!==value)$(id).textContent=value;};
+ if(!visible){previewAnnouncementKey=null;text('#preview-announcement','');return;}
+ const folded=game.players[0].folded,masked=$('#equity-content').hidden;
+ const cards=game.players[0].hole.map(c=>`${rank(c)<11?rank(c):({11:'J',12:'Q',13:'K',14:'A'})[rank(c)]}${suits[suit(c)]}`).join(' ');
+ text('#preview-hand',`${streets[game.street]} · ${cards}`);
+ const chance=folded?'폴드':masked?'가림':roundPreview.waiting?'···':previewProbability?.value===null||!previewProbability?'—':previewProbability.value+'%';
+ text('#preview-chance',chance);$('#preview-estimate').hidden=folded||masked||roundPreview.waiting||!previewProbability?.approximate;
+ text('#preview-status',roundPreview.waiting?'확률 준비 중':`${chance==='—'?'확률 확인 불가 · ':''}${roundPreview.remaining}초 후 자동 시작`);
+ const announced=roundPreview.waiting?'확률을 계산하고 있습니다. 액션 진행하기를 누르면 바로 시작합니다.':`${folded?'폴드한 상태입니다.':masked?'확률이 가려져 있습니다.':chance==='—'?'확률을 준비하지 못했습니다.':`최강 패 확률 ${chance}${previewProbability?.approximate?' 근사':''}.`} ${roundPreview.remaining}초 후 액션이 시작됩니다. 액션 진행하기를 누르면 바로 시작합니다.`;
+ const key=[game.street,folded,masked,roundPreview.waiting,chance,previewProbability?.approximate].join('|');
+ if(key!==previewAnnouncementKey){previewAnnouncementKey=key;text('#preview-announcement',announced);}
+}
 function renderBoard(g){
  const html=Array.from({length:5},(_,i)=>{const revealed=i<g.board.length,c=revealed?g.board[i]:i<g.runoutShown?g.fullBoard[i]:null;return c===null?emptyCard('미공개 보드'):card(c).replace('class="card ',`class="card ${revealed?'':'unplayed '}`);});
  // Only replace a slot when its card changes; unrelated renders preserve nodes.
@@ -219,7 +236,7 @@ function renderBoard(g){
 }
 function reviewNote(h){return `<p class="review-note">${h.revealed<5?'옅은 카드는 종료 후 공개한 남은 보드입니다. ':''}모두 폴드하지 않았다면: <b>${h.hypothetical.map(escapeHTML).join(', ')}${h.hypothetical.length>1?' 공동 승리':' 승리'}</b><br><small>전체 보드와 모든 참가자의 패를 비교한 결과 · 실제 칩 정산과 별개<br>개인별 7장에서 흐린 2장은 미사용 카드입니다. 동률인 최선의 조합은 한 가지를 표시합니다.</small></p>`;}
 function startingHand(h){return rank(h[0])===rank(h[1])?'포켓 페어':suit(h[0])===suit(h[1])?'수티드 · 같은 무늬':'오프수트 · 다른 무늬';}
-function calculate(){const id=++calcId;$('#approx-note').hidden=true;equityRequest=null;$('#equity').innerHTML='···<span>%</span>';$('#equity-detail').textContent='사전 계산표를 확인하고 있어요.';$('#equity-bar').style.width='0%';$('#hand-odds-body').innerHTML='';$('#hand-odds-status').textContent='족보별 사전 계산표를 확인하고 있어요.';
+function calculate(){previewProbability=null;const id=++calcId;$('#approx-note').hidden=true;equityRequest=null;$('#equity').innerHTML='···<span>%</span>';$('#equity-detail').textContent='사전 계산표를 확인하고 있어요.';$('#equity-bar').style.width='0%';$('#hand-odds-body').innerHTML='';$('#hand-odds-status').textContent='족보별 사전 계산표를 확인하고 있어요.';
  if(game.players[0].dealt<2||game.busy){$('#equity').innerHTML='—<span>%</span>';$('#equity-detail').textContent='카드 배분·공개 후 승률을 계산합니다.';$('#hand-odds-status').textContent='카드 배분·공개를 기다리고 있어요.';return;}
  if(game.players[0].folded){$('#equity').innerHTML='—<span>%</span>';$('#equity-detail').textContent='폴드했습니다. 종료 후 전체 패를 확인하세요.';$('#hand-odds-status').textContent='폴드한 핸드는 승률을 계산하지 않습니다. 종료 후 공개된 패를 확인하세요.';return;}
  const data=equityRequest={id,hole:[...game.players[0].hole],board:[...game.board],opponents:active().length-1};
@@ -240,6 +257,7 @@ function showEquity(data){
  const chance=Number.isFinite(data.strongest)?data.strongest:Number.isFinite(data.win)&&Number.isFinite(data.tie)?data.win+data.tie:null;
  const hasCounts=data.wins!==undefined&&data.ties!==undefined&&data.denominator!==undefined,winText=hasCounts?exactPercent(data.wins,data.denominator):(data.win*100).toFixed(1),tieText=hasCounts?exactPercent(data.ties,data.denominator):(data.tie*100).toFixed(1);
  const n=chance===null?null:hasCounts?exactPercent(BigInt(data.wins)+BigInt(data.ties),data.denominator):(chance*100).toFixed(1),opponents=active().length-1;
+ previewProbability={value:n,approximate:!!data.approximate};if(roundPreview.active)renderRoundPreview();
  $('#equity').innerHTML=`${n??'—'}<span>%</span>`;$('#equity-bar').style.width=(n??0)+'%';
  $('#equity-detail').textContent=n!==null?opponents===0?'남은 상대 없음 · 최강 패 100%':`${data.approximate?'근사 · ':''}단독 승리 ${winText}% · 동률 ${tieText}%`:data.winError?'오프라인 확률을 준비하지 못했습니다. 초기 설치를 완료한 뒤 다시 열어주세요.':`상대 ${opponents}명 정확 승률표는 아직 미제공입니다.`;
  $('#approx-note').hidden=!data.approximate;$('#approx-note').textContent=opponents>6?'8·9인 근사 · 최강 패 표시 최대 오차 ±0.4%p':'플롭 근사 · 최강 패 표시 최대 오차 ±0.25%p';
@@ -297,7 +315,7 @@ function presetBB(bb){if(modePaused||roundPreview.active||game.done||game.busy||
 for(const [id,bb] of bbPresets)$('#'+id).onclick=()=>presetBB(bb);
 function preset(fraction){if(modePaused||roundPreview.active||game.done||game.busy||game.finishing||game.turn!==0||!game.pending.has(0)||!canRaise(0))return;const p=game.players[0],slider=$('#raise-size'),pot=game.players.reduce((s,p)=>s+p.total,0),target=fraction===Infinity?p.bet+p.stack:game.current+Math.max(game.minRaise,Math.round(pot*fraction));slider.value=Math.min(Number(slider.max),Math.max(Number(slider.min),target));slider.oninput();}
 $('#half-pot').onclick=()=>preset(.5);$('#full-pot').onclick=()=>preset(1);$('#all-in').onclick=()=>preset(Infinity);
-$('#toggle-equity').onclick=()=>{const el=$('#equity-content');el.hidden=!el.hidden;$('#toggle-equity').textContent=el.hidden?'보기':'가리기';};
+$('#toggle-equity').onclick=()=>{const el=$('#equity-content');el.hidden=!el.hidden;$('#toggle-equity').textContent=el.hidden?'보기':'가리기';renderRoundPreview();};
 $('#hand-odds-content').hidden=true;
 $('#toggle-hand-odds').onclick=()=>{const content=$('#hand-odds-content'),button=$('#toggle-hand-odds');content.hidden=!content.hidden;button.textContent=content.hidden?'족보 완성 확률 보기':'족보 완성 확률 닫기';button.setAttribute?.('aria-expanded',String(!content.hidden));};
 $('#help').onclick=$('#install').onclick=()=>$('#help-dialog').showModal();$('#close-help').onclick=()=>$('#help-dialog').close();$('#help-dialog').onclick=e=>{if(e.target===$('#help-dialog'))$('#help-dialog').close();};renderHistory();start();
@@ -305,4 +323,4 @@ $('#help').onclick=$('#install').onclick=()=>$('#help-dialog').showModal();$('#c
 
 offlineReady.then(()=>{$('#offline-status').textContent='오프라인 확률 준비 완료';},()=>{$('#offline-status').textContent='오프라인 데이터 초기 설치가 필요합니다. 인터넷에 연결해 새로고침해 주세요.';});
 
-document.addEventListener?.('river-mode',e=>{modePaused=e.detail!=='play';cancelBot();if(modePaused){roundPreview.pause();closePlayerPicker();finishSequenceNow();}else{roundPreview.resume();if(game&&!game.busy&&!game.finishing)advance();}});
+document.addEventListener?.('river-mode',e=>{modePaused=e.detail!=='play';cancelBot();if(modePaused){roundPreview.pause();closePlayerPicker();finishSequenceNow();render();}else{roundPreview.resume();if(game&&!game.busy&&!game.finishing)advance();}});

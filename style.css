@@ -274,4 +274,12 @@ dialog p { color: var(--muted); font-size: 13px; line-height: 1.9; }
 .offline-status { color: var(--muted); font-size: 10px; line-height: 1.5; margin: 0 0 14px; }
 #approx-note { margin-top: 2px; }
 
-.round-preview{display:flex;align-items:center;justify-content:space-between;gap:16px;margin:18px 0;padding:16px;border:1px solid var(--line);border-radius:7px;background:var(--surface)}.round-preview p{margin:0;color:var(--muted);font-size:13px;line-height:1.6}.round-preview button{flex-shrink:0;min-height:44px}.opponent.thinking{z-index:3}@media(max-width:480px){.round-preview{align-items:stretch;flex-direction:column;gap:12px}.round-preview button{width:100%}}
+/* A temporary action bar keeps the five-second review visible without scrolling. */
+.round-preview{position:fixed;inset:auto 0 0;z-index:30;padding:12px 16px calc(12px + env(safe-area-inset-bottom));border-top:1px solid var(--line);background:var(--surface)}
+.round-preview-inner{max-width:1120px;margin:auto;display:flex;align-items:center;justify-content:space-between;gap:20px}
+.round-preview-copy{min-width:0}.round-preview p{margin:0;line-height:1.5}.round-preview .preview-hand{font-size:12px;color:var(--muted)}
+.preview-value{display:flex;align-items:baseline;gap:8px;flex-wrap:wrap;margin:2px 0;font-size:13px}.preview-value strong{font-size:26px;line-height:1.25;color:var(--primary);font-variant-numeric:tabular-nums}.preview-value small{font-size:11px;color:var(--muted)}
+#preview-status{font-size:12px;color:var(--muted)}.round-preview button{flex-shrink:0;min-height:44px;padding:12px 16px;font-size:14px}
+.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+.opponent.thinking{z-index:3}
+@media(max-width:480px){.round-preview{padding-left:12px;padding-right:12px}.round-preview-inner{gap:12px}.round-preview button{font-size:13px;padding:12px}.preview-value{gap:5px}.preview-value strong{font-size:23px}.round-preview .preview-hand{font-size:11px}}

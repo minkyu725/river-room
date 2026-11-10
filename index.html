@@ -10,9 +10,9 @@
   <link rel="manifest" href="./manifest.webmanifest">
   <link rel="icon" href="./icon.svg">
   <link rel="apple-touch-icon" href="./icon-192.png">
-  <link rel="stylesheet" href="./style.css?v=36">
-  <link rel="stylesheet" href="./mobile.css?v=36">
-  <link rel="stylesheet" href="./modes.css?v=36">
+  <link rel="stylesheet" href="./style.css?v=37">
+  <link rel="stylesheet" href="./mobile.css?v=37">
+  <link rel="stylesheet" href="./modes.css?v=37">
   <title>River Room · 홀덤 연습</title>
 </head>
 <body>
@@ -28,6 +28,7 @@
       <button data-mode="play"><span class="mode-symbol">♠</span><span><strong>플레이모드</strong><small>2~9인 테이블에서 한 핸드씩 연습</small></span><span aria-hidden="true">↗</span></button>
       <button data-mode="quiz"><span class="mode-symbol">♦</span><span><strong>퀴즈모드</strong><small>최선의 행동과 최강 패 확률 맞히기</small></span><span aria-hidden="true">↗</span></button>
       <button data-mode="ingame"><span class="mode-symbol">♣</span><span><strong>인게임모드</strong><small>내 카드와 보드를 입력하는 오픈북</small></span><span aria-hidden="true">↗</span></button>
+      <button data-mode="glossary"><span class="mode-symbol">♥</span><span><strong>용어집</strong><small>레인보우, C-bet, Equity와 GTO 기초</small></span><span aria-hidden="true">↗</span></button>
     </div><p id="study-ready" class="note" role="status">오프라인 데이터 준비 중 · 처음 한 번 저장합니다</p>
   </section>
   <section id="study-mode" class="study-mode" hidden></section>
@@ -71,7 +72,7 @@
       <section class="equity-panel" aria-label="최강 패 확률">
         <div class="equity-label"><h2>최강 패 확률</h2><button id="toggle-equity" class="text-button">가리기</button></div>
         <div id="equity-content"><div class="equity-number" id="equity">—<span>%</span></div><div class="equity-info"><div class="meter"><div id="equity-bar"></div></div><p id="equity-detail">계산 중</p></div></div>
-        <p class="note">무작위 상대 패 기준 · 공동 1등 포함</p><p id="approx-note" class="note" hidden>플롭 근사 · 최강 패 표시 최대 오차 ±0.25%p</p>
+        <p class="note">무작위 상대 패 기준 · 공동 1등 포함<br>Equity(팟 지분)와 다른 지표입니다. <a href="#glossary">용어집</a></p><p id="approx-note" class="note" hidden>플롭 근사 · 최강 패 표시 최대 오차 ±0.25%p</p>
       </section>
       <section id="round-preview" class="round-preview" aria-label="액션 시작 전 확률 확인" hidden><div class="round-preview-inner"><div class="round-preview-copy"><p id="preview-hand" class="preview-hand"></p><div class="preview-value" aria-label="최강 패 확률"><span>최강 패</span><strong id="preview-chance">—</strong><small id="preview-estimate" hidden>근사</small></div><p id="preview-status" role="timer" aria-live="off"></p><span id="preview-announcement" class="sr-only" role="status" aria-live="polite"></span></div><button id="proceed-action" class="raise-button">액션 진행하기</button></div></section>
       <section class="hand-odds" aria-label="족보 완성 확률">
@@ -108,11 +109,11 @@
   <p>2~9인 노리밋 텍사스 홀덤입니다. 새 테이블은 1,000칩으로 시작하며, 다음 핸드에도 보유 칩이 유지되고 딜러가 돌아갑니다. 칩을 모두 잃은 상대는 쉬고, 내 칩이 소진되거나 한 명만 남으면 새 테이블을 시작하세요. 체크, 콜, 폴드, 레이즈와 올인, 사이드 팟을 지원합니다.</p>
   <p>내 차례마다 레이즈 총액은 가능한 최소 금액으로 돌아갑니다. BB 버튼은 이번 라운드의 총 베팅액을 선택합니다(추가 금액 아님). 1 BB는 20칩이며 최소 레이즈보다 작거나 보유 칩을 넘는 선택은 비활성화됩니다. 금액 선택 후 레이즈 버튼을 눌러 확정하세요.</p>
   <p>각 베팅 라운드(프리플롭·플롭·턴·리버)는 카드 공개와 확률 계산 후 5초 동안 멈춥니다. 액션 진행하기를 누르면 바로 시작합니다. 모드를 벗어나면 대기 시간도 멈춥니다. 최강 패 확률을 가리면 확인 대기를 생략하고 바로 진행합니다. 플레이어별 직전 액션은 테이블 옆 목록에서 확인할 수 있습니다.</p>
-  <h3>최강 패 확률 읽기</h3><p>내 패보다 강한 상대가 없는 확률이며 공동 1등을 포함합니다. 상대 1~8명 확률을 기기 안에서 계산합니다. 상대 1~6명은 프리플롭의 정확한 내장 표와 턴·리버의 정확한 결정론 계산을 사용합니다. 상대 7~8명(8~9인)은 기존 정확 결과의 교환가능 모멘트를 이용한 오차 한계가 있는 근사입니다. 모든 스트리트의 최강 패 표시 오차는 ±0.4%p, 동률은 ±0.73%p 이내입니다. 플롭은 원본 전체 표를 1바이트로 반올림한 근사 표를 사용합니다. 최강 패와 단독 승리 계산값의 최대 오차는 ±0.197%p, 동률은 ±0.393%p이며 화면 반올림까지 포함하면 각각 ±0.25%p와 ±0.45%p 이내입니다. 첫 설치에서 약 10.6MB 모델과 앱 파일의 저장을 완료하면 확률 조회에 인터넷이 필요하지 않습니다. 기기 캐시가 삭제되면 다시 설치해야 합니다. 단독 승리와 동률 확률도 따로 표시합니다. 소수점 첫째 자리로 반올림하므로 두 표시값의 합계는 최강 패 확률과 0.1%p 다를 수 있습니다. 무작위 상대 패를 균등하게 가정하며 실제 비공개 카드나 베팅 성향을 반영한 예측은 아닙니다. 족보 완성 확률은 별도의 펼침 표에서 확인하세요.</p>
+  <h3>최강 패 확률 읽기</h3><p>Equity(에퀴티)는 동률일 때 나눠 받는 팟 지분을 반영합니다. 이 앱의 최강 패 확률과는 다릅니다. 예를 들어 6명이 항상 비기면 최강 패 확률은 100%, equity는 약 16.7%입니다.</p><p>내 패보다 강한 상대가 없는 확률이며 공동 1등을 포함합니다. 상대 1~8명 확률을 기기 안에서 계산합니다. 상대 1~6명은 프리플롭의 정확한 내장 표와 턴·리버의 정확한 결정론 계산을 사용합니다. 상대 7~8명(8~9인)은 기존 정확 결과의 교환가능 모멘트를 이용한 오차 한계가 있는 근사입니다. 모든 스트리트의 최강 패 표시 오차는 ±0.4%p, 동률은 ±0.73%p 이내입니다. 플롭은 원본 전체 표를 1바이트로 반올림한 근사 표를 사용합니다. 최강 패와 단독 승리 계산값의 최대 오차는 ±0.197%p, 동률은 ±0.393%p이며 화면 반올림까지 포함하면 각각 ±0.25%p와 ±0.45%p 이내입니다. 첫 설치에서 약 10.6MB 모델과 앱 파일의 저장을 완료하면 확률 조회에 인터넷이 필요하지 않습니다. 기기 캐시가 삭제되면 다시 설치해야 합니다. 단독 승리와 동률 확률도 따로 표시합니다. 소수점 첫째 자리로 반올림하므로 두 표시값의 합계는 최강 패 확률과 0.1%p 다를 수 있습니다. 무작위 상대 패를 균등하게 가정하며 실제 비공개 카드나 베팅 성향을 반영한 예측은 아닙니다. 족보 완성 확률은 별도의 펼침 표에서 확인하세요.</p>
   <h3>상대의 플레이</h3><p>상대는 자기 카드와 공개 정보로 판단합니다. 각자의 성향에 따라 블러프하고, 내 베팅과 과거 공개된 패를 보고 블러프를 의심하기도 합니다. 핸드 종료 후 폴드한 패까지 모두 공개됩니다.</p>
   <h3>iPhone에 설치하기</h3><p>Safari에서 <b>공유 → 홈 화면에 추가 → 추가</b>를 선택하세요. 처음 온라인으로 연 뒤에는 오프라인에서도 플레이할 수 있습니다. 기록은 이 기기에 저장됩니다.</p>
 </dialog>
 <dialog id="card-picker" class="card-picker"><div class="picker-heading"><h2 id="picker-title">카드 선택</h2><button id="picker-close" class="icon-button" aria-label="닫기">×</button></div><div id="picker-suits" class="study-segments"></div><div id="picker-ranks" class="picker-ranks"></div><button id="picker-clear" class="text-button">이 카드 지우기</button></dialog>
-<script type="module" src="./modes.js?v=36"></script>
+<script type="module" src="./modes.js?v=37"></script>
 </body>
 </html>

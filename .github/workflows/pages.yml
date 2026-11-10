@@ -29,7 +29,7 @@ jobs:
       - name: Prepare static site
         run: |
           mkdir _site
-          cp table-opponents.js round-preview.js modes.js modes.css strategy.js moment-extension.js nine-manifest.js offline-nine.js preflop-nine.js app.js card-canonical.js engine.js exact-probability.js icon-192.png icon-512.png icon.svg index.html manifest.webmanifest mobile.css offline-flop.js offline-graph.js offline-manifest.js offline-probabilities.js offline-river.js offline-supports.js offline-worker.js preflop-five-counts.js preflop-four-counts.js preflop-headsup-counts.js preflop-six-counts.js preflop-three-counts.js preflop-two-counts.js style.css sw.js _site/
+          cp glossary.js table-opponents.js round-preview.js modes.js modes.css strategy.js moment-extension.js nine-manifest.js offline-nine.js preflop-nine.js app.js card-canonical.js engine.js exact-probability.js icon-192.png icon-512.png icon.svg index.html manifest.webmanifest mobile.css offline-flop.js offline-graph.js offline-manifest.js offline-probabilities.js offline-river.js offline-supports.js offline-worker.js preflop-five-counts.js preflop-four-counts.js preflop-headsup-counts.js preflop-six-counts.js preflop-three-counts.js preflop-two-counts.js style.css sw.js _site/
           python3 scripts/copy-pages-data.py
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3

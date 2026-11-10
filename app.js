@@ -1,8 +1,8 @@
-import {chooseTableOpponents} from './table-opponents.js?v=36';
-import {createRoundPreview} from './round-preview.js?v=36';
-import {loadOfflineProbabilities,loadFlopProbabilities,offlineReady} from './offline-probabilities.js?v=36';
-import {exactPercent} from './exact-probability.js?v=36';
-import {suits,rank,suit,shuffled,evaluate,describeHand,settle,botDecision,calculateEquity} from './engine.js?v=36';
+import {chooseTableOpponents} from './table-opponents.js?v=37';
+import {createRoundPreview} from './round-preview.js?v=37';
+import {loadOfflineProbabilities,loadFlopProbabilities,offlineReady} from './offline-probabilities.js?v=37';
+import {exactPercent} from './exact-probability.js?v=37';
+import {suits,rank,suit,shuffled,evaluate,describeHand,settle,botDecision,calculateEquity} from './engine.js?v=37';
 const $=s=>document.querySelector(s);
 let profiles=[];
 let saved=[];try{saved=JSON.parse(localStorage.getItem('river-history')||'[]');if(!Array.isArray(saved))saved=[];}catch{}

@@ -10,9 +10,9 @@
   <link rel="manifest" href="./manifest.webmanifest">
   <link rel="icon" href="./icon.svg">
   <link rel="apple-touch-icon" href="./icon-192.png">
-  <link rel="stylesheet" href="./style.css?v=35">
-  <link rel="stylesheet" href="./mobile.css?v=35">
-  <link rel="stylesheet" href="./modes.css?v=35">
+  <link rel="stylesheet" href="./style.css?v=36">
+  <link rel="stylesheet" href="./mobile.css?v=36">
+  <link rel="stylesheet" href="./modes.css?v=36">
   <title>River Room · 홀덤 연습</title>
 </head>
 <body>
@@ -37,14 +37,14 @@
     <div class="setup-row">
       <span id="players-label" class="players-label">참가 인원</span>
       <div id="player-picker" class="player-picker">
-        <input id="players" type="hidden" value="4">
-        <button id="players-toggle" class="players-toggle" type="button" aria-haspopup="listbox" aria-expanded="false" aria-controls="players-menu" aria-labelledby="players-label players-value"><span id="players-value">4명</span><svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="m4 6 4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        <input id="players" type="hidden" value="6">
+        <button id="players-toggle" class="players-toggle" type="button" aria-haspopup="listbox" aria-expanded="false" aria-controls="players-menu" aria-labelledby="players-label players-value"><span id="players-value">6명</span><svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="m4 6 4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
         <div id="players-menu" class="players-menu" role="listbox" aria-labelledby="players-label" hidden>
           <button id="players-option-2" type="button" role="option" aria-selected="false" tabindex="-1"><span>2명</span><span class="selection-check" aria-hidden="true">✓</span></button>
           <button id="players-option-3" type="button" role="option" aria-selected="false" tabindex="-1"><span>3명</span><span class="selection-check" aria-hidden="true">✓</span></button>
-          <button id="players-option-4" type="button" role="option" aria-selected="true" tabindex="-1"><span>4명</span><span class="selection-check" aria-hidden="true">✓</span></button>
+          <button id="players-option-4" type="button" role="option" aria-selected="false" tabindex="-1"><span>4명</span><span class="selection-check" aria-hidden="true">✓</span></button>
           <button id="players-option-5" type="button" role="option" aria-selected="false" tabindex="-1"><span>5명</span><span class="selection-check" aria-hidden="true">✓</span></button>
-          <button id="players-option-6" type="button" role="option" aria-selected="false" tabindex="-1"><span>6명</span><span class="selection-check" aria-hidden="true">✓</span></button>
+          <button id="players-option-6" type="button" role="option" aria-selected="true" tabindex="-1"><span>6명</span><span class="selection-check" aria-hidden="true">✓</span></button>
           <button id="players-option-7" type="button" role="option" aria-selected="false" tabindex="-1"><span>7명</span><span class="selection-check" aria-hidden="true">✓</span></button>
 <button id="players-option-8" type="button" role="option" aria-selected="false" tabindex="-1"><span>8명</span><span class="selection-check" aria-hidden="true">✓</span></button><button id="players-option-9" type="button" role="option" aria-selected="false" tabindex="-1"><span>9명</span><span class="selection-check" aria-hidden="true">✓</span></button>
         </div>
@@ -113,6 +113,6 @@
   <h3>iPhone에 설치하기</h3><p>Safari에서 <b>공유 → 홈 화면에 추가 → 추가</b>를 선택하세요. 처음 온라인으로 연 뒤에는 오프라인에서도 플레이할 수 있습니다. 기록은 이 기기에 저장됩니다.</p>
 </dialog>
 <dialog id="card-picker" class="card-picker"><div class="picker-heading"><h2 id="picker-title">카드 선택</h2><button id="picker-close" class="icon-button" aria-label="닫기">×</button></div><div id="picker-suits" class="study-segments"></div><div id="picker-ranks" class="picker-ranks"></div><button id="picker-clear" class="text-button">이 카드 지우기</button></dialog>
-<script type="module" src="./modes.js?v=35"></script>
+<script type="module" src="./modes.js?v=36"></script>
 </body>
 </html>

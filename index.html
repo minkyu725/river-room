@@ -10,9 +10,9 @@
   <link rel="manifest" href="./manifest.webmanifest">
   <link rel="icon" href="./icon.svg">
   <link rel="apple-touch-icon" href="./icon-192.png">
-  <link rel="stylesheet" href="./style.css?v=34">
-  <link rel="stylesheet" href="./mobile.css?v=34">
-  <link rel="stylesheet" href="./modes.css?v=34">
+  <link rel="stylesheet" href="./style.css?v=35">
+  <link rel="stylesheet" href="./mobile.css?v=35">
+  <link rel="stylesheet" href="./modes.css?v=35">
   <title>River Room · 홀덤 연습</title>
 </head>
 <body>
@@ -64,7 +64,7 @@
           <p class="pot-label">팟 <strong id="pot">0</strong></p>
           <div id="board" class="cards board"></div>
         </div>
-        <div class="hero-area"><div class="hero-label"><span class="you-tag">나 <span id="position"></span></span><span id="stack"></span></div><div id="hero" class="cards"></div></div>
+        <div class="hero-area"><div class="hero-label"><span class="you-tag">나 <span id="position" aria-label="내 버튼·딜러 자리" hidden></span></span><span id="stack"></span></div><div id="hero" class="cards"></div></div>
       </div>
       <div id="hero-hand"></div>
       <div id="round-result" class="round-result" hidden></div>
@@ -93,6 +93,7 @@
       <section id="results" class="results" hidden></section>
     </section>
     <aside>
+      <details class="last-actions" open><summary>플레이어별 직전 액션</summary><p class="aside-note">현재 핸드의 마지막 행동입니다. 라운드가 바뀌어도 남습니다.</p><ul id="last-actions" aria-label="플레이어별 마지막 행동"></ul></details>
       <section class="opponent-notes"><h2>테이블의 상대</h2><div id="personalities"></div><p class="aside-note">큰 베팅이 항상 좋은 패는 아닙니다.<br>상대마다 블러프 빈도와 콜 기준이 다릅니다.</p></section>
       <section class="history-panel"><div class="panel-heading"><h2>지난 핸드</h2><span id="record-count">0개</span></div><div id="history"></div></section>
       <button id="install" class="install-button"><span>홈 화면에 설치</span><small>iPhone에서 앱처럼 사용하기</small></button>
@@ -106,12 +107,12 @@
   <h2>테이블 안내</h2>
   <p>2~9인 노리밋 텍사스 홀덤입니다. 새 테이블은 1,000칩으로 시작하며, 다음 핸드에도 보유 칩이 유지되고 딜러가 돌아갑니다. 칩을 모두 잃은 상대는 쉬고, 내 칩이 소진되거나 한 명만 남으면 새 테이블을 시작하세요. 체크, 콜, 폴드, 레이즈와 올인, 사이드 팟을 지원합니다.</p>
   <p>내 차례마다 레이즈 총액은 가능한 최소 금액으로 돌아갑니다. BB 버튼은 이번 라운드의 총 베팅액을 선택합니다(추가 금액 아님). 1 BB는 20칩이며 최소 레이즈보다 작거나 보유 칩을 넘는 선택은 비활성화됩니다. 금액 선택 후 레이즈 버튼을 눌러 확정하세요.</p>
-  <p>각 베팅 라운드(프리플롭·플롭·턴·리버)는 카드 공개와 확률 계산 후 5초 동안 멈춥니다. 액션 진행하기를 누르면 바로 시작합니다. 모드를 벗어나면 대기 시간도 멈춥니다.</p>
+  <p>각 베팅 라운드(프리플롭·플롭·턴·리버)는 카드 공개와 확률 계산 후 5초 동안 멈춥니다. 액션 진행하기를 누르면 바로 시작합니다. 모드를 벗어나면 대기 시간도 멈춥니다. 최강 패 확률을 가리면 확인 대기를 생략하고 바로 진행합니다. 플레이어별 직전 액션은 테이블 옆 목록에서 확인할 수 있습니다.</p>
   <h3>최강 패 확률 읽기</h3><p>내 패보다 강한 상대가 없는 확률이며 공동 1등을 포함합니다. 상대 1~8명 확률을 기기 안에서 계산합니다. 상대 1~6명은 프리플롭의 정확한 내장 표와 턴·리버의 정확한 결정론 계산을 사용합니다. 상대 7~8명(8~9인)은 기존 정확 결과의 교환가능 모멘트를 이용한 오차 한계가 있는 근사입니다. 모든 스트리트의 최강 패 표시 오차는 ±0.4%p, 동률은 ±0.73%p 이내입니다. 플롭은 원본 전체 표를 1바이트로 반올림한 근사 표를 사용합니다. 최강 패와 단독 승리 계산값의 최대 오차는 ±0.197%p, 동률은 ±0.393%p이며 화면 반올림까지 포함하면 각각 ±0.25%p와 ±0.45%p 이내입니다. 첫 설치에서 약 10.6MB 모델과 앱 파일의 저장을 완료하면 확률 조회에 인터넷이 필요하지 않습니다. 기기 캐시가 삭제되면 다시 설치해야 합니다. 단독 승리와 동률 확률도 따로 표시합니다. 소수점 첫째 자리로 반올림하므로 두 표시값의 합계는 최강 패 확률과 0.1%p 다를 수 있습니다. 무작위 상대 패를 균등하게 가정하며 실제 비공개 카드나 베팅 성향을 반영한 예측은 아닙니다. 족보 완성 확률은 별도의 펼침 표에서 확인하세요.</p>
   <h3>상대의 플레이</h3><p>상대는 자기 카드와 공개 정보로 판단합니다. 각자의 성향에 따라 블러프하고, 내 베팅과 과거 공개된 패를 보고 블러프를 의심하기도 합니다. 핸드 종료 후 폴드한 패까지 모두 공개됩니다.</p>
   <h3>iPhone에 설치하기</h3><p>Safari에서 <b>공유 → 홈 화면에 추가 → 추가</b>를 선택하세요. 처음 온라인으로 연 뒤에는 오프라인에서도 플레이할 수 있습니다. 기록은 이 기기에 저장됩니다.</p>
 </dialog>
 <dialog id="card-picker" class="card-picker"><div class="picker-heading"><h2 id="picker-title">카드 선택</h2><button id="picker-close" class="icon-button" aria-label="닫기">×</button></div><div id="picker-suits" class="study-segments"></div><div id="picker-ranks" class="picker-ranks"></div><button id="picker-clear" class="text-button">이 카드 지우기</button></dialog>
-<script type="module" src="./modes.js?v=34"></script>
+<script type="module" src="./modes.js?v=35"></script>
 </body>
 </html>

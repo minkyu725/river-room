@@ -1,8 +1,8 @@
-import {chooseTableOpponents} from './table-opponents.js?v=34';
-import {createRoundPreview} from './round-preview.js?v=34';
-import {loadOfflineProbabilities,loadFlopProbabilities,offlineReady} from './offline-probabilities.js?v=34';
-import {exactPercent} from './exact-probability.js?v=34';
-import {suits,rank,suit,shuffled,evaluate,describeHand,settle,botDecision,calculateEquity} from './engine.js?v=34';
+import {chooseTableOpponents} from './table-opponents.js?v=35';
+import {createRoundPreview} from './round-preview.js?v=35';
+import {loadOfflineProbabilities,loadFlopProbabilities,offlineReady} from './offline-probabilities.js?v=35';
+import {exactPercent} from './exact-probability.js?v=35';
+import {suits,rank,suit,shuffled,evaluate,describeHand,settle,botDecision,calculateEquity} from './engine.js?v=35';
 const $=s=>document.querySelector(s);
 let profiles=[];
 let saved=[];try{saved=JSON.parse(localStorage.getItem('river-history')||'[]');if(!Array.isArray(saved))saved=[];}catch{}
@@ -10,7 +10,7 @@ let history=saved.filter(validRecord).slice(0,30),hand=0,dealer=-1,game,timer,to
 let equityRequest,sequence,raiseTurnState,modePaused=false,actionEpoch=0,previewProbability=null,previewAnnouncementKey=null;
 const roundPreview=createRoundPreview({schedule:setTimeout,cancel:clearTimeout,onChange:()=>{render();if(roundPreview.active)message('액션 시작 대기 · 카드와 확률을 확인하세요.');},onRelease:()=>advance()});
 function cancelBot(){clearTimeout(timer);timer=null;actionEpoch++;}
-function beginRound(){cancelBot();roundPreview.start(calculate);}
+function beginRound(){cancelBot();if($('#equity-content').hidden){roundPreview.reset();calculate();advance();return;}roundPreview.start(calculate);}
 
 const BB=20,bbPresets=[['bb-2',2],['bb-2-5',2.5],['bb-3',3]];
 const actionEffects=new Set();
@@ -122,7 +122,7 @@ function start(reset=false){
  const previous=!reset&&game?game.players:null,n=previous?previous.length:Number($('#players').value);if(previous&&(previous[0].stack===0||previous.filter(p=>p.stack>0).length<2))return;
  cancelBot();roundPreview.reset();cancelSequence();token++;if(reset){dealer=-1;hand=0;}do{dealer=(dealer+1)%n;}while(previous&&previous[dealer].stack===0);hand++;$('#players').value=String(n);syncPlayerPicker();
  if(!previous)profiles=chooseTableOpponents(n-1);
- const deck=shuffled();game={players:Array.from({length:n},(_,i)=>({name:i?profiles[i-1].name:'나',hole:[deck.pop(),deck.pop()],dealt:0,revealed:false,stack:previous?previous[i].stack:1000,sittingOut:!!previous&&previous[i].stack===0,bet:0,total:0,folded:!!previous&&previous[i].stack===0,last:'',actedAt:null})),deck,board:[],runoutShown:0,street:0,current:20,minRaise:20,done:false,finishing:false,busy:false,pending:new Set(),turn:0,log:[],heroRaises:0};
+ const deck=shuffled();game={players:Array.from({length:n},(_,i)=>({name:i?profiles[i-1].name:'나',hole:[deck.pop(),deck.pop()],dealt:0,revealed:false,stack:previous?previous[i].stack:1000,sittingOut:!!previous&&previous[i].stack===0,bet:0,total:0,folded:!!previous&&previous[i].stack===0,last:'',previousAction:null,actedAt:null})),deck,board:[],runoutShown:0,street:0,current:20,minRaise:20,done:false,finishing:false,busy:false,pending:new Set(),turn:0,log:[],heroRaises:0};
  const sb=game.players.filter(p=>!p.sittingOut).length===2?dealer:nextSeat(dealer),bb=nextSeat(sb);pay(sb,10);pay(bb,20);game.players[sb].last='SB 10';game.players[bb].last='BB 20';game.pending=new Set(game.players.flatMap((p,i)=>ready(p)?[i]:[]));game.turn=nextSeat(bb);game.log.push('블라인드 10 / 20');mountSeats();
  const order=Array.from({length:n},(_,j)=>(dealer+j+1)%n).filter(i=>!game.players[i].sittingOut);
  message('홀 카드를 한 장씩 배분합니다.');runSequence([...order,...order].map(i=>()=>game.players[i].dealt++),()=>beginRound());
@@ -137,7 +137,7 @@ function act(i,type,target){
   for(let j=0;j<game.players.length;j++)if(j!==i&&ready(game.players[j])&&game.players[j].bet<game.current)game.pending.add(j);
   kind='raise';p.last=`레이즈 ${p.bet}`;if(i===0)game.heroRaises++;
  }else{const paid=pay(i,call);kind=call?'call':'check';p.last=call?`콜 ${paid}`:'체크';}
- if(!p.stack)p.last+=' · 올인';p.actedAt=game.current;game.pending.delete(i);game.log.push(`${p.name}: ${p.last}`);game.turn=nextSeat(i);render();animateAction(i,kind,before-p.stack);
+ if(!p.stack)p.last+=' · 올인';p.previousAction={street:game.street,text:p.last};p.actedAt=game.current;game.pending.delete(i);game.log.push(`${p.name}: ${p.last}`);game.turn=nextSeat(i);render();animateAction(i,kind,before-p.stack);
 }
 function advance(){
  cancelBot();if(modePaused||roundPreview.active)return;
@@ -201,8 +201,9 @@ function resultRow(p,board){return `<div class="result-row"><div><b>${escapeHTML
 function render(){
  const g=game;$('#hand-no').textContent=`핸드 ${hand}`;$('#street').textContent=g.done?'종료':streets[g.street];$('#pot').textContent=g.players.reduce((s,p)=>s+p.total,0).toLocaleString();
  markup('#pot-stack',chips(g.players.reduce((s,p)=>s+p.total,0)));$('#round-result').hidden=!g.done;$('#round-result').textContent=g.resultLabel||'';$('#round-result').className=`round-result ${g.net>0?'won':''}`;
- renderBoard(g);const hero=g.players[0];renderCards($('#hero'),hero.hole.map((c,i)=>i<hero.dealt?card(c):emptyCard('미배분 카드')),'dealing');$('#hero').classList.toggle('folded',hero.folded);markUnusedHole($('#hero'),hero.hole,g.done?g.fullBoard:g.board);renderHandStatus('#hero-hand',hero.dealt<2||hero.folded&&!g.done||!g.done&&!g.board.length?null:[...hero.hole,...(g.done?g.fullBoard:g.board)],g.done?(hero.folded?'폴드 · ':''):(hero.last?hero.last+' · ':''),hero.dealt<2?'카드 배분 중':hero.folded?'폴드':`${hero.last?hero.last+' · ':''}${startingHand(hero.hole)}`);$('#stack').textContent=`${hero.stack.toLocaleString()} 칩`;$('#position').textContent=dealer===0?'딜러':'';
- g.players.slice(1).forEach((p,j)=>{const i=j+1;$('#opponent-'+i).className=`opponent ${p.folded?'folded':''} ${g.turn===i&&!roundPreview.active&&!modePaused&&!g.done&&!g.busy&&!g.finishing?'thinking':''}`;renderCards($('#opponent-cards-'+i),p.hole.map((c,k)=>k<p.dealt?card(c,!p.revealed):emptyCard(p.sittingOut?'쉬는 자리':'미배분 카드')),p.revealed?'flipping':'dealing');markUnusedHole($('#opponent-cards-'+i),p.hole,p.revealed?g.fullBoard:[]);$('#opponent-stack-'+i).textContent=p.stack.toLocaleString();renderHandStatus('#opponent-last-'+i,p.revealed&&!p.sittingOut?[...p.hole,...g.fullBoard]:null,p.folded?'폴드 · ':'',p.sittingOut?'칩 소진':p.last||profiles[j].style);});
+ renderBoard(g);const hero=g.players[0];renderCards($('#hero'),hero.hole.map((c,i)=>i<hero.dealt?card(c):emptyCard('미배분 카드')),'dealing');$('#hero').classList.toggle('folded',hero.folded);markUnusedHole($('#hero'),hero.hole,g.done?g.fullBoard:g.board);renderHandStatus('#hero-hand',hero.dealt<2||hero.folded&&!g.done||!g.done&&!g.board.length?null:[...hero.hole,...(g.done?g.fullBoard:g.board)],g.done?(hero.folded?'폴드 · ':''):(hero.last?hero.last+' · ':''),hero.dealt<2?'카드 배분 중':hero.folded?'폴드':`${hero.last?hero.last+' · ':''}${startingHand(hero.hole)}`);$('#stack').textContent=`${hero.stack.toLocaleString()} 칩`;$('#position').textContent=dealer===0?'BTN · 딜러':'';$('#position').hidden=dealer!==0;
+ g.players.slice(1).forEach((p,j)=>{const i=j+1;$('#opponent-'+i).className=`opponent ${p.folded?'folded':''} ${g.turn===i&&!roundPreview.active&&!modePaused&&!g.done&&!g.busy&&!g.finishing?'thinking':''}`;renderCards($('#opponent-cards-'+i),p.hole.map((c,k)=>k<p.dealt?card(c,!p.revealed):emptyCard(p.sittingOut?'쉬는 자리':'미배분 카드')),p.revealed?'flipping':'dealing');markUnusedHole($('#opponent-cards-'+i),p.hole,p.revealed?g.fullBoard:[]);$('#opponent-stack-'+i).textContent=p.stack.toLocaleString();renderHandStatus('#opponent-last-'+i,p.revealed&&!p.sittingOut?[...p.hole,...g.fullBoard]:null,p.folded?'폴드 · ':'',p.sittingOut?'칩 소진':p.last||p.previousAction?.text||profiles[j].style);});
+ renderLastActions();
  $('#personalities').innerHTML=profiles.slice(0,g.players.length-1).map(p=>`<div class="profile"><span><i class="profile-dot"></i>${p.name}</span><small>${p.style}</small><span class="aggression">${'▰'.repeat(Math.round(p.aggression*5))}<em>${'▱'.repeat(5-Math.round(p.aggression*5))}</em></span></div>`).join('');
  renderRoundPreview();
  const turn=g.turn===0&&!roundPreview.active&&!modePaused&&!g.done&&!g.busy&&!g.finishing&&g.pending.has(0),p=g.players[0],call=Math.min(p.stack,g.current-p.bet);$('#actions').hidden=g.done;$('#next').hidden=!g.done;$('#next').disabled=g.done&&(g.players[0].stack===0||g.players.filter(p=>p.stack>0).length<2);$('#next').textContent=$('#next').disabled?'테이블 종료 · 새 테이블로 시작하세요':'다음 핸드';$('#results').hidden=!g.done;
@@ -214,6 +215,9 @@ function render(){
  if(Number(slider.value)<min)slider.value=min;if(Number(slider.value)>max)slider.value=max;showRaiseTarget();slider.disabled=!turn||!canRaise(0);
  for(const [id,bb] of bbPresets)$('#'+id).disabled=!turn||!canRaise(0)||bb*BB<min||bb*BB>max;
 }
+function renderLastActions(){
+ $('#last-actions').innerHTML=game.players.map((p,i)=>{const a=p.previousAction,role=i===dealer?' · BTN':'';return `<li><span class="action-player">${escapeHTML(p.name)}${role}</span><span class="action-record">${a?`<small>${streets[a.street]}</small><b>${escapeHTML(a.text)}</b>`:`<span class="no-action">${p.sittingOut?'이번 핸드 참여 안 함':'아직 액션 없음'}</span>`}</span></li>`;}).join('');
+}
 function renderRoundPreview(){
  const visible=roundPreview.active&&!modePaused&&!game.done&&!game.busy&&!game.finishing;
  $('#round-preview').hidden=!visible;
@@ -221,7 +225,7 @@ function renderRoundPreview(){
  if(!visible){previewAnnouncementKey=null;text('#preview-announcement','');return;}
  const folded=game.players[0].folded,masked=$('#equity-content').hidden;
  const cards=game.players[0].hole.map(c=>`${rank(c)<11?rank(c):({11:'J',12:'Q',13:'K',14:'A'})[rank(c)]}${suits[suit(c)]}`).join(' ');
- text('#preview-hand',`${streets[game.street]} · ${cards}`);
+ text('#preview-hand',`${streets[game.street]}${dealer===0?' · BTN':''} · ${cards}`);
  const chance=folded?'폴드':masked?'가림':roundPreview.waiting?'···':previewProbability?.value===null||!previewProbability?'—':previewProbability.value+'%';
  text('#preview-chance',chance);$('#preview-estimate').hidden=folded||masked||roundPreview.waiting||!previewProbability?.approximate;
  text('#preview-status',roundPreview.waiting?'확률 준비 중':`${chance==='—'?'확률 확인 불가 · ':''}${roundPreview.remaining}초 후 자동 시작`);
@@ -315,7 +319,7 @@ function presetBB(bb){if(modePaused||roundPreview.active||game.done||game.busy||
 for(const [id,bb] of bbPresets)$('#'+id).onclick=()=>presetBB(bb);
 function preset(fraction){if(modePaused||roundPreview.active||game.done||game.busy||game.finishing||game.turn!==0||!game.pending.has(0)||!canRaise(0))return;const p=game.players[0],slider=$('#raise-size'),pot=game.players.reduce((s,p)=>s+p.total,0),target=fraction===Infinity?p.bet+p.stack:game.current+Math.max(game.minRaise,Math.round(pot*fraction));slider.value=Math.min(Number(slider.max),Math.max(Number(slider.min),target));slider.oninput();}
 $('#half-pot').onclick=()=>preset(.5);$('#full-pot').onclick=()=>preset(1);$('#all-in').onclick=()=>preset(Infinity);
-$('#toggle-equity').onclick=()=>{const el=$('#equity-content');el.hidden=!el.hidden;$('#toggle-equity').textContent=el.hidden?'보기':'가리기';renderRoundPreview();};
+$('#toggle-equity').onclick=()=>{const el=$('#equity-content');el.hidden=!el.hidden;$('#toggle-equity').textContent=el.hidden?'보기':'가리기';if(el.hidden&&roundPreview.active)roundPreview.proceed();else renderRoundPreview();};
 $('#hand-odds-content').hidden=true;
 $('#toggle-hand-odds').onclick=()=>{const content=$('#hand-odds-content'),button=$('#toggle-hand-odds');content.hidden=!content.hidden;button.textContent=content.hidden?'족보 완성 확률 보기':'족보 완성 확률 닫기';button.setAttribute?.('aria-expanded',String(!content.hidden));};
 $('#help').onclick=$('#install').onclick=()=>$('#help-dialog').showModal();$('#close-help').onclick=()=>$('#help-dialog').close();$('#help-dialog').onclick=e=>{if(e.target===$('#help-dialog'))$('#help-dialog').close();};renderHistory();start();

@@ -283,3 +283,10 @@ dialog p { color: var(--muted); font-size: 13px; line-height: 1.9; }
 .sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
 .opponent.thinking{z-index:3}
 @media(max-width:480px){.round-preview{padding-left:12px;padding-right:12px}.round-preview-inner{gap:12px}.round-preview button{font-size:13px;padding:12px}.preview-value{gap:5px}.preview-value strong{font-size:23px}.round-preview .preview-hand{font-size:11px}}
+
+/* Keep the hero identity readable where the cards cross the pale rail edge. */
+.hero-label{width:max-content;max-width:100%;margin-left:auto;margin-right:auto;padding:2px 6px;background:var(--rail);border-radius:4px;color:var(--paper)}
+#position{display:inline-flex;align-items:center;padding:0 4px;margin-left:4px;border:1px solid var(--line);border-radius:3px;background:var(--paper);color:var(--ink);font-size:11px;line-height:1.35;font-weight:750;white-space:nowrap}
+.last-actions{margin:0 0 24px;padding:0;border:0}.last-actions>summary{font-size:14px;font-weight:650;cursor:pointer;min-height:32px}.last-actions .aside-note{margin:8px 0 12px}#last-actions{list-style:none;margin:0;padding:0}#last-actions li{display:flex;justify-content:space-between;align-items:baseline;gap:12px;padding:9px 0;border-top:1px solid var(--line);font-size:12px}.action-player{flex-shrink:0;font-weight:650}.action-record{text-align:right;min-width:0;overflow-wrap:anywhere}.action-record small{display:block;color:var(--muted);font-size:10px;margin-bottom:2px}.action-record b{font-weight:550}.no-action{color:var(--muted);font-size:11px}
+@media(max-width:800px){.last-actions{grid-column:1/-1;margin-bottom:0}#last-actions{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));column-gap:20px}#last-actions li{gap:8px}.last-actions>summary{font-size:13px}}
+@media(max-width:360px){#last-actions{grid-template-columns:1fr}}

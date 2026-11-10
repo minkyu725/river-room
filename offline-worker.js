@@ -1,9 +1,9 @@
-import {createNineFlop} from './offline-nine.js?v=37';
-import {nineModel} from './nine-manifest.js?v=37';
-import {extendedResult} from './moment-extension.js?v=37';
-import {createOfflineFlop} from './offline-flop.js?v=37';
-import {exactRiverCounts,exactTurnCounts,flopCategories,probabilityResult} from './offline-river.js?v=37';
-import {model} from './offline-manifest.js?v=37';
+import {createNineFlop} from './offline-nine.js?v=38';
+import {nineModel} from './nine-manifest.js?v=38';
+import {extendedResult} from './moment-extension.js?v=38';
+import {createOfflineFlop} from './offline-flop.js?v=38';
+import {exactRiverCounts,exactTurnCounts,flopCategories,probabilityResult} from './offline-river.js?v=38';
+import {model} from './offline-manifest.js?v=38';
 let flop,nine,initializing;
 self.onmessage=async({data})=>{const {type,id,hole,board,opponents}=data;try{if(type==='init'){if(!initializing)initializing=(async()=>{if(data.buffer.byteLength!==model.bytes)throw Error('Offline model size mismatch');const hash=[...new Uint8Array(await crypto.subtle.digest('SHA-256',data.buffer))].map(x=>x.toString(16).padStart(2,'0')).join('');if(hash!==model.sha256)throw Error('Offline model integrity failure');flop=createOfflineFlop(data.buffer);if(data.nineBuffer){const h=[...new Uint8Array(await crypto.subtle.digest('SHA-256',data.nineBuffer))].map(x=>x.toString(16).padStart(2,'0')).join('');if(h!==nineModel.sha256)throw Error('Nine-player integrity failure');nine=createNineFlop(data.nineBuffer,data.buffer);}})();await initializing;self.postMessage({type:'ready'});return;}
  if(!initializing)throw Error('Offline model is not initialized');await initializing;let result;

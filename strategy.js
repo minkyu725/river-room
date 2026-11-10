@@ -1,4 +1,4 @@
-import {calculateEquity} from './engine.js?v=37';
+import {calculateEquity} from './engine.js?v=38';
 export const referenceURL='https://syup5.github.io/holdem_strategy_preflop/';
 export const ranks='AKQJT98765432';
 export function handClass(hole){const a=hole.map(c=>c%13).sort((a,b)=>b-a);return '23456789TJQKA'[a[0]]+'23456789TJQKA'[a[1]]+(a[0]===a[1]?'':Math.floor(hole[0]/13)===Math.floor(hole[1]/13)?'s':'o');}

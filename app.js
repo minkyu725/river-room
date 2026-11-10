@@ -1,8 +1,8 @@
-import {chooseTableOpponents} from './table-opponents.js?v=35';
-import {createRoundPreview} from './round-preview.js?v=35';
-import {loadOfflineProbabilities,loadFlopProbabilities,offlineReady} from './offline-probabilities.js?v=35';
-import {exactPercent} from './exact-probability.js?v=35';
-import {suits,rank,suit,shuffled,evaluate,describeHand,settle,botDecision,calculateEquity} from './engine.js?v=35';
+import {chooseTableOpponents} from './table-opponents.js?v=36';
+import {createRoundPreview} from './round-preview.js?v=36';
+import {loadOfflineProbabilities,loadFlopProbabilities,offlineReady} from './offline-probabilities.js?v=36';
+import {exactPercent} from './exact-probability.js?v=36';
+import {suits,rank,suit,shuffled,evaluate,describeHand,settle,botDecision,calculateEquity} from './engine.js?v=36';
 const $=s=>document.querySelector(s);
 let profiles=[];
 let saved=[];try{saved=JSON.parse(localStorage.getItem('river-history')||'[]');if(!Array.isArray(saved))saved=[];}catch{}
@@ -278,7 +278,7 @@ $('#new').onclick=()=>{if(game&&!game.done&&game.players.some(p=>p.total>20)&&!c
 $('#players').onchange=()=>{const previous=String(game.players.length);if($('#players').value===previous)return;if(!confirm('참가 인원을 변경하면 현재 테이블과 보유 칩이 초기화됩니다. 새 테이블을 시작할까요?')){$('#players').value=previous;syncPlayerPicker();return;}unlockAudio();start(true);};
 // Custom single-select listbox. Focus moves through choices without changing
 // the table until the user confirms a choice; cancelling restores the selection.
-let playerChoice=4;
+let playerChoice=Number($('#players').value);
 function syncPlayerPicker(){
  const value=Number($('#players').value);$('#players-value').textContent=`${value}명`;
  for(let n=2;n<=9;n++)$('#players-option-'+n).setAttribute('aria-selected',String(n===value));
